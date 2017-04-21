@@ -51,12 +51,14 @@ public class Datosusuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
+    
     private BigDecimal id;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 90)
     @Column(name = "EMAIL")
+    //Aquí colocar lo del campus
     private String email;
     @Basic(optional = false)
     @NotNull
