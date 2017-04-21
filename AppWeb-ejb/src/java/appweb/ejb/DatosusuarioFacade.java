@@ -1,0 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package appweb.ejb;
+
+import appweb.entity.Datosusuario;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author Adrián
+////// */
+@Stateless
+public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
+
+    @PersistenceContext(unitName = "AppWeb-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public DatosusuarioFacade() {
+        super(Datosusuario.class);
+    }
+    
+    public Datosusuario obtenerID(String email, String pass){
+        Query q;
+        q = this.em.createQuery("select d from Datosusuario d where d.email = :email and d.password = :pass ");
+        q.setParameter("email", email);
+        q.setParameter("pass", pass);
+        List <Datosusuario> lista = (List)q.getResultList();
+        return lista.get(0);
+    }
+    
+}
