@@ -40,4 +40,25 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
         return lista.get(0);
     }
     
+    public Integer obtenerProximoValorIdUsuario (  ){
+        Query q;
+        List<Integer> lista;
+        
+        q = em.createQuery("select max(u.id) from Datosusuario u");
+        lista = q.getResultList();
+        if(lista==null || lista.isEmpty())
+            return 0;
+        else{
+            Integer entero = lista.get(0);
+            return entero+1;
+        }
+    }
+    
+    public Boolean emailUsado(String email){
+        Query q;
+        q = this.em.createQuery("select d from Datosusuario d where d.email = :email ");
+        q.setParameter("email", email);
+        List <Datosusuario> lista = (List)q.getResultList();
+        return lista.get(0) != null;
+    }
 }
