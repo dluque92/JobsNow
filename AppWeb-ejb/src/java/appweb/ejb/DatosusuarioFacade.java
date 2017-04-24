@@ -31,13 +31,17 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
         super(Datosusuario.class);
     }
     
-    public Datosusuario obtenerID(String email, String pass){
+    public Datosusuario obtenerUsuario(String email, String pass){
         Query q;
         q = this.em.createQuery("select d from Datosusuario d where d.email = :email and d.password = :pass ");
         q.setParameter("email", email);
         q.setParameter("pass", pass);
         List <Datosusuario> lista = (List)q.getResultList();
-        return lista.get(0);
+        if (!lista.isEmpty()){
+            return lista.get(0);  
+        }else{
+            return null;
+        }
     }
     
     public Integer obtenerProximoValorIdUsuario (  ){
@@ -59,6 +63,6 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
         q = this.em.createQuery("select d from Datosusuario d where d.email = :email ");
         q.setParameter("email", email);
         List <Datosusuario> lista = (List)q.getResultList();
-        return lista.get(0) != null;
+        return !lista.isEmpty();
     }
 }

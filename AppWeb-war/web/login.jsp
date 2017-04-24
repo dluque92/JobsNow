@@ -8,7 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    Datosusuario usuario = (Datosusuario) request.getAttribute("usuario");
+    Float accedido = (Float) request.getAttribute("accedido");
+    Datosusuario usuario = (Datosusuario) request.getAttribute("usuario");  
 %>
 <html>
     
@@ -25,7 +26,7 @@
     </head>
     <body>
         <%
-        if (usuario == null){
+        if (usuario == null &&accedido!=null&& accedido==1){
         %>
         <script>
             alert("Usuario o contraseña incorrecto");
@@ -57,12 +58,13 @@
                         <div class="col-md-7" style="border-left:1px solid #ccc;height:160px">
                             <form class="form-horizontal" action="ServletLogin" method="post">
                                 <fieldset>
-                                    <input id="textinput" name="email" type="text" placeholder="Enter User Name" class="form-control input-md">
+                                    <input id="email" name="email" type="text" placeholder="Enter User Name" class="form-control input-md">
                                     <div class="spacing"><input type="checkbox" name="checkboxes" id="checkboxes-0" value="1"><small> Remember me</small></div>
-                                    <input id="textinput" name="password" type="text" placeholder="Enter Password" class="form-control input-md">
+                                    <input id="password" name="password" type="password" placeholder="Enter Password" class="form-control input-md">
                                     <div class="spacing"><a href="#"><small> Forgot Password?</small></a><br/></div>
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right">Sign In</button>
-                                </fieldset>
+                                    <input type="submit" id="singlebutton" name="singlebutton" value="Sign In" class="btn btn-info btn-sm pull-right">
+                                    <a href="registrar.jsp" target="_self"> <input type="button" name="boton" value="Register" class="btn btn-default btn-sm pull-left"/> </a>
+                                    </fieldset>
                             </form>
                         </div>
 
@@ -76,3 +78,5 @@
         </div>
     </body>
 </html>
+
+

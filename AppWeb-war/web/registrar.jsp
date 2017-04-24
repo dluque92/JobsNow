@@ -35,7 +35,7 @@
 
                     <div class="row">
                         <div class="col-md-7" style="border-left:1px solid #ccc;height:660px">
-                            <form class="form-horizontal" action="ServletLogin" method="post">
+                            <form class="form-horizontal" action="ServletRegistrar" method="post">
                                 <fieldset>
                                     <div class="spacing"><small>Nombre</small></div>
                                     <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control input-md" required="true">
@@ -54,7 +54,7 @@
                                     <div class="spacing"><small>Página Web</small></div>
                                     <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md">
                                     <div class="spacing"><small>Foto</small></div>
-                                    <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" required="true">
+                                    <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md">
                                     <div class="spacing"></div>
                                     <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right">Registrarse</button>
                                 </fieldset>

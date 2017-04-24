@@ -1,17 +1,15 @@
-package appweb.servlet;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package appweb.servlet;
 
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Datosusuario;
+import appweb.ejb.AficionFacade;
+import appweb.entity.Aficion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,14 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Adrián
+ * @author Daniel
  */
-@WebServlet(urlPatterns = {"/ServletLogin"})
-public class ServletLogin extends HttpServlet {
+@WebServlet(name = "ServletBorrarAficion", urlPatterns = {"/ServletBorrarAficion"})
+public class ServletBorrarAficion extends HttpServlet {
 
     @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+    private AficionFacade aficionFacade;
 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,21 +38,12 @@ public class ServletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = (String) request.getParameter("email");
-        String pass = (String) request.getParameter("password");
-        
-        Datosusuario d = this.datosusuarioFacade.obtenerUsuario(email, pass);
-        
-        request.setAttribute("usuario", d);
-        request.setAttribute("accedido",(float) 1.0);
-        RequestDispatcher rd;
-        if (d != null){
-            rd = this.getServletContext().getRequestDispatcher("/index.html");
-        } else {
-            rd = this.getServletContext().getRequestDispatcher("/login.jsp");
-        }
-        rd.forward(request,response);
-        
+        Aficion aficion;
+        String aficionID;
+        aficionID = request.getParameter("id");
+        aficion = this.aficionFacade.find(new Integer(aficionID));
+        this.aficionFacade.remove(aficion);
+        response.sendRedirect("ServletListarDatos");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,13 +1,12 @@
-package appweb.servlet;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package appweb.servlet;
 
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Datosusuario;
+import appweb.ejb.AficionFacade;
+import appweb.entity.Aficion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -20,14 +19,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Adrián
+ * @author Daniel
  */
-@WebServlet(urlPatterns = {"/ServletLogin"})
-public class ServletLogin extends HttpServlet {
+@WebServlet(name = "ServletEditarAficion", urlPatterns = {"/ServletEditarAficion"})
+public class ServletEditarAficion extends HttpServlet {
 
     @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+    private AficionFacade aficionFacade;
 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,21 +39,16 @@ public class ServletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = (String) request.getParameter("email");
-        String pass = (String) request.getParameter("password");
+        Aficion aficion;
+        String aficionID;
         
-        Datosusuario d = this.datosusuarioFacade.obtenerUsuario(email, pass);
+        aficionID = request.getParameter("id");
+        aficion = this.aficionFacade.find(new Integer(aficionID));
         
-        request.setAttribute("usuario", d);
-        request.setAttribute("accedido",(float) 1.0);
+        request.setAttribute("aficion", aficion);
+        
         RequestDispatcher rd;
-        if (d != null){
-            rd = this.getServletContext().getRequestDispatcher("/index.html");
-        } else {
-            rd = this.getServletContext().getRequestDispatcher("/login.jsp");
-        }
-        rd.forward(request,response);
-        
+        rd = this.getServletContext().getRequestDispatcher("/editar.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

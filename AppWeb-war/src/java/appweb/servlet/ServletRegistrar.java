@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +39,7 @@ public class ServletRegistrar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Datosusuario datosUsuario;
+        
         String nombre = request.getParameter("nombre");//obligatorio
         String apellidos = request.getParameter("apellidos");//obligatorio
         String email = request.getParameter("email");//obligatorio
@@ -51,26 +53,27 @@ public class ServletRegistrar extends HttpServlet {
             //mandar alerta
         } else {
         
-        datosUsuario = new Datosusuario();
-        Integer clave = this.datosusuarioFacade.obtenerProximoValorIdUsuario();
-        datosUsuario.setId(BigDecimal.valueOf(clave));
-        datosUsuario.setNombre(nombre);
-        datosUsuario.setApellidos(apellidos);
-        datosUsuario.setPassword(password);
-        if(twitter != null || !twitter.isEmpty()){
+        datosUsuario = new Datosusuario(new BigDecimal(3),email,password,nombre,apellidos);
+        //Integer clave = this.datosusuarioFacade.obtenerProximoValorIdUsuario();
+       
+        if(twitter != null){
             datosUsuario.setTwitter(twitter);
         }
-        if(instagram != null || !instagram.isEmpty()){
+        if(instagram != null){
             datosUsuario.setInstagram(instagram);
         }
-        if(web != null || !web.isEmpty()){
+        if(web != null){
             datosUsuario.setWeb(web);
         }
-        if(foto != null || !foto.isEmpty()){
+        if(foto != null){
             datosUsuario.setFoto(foto);
         }
         
-        response.sendRedirect("ServletLogin");
+        this.datosusuarioFacade.create(datosUsuario);
+        
+        RequestDispatcher rd;
+        rd = this.getServletContext().getRequestDispatcher("/login.jsp");
+        rd.forward(request,response);
        
         }
     }
