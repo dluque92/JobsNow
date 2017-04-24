@@ -8,8 +8,6 @@ package appweb.servlet;
 import appweb.ejb.DatosusuarioFacade;
 import appweb.entity.Datosusuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,17 +42,27 @@ public class ServletRegistrar extends HttpServlet {
         String apellidos = request.getParameter("apellidos");//obligatorio
         String email = request.getParameter("email");//obligatorio
         String password = request.getParameter("password");//obligatorio
+        String password2 = request.getParameter("password2");//obligatorio
         String twitter = request.getParameter("twitter");
         String instagram = request.getParameter("instagram");
         String web = request.getParameter("web");
         String foto = request.getParameter("foto");//serializable??
         
-        if(this.datosusuarioFacade.emailUsado(email)){
-            //mandar alerta
-        } else {
         
-        datosUsuario = new Datosusuario(new BigDecimal(3),email,password,nombre,apellidos);
-        //Integer clave = this.datosusuarioFacade.obtenerProximoValorIdUsuario();
+        if(this.datosusuarioFacade.emailUsado(email)){
+            Boolean emailusado = true;
+            request.setAttribute("emailusado", emailusado);
+        }
+        if (!password.equals(password2)){
+            Boolean pass = true;
+            request.setAttribute("pass", pass);
+        }
+        if(this.datosusuarioFacade.emailUsado(email) || !password.equals(password2)){
+            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/registrar.jsp");
+            rd.forward(request, response);
+        } 
+        
+        datosUsuario = this.datosusuarioFacade.crearUsuario(email,password,nombre,apellidos);
        
         if(twitter != null){
             datosUsuario.setTwitter(twitter);
@@ -74,8 +82,6 @@ public class ServletRegistrar extends HttpServlet {
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/login.jsp");
         rd.forward(request,response);
-       
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

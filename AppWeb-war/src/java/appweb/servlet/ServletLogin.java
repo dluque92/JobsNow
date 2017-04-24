@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,13 +43,14 @@ public class ServletLogin extends HttpServlet {
         String email = (String) request.getParameter("email");
         String pass = (String) request.getParameter("password");
         
-        Datosusuario d = this.datosusuarioFacade.obtenerUsuario(email, pass);
+        Datosusuario usuario = this.datosusuarioFacade.obtenerUsuario(email, pass);
+        HttpSession session = request.getSession();
+        session.setAttribute("usuario", usuario);
         
-        request.setAttribute("usuario", d);
         request.setAttribute("accedido",(float) 1.0);
         RequestDispatcher rd;
-        if (d != null){
-            rd = this.getServletContext().getRequestDispatcher("/index.html");
+        if (usuario != null){
+            rd = this.getServletContext().getRequestDispatcher("/index.jsp");
         } else {
             rd = this.getServletContext().getRequestDispatcher("/login.jsp");
         }

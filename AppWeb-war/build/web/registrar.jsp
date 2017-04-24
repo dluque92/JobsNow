@@ -6,7 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    Boolean emailusado = (Boolean) request.getAttribute("emailusado");
+    Boolean pass = (Boolean) request.getAttribute("pass");
+%> 
 <html>
+    
     <link href='style.css' rel='stylesheet' type='text/css'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,7 +23,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/40f6f1cf0c.js"></script>
     </head>
-    <body>
 
     <body>
         <div class="middlePage" style="margin-top:  0;">
@@ -34,16 +38,39 @@
                 <div class="panel-body">
 
                     <div class="row">
-                        <div class="col-md-7" style="border-left:1px solid #ccc;height:660px">
+                        <div class="col-md-7" style="border-left:1px solid #ccc;<% 
+                            if(emailusado!=null && emailusado){ 
+                                %>
+                                height:715px">
+                                <%  }else{
+                                    %>
+                                    height:660px">
+                                    <% 
+                                    }
+                                %>
                             <form class="form-horizontal" action="ServletRegistrar" method="post">
                                 <fieldset>
                                     <div class="spacing"><small>Nombre</small></div>
                                     <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control input-md" required="true">
                                     <div class="spacing"><small>Apellidos</small></div>
                                     <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos" class="form-control input-md" required="true">
-                                    <div class="spacing"><small>Email</small></div>
+                                    <div class="spacing"><small>Email</small></div><%
+                                        if(emailusado!=null && emailusado){
+                                    %>   
+                                    <p style="color: red"><small>Email ya esta en uso</small></p>
+                                    <%
+                                        }
+                                    %>
+                                    
                                     <input id="email" name="email" type="text" placeholder="Email" class="form-control input-md" required="true">
                                     <div class="spacing"><small>Contraseña</small></div>
+                                    <%
+                                        if(pass !=null && pass){
+                                    %>   
+                                    <p style="color: red"><small>Contraseña no coincide</small></p>
+                                    <%
+                                        }
+                                    %>
                                     <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md" required="true">
                                     <div class="spacing"><small>Repetir Contraseña</small></div>
                                     <input id="password2" name="password2" type="password" placeholder="Password" class="form-control input-md" required="true">
