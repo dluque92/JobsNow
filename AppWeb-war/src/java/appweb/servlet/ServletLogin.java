@@ -9,7 +9,6 @@ package appweb.servlet;
 import appweb.ejb.DatosusuarioFacade;
 import appweb.entity.Datosusuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
