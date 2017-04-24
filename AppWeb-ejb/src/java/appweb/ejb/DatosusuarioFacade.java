@@ -43,6 +43,10 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
             return null;
         }
     }
+    /*
+    COMENTARIO DE PRUEBA PARA JOHN
+    ¿LO VES O QUE?
+    */
     
     public Integer obtenerProximoValorIdUsuario (  ){
         Query q;
