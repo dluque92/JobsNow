@@ -43,7 +43,7 @@
     <body>
 
     <body>
-        <div class="middlePage" style="margin-top:  0;">
+        <div class="middlePage" style="margin-top:  0; width: 700px">
             <div class="page-header">
                 <h1 class="logo">JobsNow <small>Welcome to our place!</small></h1>
 
@@ -102,6 +102,10 @@
                                     %>
                                     <input id="twitter" name="twitter" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getTwitter()%>">
                                     <%
+                                        }else{
+                                    %>
+                                    <input id="twitter" name="twitter" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="">
+                                    <%
                                         }
                                     %>
                                     <div class="spacing"><small>Instagram</small></div>
@@ -109,6 +113,10 @@
                                         if (contacto.getInstagram() != null) {
                                     %>
                                     <input id="instagram" name="instagram" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getInstagram()%>">
+                                    <%
+                                        }else{
+                                    %>
+                                    <input id="instagram" name="instagram" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="">
                                     <%
                                         }
                                     %>
@@ -118,6 +126,10 @@
                                     %>
                                     <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md" value="<%=contacto.getWeb()%>">
                                     <%
+                                        }else{
+                                    %>
+                                    <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md" value="">
+                                    <%
                                         }
                                     %>
                                     <div class="spacing"><small>Foto</small></div>
@@ -126,6 +138,10 @@
                                     %>
 
                                     <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="<%=contacto.getFoto()%>">
+                                    <%
+                                        }else{
+                                    %>
+                                    <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="">
                                     <%
                                         }
                                     %>
@@ -159,6 +175,13 @@
                                                     }
                                                 }
                                             %>
+                                            <tr>
+                                                <td style="width:150px;"><input type="date" style="width:120px;"></td>
+                                                <td style="width:150px;"><input type="date" style="width:120px;"></td>
+                                                <td style="width:150px;"><input type="text" style="width:120px;"></td>
+                                                <td style="width:150px;"><input type="text" style="width:120px;"></td>
+                                                <td ><a href=""><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></a></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                     <div class="spacing"><small>Experiencia</small></div>
@@ -170,11 +193,11 @@
                                                 if (experiencias != null) {
                                             %>
                                             <tr>
-                                                <th style="width:150px;">Comienzo</th>
-                                                <th style="width:150px;">Finalizacion</th>
-                                                <th style="width:150px;">Empresa</th>
-                                                <th style="width:150px;">Web Empresa</th>  
-                                                <th style="width:150px;">Puesto</th>
+                                                <th style="width:100px;">Comienzo</th>
+                                                <th style="width:100px;">Finalizacion</th>
+                                                <th style="width:100px;">Empresa</th>
+                                                <th style="width:100px;">Web Empresa</th>  
+                                                <th style="width:100px;">Puesto</th>
                                             </tr>
                                             </thead>
                                             <%
@@ -182,11 +205,11 @@
                                                         : experiencias) {
                                             %>
                                             <tr>
-                                                <td style="width:150px;"><%=experiencia.getFechaComienzo()%></td>
-                                                <td style="width:150px;"><%=experiencia.getFechaFinalizacion()%></td>
-                                                <td style="width:150px;"><%=experiencia.getEmpresa()%></td>
-                                                <td style="width:150px;"><%=experiencia.getWebEmpresa()%></td>
-                                                <td style="width:150px;"><%=experiencia.getPuesto()%></td>
+                                                <td style="width:100px;"><%=experiencia.getFechaComienzo()%></td>
+                                                <td style="width:100px;"><%=experiencia.getFechaFinalizacion()%></td>
+                                                <td style="width:100px;"><%=experiencia.getEmpresa()%></td>
+                                                <td style="width:100px;"><%=experiencia.getWebEmpresa()%></td>
+                                                <td style="width:100px;"><%=experiencia.getPuesto()%></td>
                                                 <td><a href="ServletEditarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
                                                 <td><a href="ServletBorrarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                             </tr>
@@ -194,6 +217,14 @@
                                                     }
                                                 }
                                             %>
+                                            <tr>
+                                                <td style="width:100px;"><input type="date" style="width:100px;"></td>
+                                                <td style="width:100px;"><input type="date" style="width:100px;"></td>
+                                                <td style="width:100px;"><input type="text" style="width:100px;"></td>
+                                                <td style="width:100px;"><input type="text" style="width:100px;"></td>
+                                                <td style="width:100px;"><input type="text" style="width:100px;"></td>
+                                                <td ><a href=""><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></a></td>
+                                            </tr>
                                         </tbody>
                                     </table>
 
@@ -230,6 +261,13 @@
                                                     }
                                                 }
                                             %>
+                                            <tr>
+                                                <td style="width:150px;"><input type="text" style="width:100px;"></td>
+                                                <td style="width:150px;"></td>
+                                                <td style="width:150px;"></td>
+                                                <td style="width:150px;"></td>
+                                                <td ><a href=""><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></a></td>
+                                            </tr>
                                         </tbody>
                                     </table>
 
