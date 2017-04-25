@@ -34,7 +34,7 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
     
     public Datosusuario obtenerUsuario(String email, String pass){
         Query q;
-        q = this.em.createQuery("select d from Datosusuario d where d.email = :email and d.password = :pass ");
+        q = this.em.createQuery("select d from Datosusuario d where UPPER(d.email) = UPPER(:email) and d.password = :pass ");
         q.setParameter("email", email);
         q.setParameter("pass", pass);
         List <Datosusuario> lista = (List)q.getResultList();
@@ -47,7 +47,7 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
   
     public Boolean emailUsado(String email){
         Query q;
-        q = this.em.createQuery("select d from Datosusuario d where d.email = :email ");
+        q = this.em.createQuery("select d from Datosusuario d where UPPER(d.email) = UPPER(:email) ");
         q.setParameter("email", email);
         List <Datosusuario> lista = (List)q.getResultList();
         return !lista.isEmpty();
