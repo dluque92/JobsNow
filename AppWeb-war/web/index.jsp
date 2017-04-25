@@ -42,6 +42,7 @@
                 background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* IE10 */
                 background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
                 background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
+                padding-top: 60px; /* ESTO LO PIDE LA PAGINA WEB DE BOOTSTRAP */
             }
             .jumbotron{
                 margin: 1em;
@@ -100,6 +101,32 @@
         </style>
     </head>
     <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top  navbar-static-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="bandejaentrada.jsp"><i class="fa fa-envelope"></i></a></li>
+                        <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <div class="jumbotron vertical-center">
                 <%
@@ -123,19 +150,17 @@
                         if (usuario.getInstagram() != null) {
                     %>
                     <a href="<%= usuario.getInstagram()%>"><i class="fa fa-instagram fa-lg"></i></a>
-                        <%
-                            }
-                        %>
-                        <%
-                            if (usuario.getWeb() != null) {
-                        %>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (usuario.getWeb() != null) {
+                    %>
                     <a href="<%= usuario.getWeb()%>"><i class="fa fa-link fa-lg"></i></a>
-                        <%
-                            }
-                        %>
+                    <%
+                        }
+                    %>
                 </div>
-                <a class="btn btn-success pull-right" href="bandejaentrada.jsp"><i class="fa fa-envelope"></i> Bandeja Entrada</a>
-                <!--HAY QUE PONERLO CON UN BOTON COMO EL DE TWITTER -->
 
                 <br/>
 
