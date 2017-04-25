@@ -39,7 +39,7 @@
 
                     <div class="row">
                         <div class="col-md-7" style="border-left:1px solid #ccc;<% 
-                            if(emailusado!=null && emailusado){ 
+                            if(emailusado!=null && emailusado || pass != null && pass){ 
                                 %>
                                 height:715px">
                                 <%  }else{
@@ -79,7 +79,7 @@
                                     <div class="spacing"><small>Instagram</small></div>
                                     <input id="instagram" name="instagram" type="text" placeholder="@NombreUsuario" class="form-control input-md">
                                     <div class="spacing"><small>Página Web</small></div>
-                                    <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md">
+                                    <input id="web" name="web" type="text" placeholder="www.tuweb.com" class="form-control input-md">
                                     <div class="spacing"><small>Foto</small></div>
                                     <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md">
                                     <div class="spacing"></div>

@@ -14,11 +14,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,18 +43,17 @@ public class ServletListarDatos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Datosusuario usuario = (Datosusuario) request.getAttribute("usuario");
-        Datosusuario usuarioalistar = (Datosusuario) request.getAttribute("usuarioalistar");
         
+        HttpSession session = request.getSession();
+        Datosusuario usuario = (Datosusuario) session.getAttribute("usuario");
         
-        if(usuarioalistar==null){
-            request.setAttribute("usuario", usuario);
-        }else{
-            Boolean amigos = false;//COMPROBAR SI SON AMIGOS PARA PONER UN BOTON U OTRO
-            request.setAttribute("usuario", usuarioalistar);
-        }
+        request.setAttribute("listaExperiencias", usuario.getExperienciaCollection());
+        request.setAttribute("listaAficiones", usuario.getAficionCollection());
+        request.setAttribute("listaEstudios", usuario.getEstudioCollection());
         
-        
+        RequestDispatcher rd;
+        rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+        rd.forward(request,response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -22,9 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletRegistrar", urlPatterns = {"/ServletRegistrar"})
 public class ServletRegistrar extends HttpServlet {
-    
+
     @EJB
     private DatosusuarioFacade datosusuarioFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +38,7 @@ public class ServletRegistrar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Datosusuario datosUsuario;
-        
+
         String nombre = request.getParameter("nombre");//obligatorio
         String apellidos = request.getParameter("apellidos");//obligatorio
         String email = request.getParameter("email");//obligatorio
@@ -47,41 +48,41 @@ public class ServletRegistrar extends HttpServlet {
         String instagram = request.getParameter("instagram");
         String web = request.getParameter("web");
         String foto = request.getParameter("foto");//serializable??
-        
-        
-        if(this.datosusuarioFacade.emailUsado(email)){
+
+        if (this.datosusuarioFacade.emailUsado(email)) {
             Boolean emailusado = true;
             request.setAttribute("emailusado", emailusado);
         }
-        if (!password.equals(password2)){
+        if (!password.equals(password2)) {
             Boolean pass = true;
             request.setAttribute("pass", pass);
         }
-        if(this.datosusuarioFacade.emailUsado(email) || !password.equals(password2)){
+        if (this.datosusuarioFacade.emailUsado(email) || !password.equals(password2)) {
             RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/registrar.jsp");
             rd.forward(request, response);
-        } 
-        
-        datosUsuario = this.datosusuarioFacade.crearUsuario(email,password,nombre,apellidos);
-       
-        if(twitter != null){
-            datosUsuario.setTwitter(twitter);
+        } else {
+
+            datosUsuario = this.datosusuarioFacade.crearUsuario(email, password, nombre, apellidos);
+
+            if (twitter != null) {
+                datosUsuario.setTwitter(twitter);
+            }
+            if (instagram != null) {
+                datosUsuario.setInstagram(instagram);
+            }
+            if (web != null) {
+                datosUsuario.setWeb(web);
+            }
+            if (foto != null) {
+                datosUsuario.setFoto(foto);
+            }
+
+            this.datosusuarioFacade.create(datosUsuario);
+
+            RequestDispatcher rd;
+            rd = this.getServletContext().getRequestDispatcher("/login.jsp");
+            rd.forward(request, response);
         }
-        if(instagram != null){
-            datosUsuario.setInstagram(instagram);
-        }
-        if(web != null){
-            datosUsuario.setWeb(web);
-        }
-        if(foto != null){
-            datosUsuario.setFoto(foto);
-        }
-        
-        this.datosusuarioFacade.create(datosUsuario);
-        
-        RequestDispatcher rd;
-        rd = this.getServletContext().getRequestDispatcher("/login.jsp");
-        rd.forward(request,response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

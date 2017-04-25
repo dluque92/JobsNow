@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/adri_/Google%20Drive/UMA/Tercer%20Curso/Segundo%20Cuatrimestre/Tecnologias%20de%20aplicaciones%20web/Trabajo/AppWeb/AppWeb-ejb/src/java/appweb/entity/Aficion.java</file>
+            <file>file:/C:/Users/adri_/Google%20Drive/UMA/Tercer%20Curso/Segundo%20Cuatrimestre/Tecnologias%20de%20aplicaciones%20web/Trabajo/AppWeb/AppWeb-ejb/src/java/appweb/ejb/AbstractFacade.java</file>
+            <file>file:/C:/Users/adri_/Google%20Drive/UMA/Tercer%20Curso/Segundo%20Cuatrimestre/Tecnologias%20de%20aplicaciones%20web/Trabajo/AppWeb/AppWeb-ejb/src/java/appweb/ejb/AficionFacade.java</file>
+            <file>file:/C:/Users/adri_/Google%20Drive/UMA/Tercer%20Curso/Segundo%20Cuatrimestre/Tecnologias%20de%20aplicaciones%20web/Trabajo/AppWeb/AppWeb-ejb/src/java/appweb/ejb/MensajeFacade.java</file>
+            <file>file:/C:/Users/adri_/Google%20Drive/UMA/Tercer%20Curso/Segundo%20Cuatrimestre/Tecnologias%20de%20aplicaciones%20web/Trabajo/AppWeb/AppWeb-ejb/src/java/appweb/ejb/DatosusuarioFacade.java</file>
+        </group>
     </open-files>
 </project-private>

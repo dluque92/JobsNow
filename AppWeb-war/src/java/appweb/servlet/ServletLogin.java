@@ -49,7 +49,8 @@ public class ServletLogin extends HttpServlet {
         request.setAttribute("accedido",(float) 1.0);
         RequestDispatcher rd;
         if (usuario != null){
-            rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+            //rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+            rd = this.getServletContext().getRequestDispatcher("/ServletListarDatos");
         } else {
             rd = this.getServletContext().getRequestDispatcher("/login.jsp");
         }

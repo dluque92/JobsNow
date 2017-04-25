@@ -4,15 +4,226 @@
     Author     : adri_
 --%>
 
+<%@page import="appweb.entity.Estudio"%>
+<%@page import="appweb.entity.Aficion"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="appweb.entity.Experiencia"%>
+<%@page import="appweb.entity.Datosusuario"%>
+<%
+    Datosusuario usuario = (Datosusuario) session.getAttribute("usuario");
+    List<Experiencia> listaExperiencias = (List<Experiencia>) request.getAttribute("listaExperiencias");
+    List<Aficion> listaAficiones = (List<Aficion>) request.getAttribute("listaAficiones");
+    List<Estudio> listaEstudios = (List<Estudio>) request.getAttribute("listaEstudios");
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%= usuario.getNombre() + " " + usuario.getApellidos()%></title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <!-- Icons -->
+        <script src="https://use.fontawesome.com/0e798431ad.js"></script>
+
+        <style>
+            /* Para el fondo del body */
+            body {
+                background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Chrome 10+, Saf5.1+ */
+                background:    -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* FF3.6+ */
+                background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* IE10 */
+                background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
+                background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
+            }
+            .jumbotron{
+                margin: 1em;
+            }
+            .btn{
+                margin: 0.2em;
+            }
+            h1 { 
+                color: #16222A;
+                font-size: 4em; 
+                font-weight: 800; 
+                line-height: 72px; 
+                margin: 0 0 24px; 
+                text-align: center; 
+                text-transform: uppercase; 
+            }
+            h3 { 
+                color: #16222A;
+                font-size: 2em; 
+                font-weight: 600; 
+                line-height: 72px;
+                text-transform: uppercase; 
+            }
+            /* Codigo para los social links */
+            .social-links a{
+                text-align:center;
+                float: left;
+                width: 36px;
+                height: 36px;
+                border: 2px solid #909090;
+                border-radius: 100%;
+                margin-right: 7px; /*space between*/
+                display: flex;
+                align-items: flex-start;
+                transition: all 0.4s;
+                -webkit-transition: all 0.4s;
+            } 
+            .social-links a i{
+                font-size: 20px;
+                align-self:center;
+                color: #909090;
+                transition: all 0.4s;
+                -webkit-transition: all 0.4s;
+                margin: 0 auto;
+            }
+            .social-links a i::before{
+                display:inline-block;
+                text-decoration:none;
+            }
+            .social-links a:hover{
+                background: rgba(0,0,0,0.2);
+            }
+            .social-links a:hover i{
+                color:#fff;
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <a href="bandejaentrada.jsp"> Bandeja de Entrada </a>
+        <div class="container">
+            <div class="jumbotron vertical-center">
+                <%
+                    if (usuario.getNombre() != null || usuario.getApellidos() != null) {
+                %>
+                <h1><%= usuario.getNombre() + " " + usuario.getApellidos()%></h1>
+                <%
+                    }
+                %>
+
+                <div class="social-links">
+                    <%
+                        if (usuario.getTwitter() != null) {
+                    %>
+                    <a href="<%= usuario.getTwitter()%>"><i class="fa fa-twitter fa-lg"></i></a>
+                        <%
+                            }
+                        %>
+
+                    <%
+                        if (usuario.getInstagram() != null) {
+                    %>
+                    <a href="<%= usuario.getInstagram()%>"><i class="fa fa-instagram fa-lg"></i></a>
+                        <%
+                            }
+                        %>
+                        <%
+                            if (usuario.getWeb() != null) {
+                        %>
+                    <a href="<%= usuario.getWeb()%>"><i class="fa fa-link fa-lg"></i></a>
+                        <%
+                            }
+                        %>
+                </div>
+                <a class="btn btn-success pull-right" href="bandejaentrada.jsp"><i class="fa fa-envelope"></i> Bandeja Entrada</a>
+                <!--HAY QUE PONERLO CON UN BOTON COMO EL DE TWITTER -->
+
+                <br/>
+
+
+                <h3>Experiencia</h3>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Fecha Comienza</th>
+                            <th>Fecha Finalizaci&oacute;n</th>
+                            <th>Empresa</th>
+                            <th>Web Empresa</th>
+                            <th>Puesto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            if (listaExperiencias != null && !listaExperiencias.isEmpty()) {
+                                for (Experiencia experiencia : listaExperiencias) {
+                        %>
+                        <tr>
+                            <td><%=experiencia.getFechaComienzo().toString()%></td>
+                            <td><%=experiencia.getFechaFinalizacion().toString()%></td>
+                            <td><%=experiencia.getEmpresa()%></td>
+                            <td><%=experiencia.getWebEmpresa()%></td>
+                            <td><%=experiencia.getPuesto()%></td>
+                        </tr>
+                        <%
+                                }
+                            }
+                        %>
+                    </tbody>
+                </table>
+
+
+
+
+                <h3>Aficiones</h3>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            if (listaAficiones != null && !listaAficiones.isEmpty()) {
+                                for (Aficion aficion : listaAficiones) {
+                        %>
+                        <tr>
+                            <td><%=aficion.getNombre()%></td>
+                        </tr>
+                        <%
+                                }
+                            }
+                        %>
+                    </tbody>
+                </table>
+
+                <h3>Estudios</h3>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Fecha Comienzo</th>
+                            <th>Fecha de Finalizaci&oacute;n</th>
+                            <th>Descripci&oacute;n</th>
+                            <th>Ubicaci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            if (listaEstudios != null && !listaEstudios.isEmpty()) {
+                                for (Estudio estudio : listaEstudios) {
+                        %>
+                        <tr>
+                            <td><%=estudio.getFechaComienzo()%></td>
+                            <td><%=estudio.getFechoFinalizacion()%></td>
+                            <td><%=estudio.getDescripcion()%></td>
+                            <td><%=estudio.getUbicacion()%></td>
+                        </tr>
+                        <%
+                                }
+                            }
+                        %>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </body>
 </html>
