@@ -1,9 +1,10 @@
 <%-- 
     Document   : registrar
     Created on : 21-abr-2017, 10:40:16
-    Author     : david
+    Author     : david?
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="appweb.entity.Aficion"%>
 <%@page import="appweb.entity.Experiencia"%>
 <%@page import="appweb.entity.Estudio"%>
@@ -11,16 +12,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    //Datosusuario contacto = (Datosusuario) request.getAttribute("usuario");
-    //Datos para hacer debugging
-    Datosusuario contacto = new Datosusuario();
-    contacto.setNombre("John Carlo");
-    contacto.setApellidos("Purihin Enriquez");
-    contacto.setTwitter("@JCarlo36");
-    contacto.setInstagram("@JCarlo36Instagram");
-    contacto.setEmail("johncarlo@gmail.com");
-    contacto.setPassword("purihin");
-    contacto.setWeb("johncarlo.com");
+    
+    Datosusuario contacto = (Datosusuario) request.getAttribute("usuario");
+    List<Aficion> aficiones = (List<Aficion>) request.getAttribute("aficiones");
+    List<Experiencia> experiencias = (List<Experiencia>) request.getAttribute("experiencias");
+    List<Estudio> estudios = (List<Estudio>) request.getAttribute("estudios");
 %>
 <html>
     <link href='style.css' rel='stylesheet' type='text/css'>
@@ -61,31 +57,78 @@
 
                     <div class="row">
                         <div class="col-md-7" style="border-left:1px solid #ccc;height:auto; width: 680px">
-                            <form class="form-horizontal" action="ServletLogin" method="post">
+                            <form class="form-horizontal" action="ServletGuardarDatos" method="post">
                                 <fieldset>
                                     <div class="spacing"><small>Nombre</small></div>
+                                    <%
+                    if (contacto.getNombre() != null ) {
+                %>
                                     <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control input-md" value="<%= contacto.getNombre()%>">
+                                    
+                                    <%
+                                        }
+                                        %>
+                                    
                                     <div class="spacing"><small>Apellidos</small></div>
+                                     <%
+                    if (contacto.getApellidos() != null ) {
+                %>
                                     <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos" class="form-control input-md" value="<%=contacto.getApellidos()%>">
+                                     <%
+                                        }
+                                        %>
                                     <div class="spacing"><small>Email</small></div>
+                                      <%
+                    if (contacto.getEmail() != null ) {
+                %>
                                     <input id="email" name="email" type="text" placeholder="Email" class="form-control input-md" value="<%=contacto.getEmail()%>">
+                                    <%
+                                        }
+                                        %>
                                     <div class="spacing"><small>Contraseña Actual</small></div>
+                                      <%
+                    if (contacto.getPassword()!= null ) {
+                %>
                                     <input id="password" name="password" type="password" placeholder="Contrasela actual" class="form-control input-md" value="">
+                                    <%
+                                        }
+                                        %>
                                     <div class="spacing"><small>Nueva Contraseña</small></div>
                                     <input id="password2" name="password2" type="password2" placeholder="Nueva contraseña" class="form-control input-md">
                                     <input id="password3" name="password3" type="password3" placeholder="Repetir contraseña" class="form-control input-md">
                                     <div class="spacing"><small>Twitter</small></div>
+                                     <%
+                    if (contacto.getTwitter()!= null ) {
+                %>
                                     <input id="twitter" name="twitter" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getTwitter()%>">
+                                     <%
+                                        }
+                                        %>
                                     <div class="spacing"><small>Instagram</small></div>
+                                                 <%
+                    if (contacto.getInstagram()!= null ) {
+                %>
                                     <input id="instagram" name="instagram" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getInstagram()%>">
+                                      <%
+                                        }
+                                        %>
                                     <div class="spacing"><small>Página Web</small></div>
+                                      <%
+                    if (contacto.getWeb()!= null ) {
+                %>
                                     <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md" value="<%=contacto.getWeb()%>">
+                                     <%
+                                        }
+                                        %>
                                     <div class="spacing"><small>Foto</small></div>
-                                    <%
-                                        //PARA HACER PRUEBA<--------------OJOOOOOOOOOOOOOOOOOOOOOOOOOO
-                                        if(1==0){
-                                    %>
+                                   <%
+                    if (contacto.getFoto()!= null ) {
+                %>
+                                    
                                     <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="<%=contacto.getFoto()%>">
+                                     <%
+                                        }
+                                        %>
                                     <div class="spacing"><small>Estudios</small></div>
                                     <table class="table table-striped">
                                         <thead>
@@ -98,6 +141,7 @@
                                         </thead>
                                         <tbody>
                                             <%
+                                                  if(request.getAttribute("estudios") != null){
                                                 for (Estudio estudio : contacto.getEstudioCollection()) {
                                             %>
                                             <tr>
@@ -109,6 +153,7 @@
                                                 <td><a href="BorrarEstudio?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                             </tr>
                                             <%
+                                                 }
                                                 }
                                             %>
                                         </tbody>
@@ -117,6 +162,7 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <%
+                                                if(request.getAttribute("experiencia") != null){
                                                 for (Experiencia experiencia
 
                                                 : contacto.getExperienciaCollection () 
@@ -142,6 +188,7 @@
                                             </tr>
                                             <%
                                                 }
+                                               }
                                             %>
                                         </tbody>
                                     </table>
@@ -150,6 +197,7 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <%
+                                                if(request.getAttribute("estudios") != null){
                                                 for (Aficion aficion
 
                                                 : contacto.getAficionCollection () 
@@ -174,14 +222,13 @@
                                             </tr>
                                             <%
                                                 }
+                                                }
                                             %>
                                         </tbody>
                                     </table>
-                                            <%
-                                                }//END DEL IF(1==0) <-------------------------------------OJOOOOOOOOOOOOOOOOOOOOOO
-                                            %>
+                                            
                                     <div class="spacing"></div>
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right" value="<%=contacto.getId()%>">Guardar cambios</button>
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right" value="<%= contacto.getId()%>">Guardar cambios</button>
                                     <button id="singlebutton" name="singlebutton" class="btn btn-default btn-sm pull-right">Cancelar</button>
                                 </fieldset>
                             </form>

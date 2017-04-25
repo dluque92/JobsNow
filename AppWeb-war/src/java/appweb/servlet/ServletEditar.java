@@ -5,16 +5,13 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.DatosusuarioFacade;
 import appweb.entity.Aficion;
 import appweb.entity.Datosusuario;
 import appweb.entity.Estudio;
 import appweb.entity.Experiencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,13 +22,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Adrián
+ * @author Daniel
  */
-@WebServlet(name = "ServletListarDatos", urlPatterns = {"/ServletListarDatos"})
-public class ServletListarDatos extends HttpServlet {
-
-    @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+@WebServlet(name = "ServletEditar", urlPatterns = {"/ServletEditar"})
+public class ServletEditar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,25 +38,22 @@ public class ServletListarDatos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         
-        String stringId = request.getParameter("id");
-        Datosusuario usuario = null;
+          HttpSession sesion = request.getSession();
+        Datosusuario usuario = (Datosusuario) sesion.getAttribute("usuario");
         
-        if(stringId == null || stringId.isEmpty()){
-            HttpSession session = request.getSession();
-            usuario = (Datosusuario) session.getAttribute("usuario");
-        }else{
-            usuario = this.datosusuarioFacade.find(new BigDecimal(stringId));  
-        }
+        List<Aficion> aficiones = (List<Aficion>) usuario.getAficionCollection();
+        List<Experiencia> experiencias = (List<Experiencia>) usuario.getExperienciaCollection();
+        List<Estudio> estudios = (List<Estudio>) usuario.getEstudioCollection();
         
-        request.setAttribute("usuario", usuario);
-        request.setAttribute("listaExperiencias", usuario.getExperienciaCollection());
-        request.setAttribute("listaAficiones", usuario.getAficionCollection());
-        request.setAttribute("listaEstudios", usuario.getEstudioCollection());
+        request.setAttribute("usuario",usuario);
+        request.setAttribute("aficiones", aficiones);
+        request.setAttribute("experiencias", experiencias);
+        request.setAttribute("estudios", estudios);
         
-        RequestDispatcher rd;
-        rd = this.getServletContext().getRequestDispatcher("/index.jsp");
-        rd.forward(request,response);
+        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/editar.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

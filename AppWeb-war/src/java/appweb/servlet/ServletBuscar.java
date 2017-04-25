@@ -1,9 +1,10 @@
+package appweb.servlet;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appweb.servlet;
 
 import appweb.ejb.DatosusuarioFacade;
 import appweb.entity.Aficion;
@@ -12,7 +13,6 @@ import appweb.entity.Estudio;
 import appweb.entity.Experiencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -27,8 +27,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Adrián
  */
-@WebServlet(name = "ServletListarDatos", urlPatterns = {"/ServletListarDatos"})
-public class ServletListarDatos extends HttpServlet {
+@WebServlet(urlPatterns = {"/ServletBuscar"})
+public class ServletBuscar extends HttpServlet {
 
     @EJB
     private DatosusuarioFacade datosusuarioFacade;
@@ -45,24 +45,23 @@ public class ServletListarDatos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String stringId = request.getParameter("id");
-        Datosusuario usuario = null;
+        HttpSession session = request.getSession();
+        Datosusuario usuarioEnSesion = (Datosusuario) session.getAttribute("usuario");
         
-        if(stringId == null || stringId.isEmpty()){
-            HttpSession session = request.getSession();
-            usuario = (Datosusuario) session.getAttribute("usuario");
-        }else{
-            usuario = this.datosusuarioFacade.find(new BigDecimal(stringId));  
-        }
+        List<Datosusuario> listaUsuarios;
+        List<Aficion> listaAficion;
+        List<Estudio> listaEstudio;
+        List<Experiencia> listaExperiencia;
         
-        request.setAttribute("usuario", usuario);
-        request.setAttribute("listaExperiencias", usuario.getExperienciaCollection());
-        request.setAttribute("listaAficiones", usuario.getAficionCollection());
-        request.setAttribute("listaEstudios", usuario.getEstudioCollection());
+        String busqueda = request.getParameter("busqueda");
         
+        listaUsuarios = this.datosusuarioFacade.findByName(busqueda, usuarioEnSesion.getId());
+        
+        request.setAttribute("listaUsuarios", listaUsuarios);
         RequestDispatcher rd;
-        rd = this.getServletContext().getRequestDispatcher("/index.jsp");
-        rd.forward(request,response);
+        rd = this.getServletContext().getRequestDispatcher("/listarBusqueda.jsp");
+        rd.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

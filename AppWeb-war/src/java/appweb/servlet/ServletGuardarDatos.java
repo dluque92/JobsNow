@@ -5,33 +5,21 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Aficion;
-import appweb.entity.Datosusuario;
-import appweb.entity.Estudio;
-import appweb.entity.Experiencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Adrián
+ * @author adri_
  */
-@WebServlet(name = "ServletListarDatos", urlPatterns = {"/ServletListarDatos"})
-public class ServletListarDatos extends HttpServlet {
-
-    @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+@WebServlet(name = "ServletGuardarDatos", urlPatterns = {"/ServletGuardarDatos"})
+public class ServletGuardarDatos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,23 +33,8 @@ public class ServletListarDatos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String stringId = request.getParameter("id");
-        Datosusuario usuario = null;
-        
-        if(stringId == null || stringId.isEmpty()){
-            HttpSession session = request.getSession();
-            usuario = (Datosusuario) session.getAttribute("usuario");
-        }else{
-            usuario = this.datosusuarioFacade.find(new BigDecimal(stringId));  
-        }
-        
-        request.setAttribute("usuario", usuario);
-        request.setAttribute("listaExperiencias", usuario.getExperienciaCollection());
-        request.setAttribute("listaAficiones", usuario.getAficionCollection());
-        request.setAttribute("listaEstudios", usuario.getEstudioCollection());
-        
         RequestDispatcher rd;
-        rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+        rd = this.getServletContext().getRequestDispatcher("/ServletListarDatos");
         rd.forward(request,response);
     }
 

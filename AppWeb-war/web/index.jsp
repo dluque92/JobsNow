@@ -11,7 +11,8 @@
 <%@page import="appweb.entity.Experiencia"%>
 <%@page import="appweb.entity.Datosusuario"%>
 <%
-    Datosusuario usuario = (Datosusuario) session.getAttribute("usuario");
+    Datosusuario usuario = (Datosusuario) request.getAttribute("usuario");
+    Datosusuario usuarioLogueado = (Datosusuario) session.getAttribute("usuario");
     List<Experiencia> listaExperiencias = (List<Experiencia>) request.getAttribute("listaExperiencias");
     List<Aficion> listaAficiones = (List<Aficion>) request.getAttribute("listaAficiones");
     List<Estudio> listaEstudios = (List<Estudio>) request.getAttribute("listaEstudios");
@@ -110,13 +111,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Brand</a>
+                    <a class="navbar-brand" href="ServletListarDatos">Brand</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form class="navbar-form navbar-left">
+                    <form class="navbar-form navbar-left" action="ServletBuscar" method="POST">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
+                            <input type="text" name="busqueda" class="form-control" placeholder="Search">
                         </div>
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
@@ -161,10 +162,15 @@
                         }
                     %>
                 </div>
-
                 <br/>
-
-
+                
+                <%
+                    if(usuarioLogueado.getId().equals(usuario.getId())){
+                %>
+                <a class="btn btn-success pull-right" href="ServletEditar"> Editar Perfil</a>
+                <%
+                    }
+                %>
                 <h3>Experiencia</h3>
                 <table class="table table-responsive">
                     <thead>
