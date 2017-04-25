@@ -6,15 +6,19 @@
 package appweb.servlet;
 
 import appweb.ejb.EstudioFacade;
+import appweb.entity.Datosusuario;
 import appweb.entity.Estudio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,9 +46,17 @@ public class ServletBorrarEstudio extends HttpServlet {
         Estudio estudio;
         String estudioID;
         estudioID = request.getParameter("id");
-        estudio = this.estudioFacade.find(new Integer(estudioID));
+        estudio = this.estudioFacade.find(new BigDecimal(estudioID));
+        
+        HttpSession session = request.getSession();
+        Datosusuario usuario = (Datosusuario)session.getAttribute("usuario");
+        Collection c = usuario.getEstudioCollection();
+        c.remove(estudio);
+        usuario.setEstudioCollection(c);
+        
         this.estudioFacade.remove(estudio);
-        response.sendRedirect("ServletListarDatos");
+        
+        response.sendRedirect("ServletEditar");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

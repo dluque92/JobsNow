@@ -12,7 +12,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    
+
     Datosusuario contacto = (Datosusuario) request.getAttribute("usuario");
     List<Aficion> aficiones = (List<Aficion>) request.getAttribute("aficiones");
     List<Experiencia> experiencias = (List<Experiencia>) request.getAttribute("experiencias");
@@ -61,99 +61,102 @@
                                 <fieldset>
                                     <div class="spacing"><small>Nombre</small></div>
                                     <%
-                    if (contacto.getNombre() != null ) {
-                %>
+                                        if (contacto.getNombre() != null) {
+                                    %>
                                     <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control input-md" value="<%= contacto.getNombre()%>">
-                                    
+
                                     <%
                                         }
-                                        %>
-                                    
+                                    %>
+
                                     <div class="spacing"><small>Apellidos</small></div>
-                                     <%
-                    if (contacto.getApellidos() != null ) {
-                %>
+                                    <%
+                                        if (contacto.getApellidos() != null) {
+                                    %>
                                     <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos" class="form-control input-md" value="<%=contacto.getApellidos()%>">
-                                     <%
+                                    <%
                                         }
-                                        %>
+                                    %>
                                     <div class="spacing"><small>Email</small></div>
-                                      <%
-                    if (contacto.getEmail() != null ) {
-                %>
+                                    <%
+                                        if (contacto.getEmail() != null) {
+                                    %>
                                     <input id="email" name="email" type="text" placeholder="Email" class="form-control input-md" value="<%=contacto.getEmail()%>">
                                     <%
                                         }
-                                        %>
+                                    %>
                                     <div class="spacing"><small>Contraseña Actual</small></div>
-                                      <%
-                    if (contacto.getPassword()!= null ) {
-                %>
+                                    <%
+                                        if (contacto.getPassword() != null) {
+                                    %>
                                     <input id="password" name="password" type="password" placeholder="Contrasela actual" class="form-control input-md" value="">
                                     <%
                                         }
-                                        %>
+                                    %>
                                     <div class="spacing"><small>Nueva Contraseña</small></div>
                                     <input id="password2" name="password2" type="password2" placeholder="Nueva contraseña" class="form-control input-md">
                                     <input id="password3" name="password3" type="password3" placeholder="Repetir contraseña" class="form-control input-md">
                                     <div class="spacing"><small>Twitter</small></div>
-                                     <%
-                    if (contacto.getTwitter()!= null ) {
-                %>
+                                    <%
+                                        if (contacto.getTwitter() != null) {
+                                    %>
                                     <input id="twitter" name="twitter" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getTwitter()%>">
-                                     <%
+                                    <%
                                         }
-                                        %>
+                                    %>
                                     <div class="spacing"><small>Instagram</small></div>
-                                                 <%
-                    if (contacto.getInstagram()!= null ) {
-                %>
+                                    <%
+                                        if (contacto.getInstagram() != null) {
+                                    %>
                                     <input id="instagram" name="instagram" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getInstagram()%>">
-                                      <%
+                                    <%
                                         }
-                                        %>
+                                    %>
                                     <div class="spacing"><small>Página Web</small></div>
-                                      <%
-                    if (contacto.getWeb()!= null ) {
-                %>
+                                    <%
+                                        if (contacto.getWeb() != null) {
+                                    %>
                                     <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md" value="<%=contacto.getWeb()%>">
-                                     <%
+                                    <%
                                         }
-                                        %>
+                                    %>
                                     <div class="spacing"><small>Foto</small></div>
-                                   <%
-                    if (contacto.getFoto()!= null ) {
-                %>
-                                    
+                                    <%
+                                        if (contacto.getFoto() != null) {
+                                    %>
+
                                     <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="<%=contacto.getFoto()%>">
-                                     <%
+                                    <%
                                         }
-                                        %>
+                                    %>
                                     <div class="spacing"><small>Estudios</small></div>
                                     <table class="table table-striped">
                                         <thead>
+
+                                        <tbody>
+                                            <%
+                                                if (estudios != null) {
+                                            %>
                                             <tr>
                                                 <th style="width:150px;">Comienzo</th>
                                                 <th style="width:150px;">Finalizacion</th>
                                                 <th style="width:150px;">Descripcion</th>  
                                                 <th style="width:150px;">Ubicacion</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                            </thead>
                                             <%
-                                                  if(request.getAttribute("estudios") != null){
-                                                for (Estudio estudio : contacto.getEstudioCollection()) {
+                                                for (Estudio estudio : estudios) {
                                             %>
                                             <tr>
                                                 <td style="width:150px;"><%=estudio.getFechaComienzo()%></td>
-                                                <td style="width:150px;"><%=estudio.getFechoFinalizacion() %></td>
+                                                <td style="width:150px;"><%=estudio.getFechoFinalizacion()%></td>
                                                 <td style="width:150px;"><%=estudio.getDescripcion()%></td>
                                                 <td style="width:150px;"><%=estudio.getUbicacion()%></td>  
-                                                <td ><a href="EditarEstudio?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                                <td><a href="BorrarEstudio?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                                <td ><a href="ServletEditarEstudio?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                                <td><a href="ServletBorrarEstudio?id=<%= estudio.getIdEstudios()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                             </tr>
                                             <%
-                                                 }
+                                                    }
                                                 }
                                             %>
                                         </tbody>
@@ -161,12 +164,10 @@
                                     <div class="spacing"><small>Experiencia</small></div>
                                     <table class="table table-striped">
                                         <thead>
-                                            <%
-                                                if(request.getAttribute("experiencia") != null){
-                                                for (Experiencia experiencia
 
-                                                : contacto.getExperienciaCollection () 
-                                                    ) {
+                                        <tbody>
+                                            <%
+                                                if (experiencias != null) {
                                             %>
                                             <tr>
                                                 <th style="width:150px;">Comienzo</th>
@@ -175,20 +176,23 @@
                                                 <th style="width:150px;">Web Empresa</th>  
                                                 <th style="width:150px;">Puesto</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                            </thead>
+                                            <%
+                                                for (Experiencia experiencia
+                                                        : experiencias) {
+                                            %>
                                             <tr>
                                                 <td style="width:150px;"><%=experiencia.getFechaComienzo()%></td>
                                                 <td style="width:150px;"><%=experiencia.getFechaFinalizacion()%></td>
                                                 <td style="width:150px;"><%=experiencia.getEmpresa()%></td>
                                                 <td style="width:150px;"><%=experiencia.getWebEmpresa()%></td>
                                                 <td style="width:150px;"><%=experiencia.getPuesto()%></td>
-                                                <td><a href="EditarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                                <td><a href="BorrarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                                <td><a href="ServletEditarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                                <td><a href="ServletBorrarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                             </tr>
                                             <%
+                                                    }
                                                 }
-                                               }
                                             %>
                                         </tbody>
                                     </table>
@@ -197,11 +201,7 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <%
-                                                if(request.getAttribute("estudios") != null){
-                                                for (Aficion aficion
-
-                                                : contacto.getAficionCollection () 
-                                                    ) {
+                                                if (aficiones != null) {
                                             %>
                                             <tr>
                                                 <th style="width:150px;">Nombre</th>
@@ -211,26 +211,34 @@
 
                                             </tr>
                                         </thead>
+                                        <%
+                                            for (Aficion aficion
+                                                    : aficiones) {
+                                        %>
+
+
                                         <tbody >
                                             <tr >
                                                 <td style="width:150px;"><%= aficion.getNombre()%></td>
                                                 <td style="width:150px;"></td>
                                                 <td style="width:150px;"></td>
                                                 <td style="width:150px;"></td>
-                                                <td><a href="EditarAficion?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                                <td><a href="BorrarAficion?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td>
+                                                <td><a href="ServletEditarAficion?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                                <td><a href="ServletBorrarAficion?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td>
                                             </tr>
                                             <%
-                                                }
+                                                    }
                                                 }
                                             %>
                                         </tbody>
                                     </table>
-                                            
+
                                     <div class="spacing"></div>
                                     <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right" value="<%= contacto.getId()%>">Guardar cambios</button>
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-default btn-sm pull-right">Cancelar</button>
                                 </fieldset>
+                            </form>
+                            <form action="ServletListarDatos" style="margin-bottom: 10px;">
+                                <button id="singlebutton" name="singlebutton" class="btn btn-default btn-sm pull-left">Cancelar</button>                      
                             </form>
                         </div>
                     </div>
