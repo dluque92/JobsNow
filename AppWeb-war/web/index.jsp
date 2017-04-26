@@ -120,10 +120,11 @@
                         <div class="form-group">
                             <input type="text" name="busqueda" class="form-control" placeholder="Search">
                         </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" class="btn btn-default fa fa-search"></button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="bandejaentrada.jsp"><i class="fa fa-envelope"></i></a></li>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color:green"></i></a></li>
                         <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
                     </ul>
                 </div>
