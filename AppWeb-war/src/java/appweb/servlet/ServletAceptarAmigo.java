@@ -12,8 +12,7 @@ import appweb.entity.Datosusuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigInteger;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,9 +26,15 @@ import javax.servlet.http.HttpSession;
  *
  * @author adri_
  */
-@WebServlet(name = "ServletListarPeticiones", urlPatterns = {"/ServletListarPeticiones"})
-public class ServletListarPeticiones extends HttpServlet {
+@WebServlet(name = "ServletAceptarAmigo", urlPatterns = {"/ServletAceptarAmigo"})
+public class ServletAceptarAmigo extends HttpServlet {
 
+    @EJB
+    private DatosusuarioFacade datosusuarioFacade;
+
+    @EJB
+    private AmigosFacade amigosFacade;
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,18 +47,28 @@ public class ServletListarPeticiones extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Datosusuario> listaPeticiones;
         HttpSession session = request.getSession();
         
-        Datosusuario usuario = (Datosusuario)session.getAttribute("usuario");
-        listaPeticiones = (List)usuario.getDatosusuarioCollection1();
+        String id = request.getParameter("id");
         
-        request.setAttribute("listaPeticiones", listaPeticiones);
+        Datosusuario usuario = (Datosusuario)session.getAttribute("usuario");
+        Datosusuario nuevoAmigo = this.datosusuarioFacade.find(new BigDecimal(id));
+                
+        this.amigosFacade.create(new Amigos(usuario.getId().toBigInteger(),nuevoAmigo.getId().toBigInteger()));
+        
+        usuario.getDatosusuarioCollection().remove(nuevoAmigo);
+        nuevoAmigo.getDatosusuarioCollection().remove(usuario);
+        
+        
+        this.datosusuarioFacade.edit(usuario);
+        this.datosusuarioFacade.edit(nuevoAmigo);
+        
+        session.setAttribute("usuario", usuario);
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/bandejapeticiones.jsp");
         rd.forward(request,response);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

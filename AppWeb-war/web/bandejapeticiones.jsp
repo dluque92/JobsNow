@@ -80,7 +80,7 @@
                     %>
                     <div class="list-group-item">
                         <h4><%= usuario.getNombre()%>  <%= usuario.getApellidos()%>
-                            <a href="ServletListarPeticiones?id=<%= usuario.getId()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-check"></span></button></a>
+                            <a href="ServletAceptarAmigo?id=<%= usuario.getId()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-check"></span></button></a>
                         </h4>
                     </div>
                     <%
