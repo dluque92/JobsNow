@@ -16,6 +16,7 @@
     List<Experiencia> listaExperiencias = (List<Experiencia>) request.getAttribute("listaExperiencias");
     List<Aficion> listaAficiones = (List<Aficion>) request.getAttribute("listaAficiones");
     List<Estudio> listaEstudios = (List<Estudio>) request.getAttribute("listaEstudios");
+    Boolean sonAmigos = (Boolean) request.getAttribute("sonAmigos");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -168,6 +169,14 @@
                     if(usuarioLogueado.getId().equals(usuario.getId())){
                 %>
                 <a class="btn btn-success pull-right" href="ServletEditar"> Editar Perfil</a>
+                <%
+                    }else if(!usuarioLogueado.getId().equals(usuario.getId()) && sonAmigos){
+                %>
+                <a class="btn btn-info pull-right" href="ServletEditar"> Enviar mensaje</a>
+                <%
+                    }else{
+                %>
+                <a class="btn btn-primary pull-right " href="ServletEditar"> Añadir amigo</a>
                 <%
                     }
                 %>

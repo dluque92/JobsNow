@@ -5,6 +5,7 @@
  */
 package appweb.ejb;
 
+import appweb.entity.Amigos;
 import appweb.entity.Datosusuario;
 import java.math.BigDecimal;
 import java.util.List;
@@ -68,5 +69,14 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
         q.setParameter("id", id);
         List <Datosusuario> lista = (List)q.getResultList();
         return lista;
+    }
+
+    public Boolean sonAmigos(BigDecimal id, BigDecimal id0) {
+       Query q;
+       q= this.em.createQuery("select a from Amigos a where (a.datosusuario.id = :amigo1 and a.datosusuario1.id = :amigo2) OR (a.datosusuario.id = :amigo2 and a.datosusuario1.id = :amigo1)");
+       q.setParameter("amigo1", id);
+       q.setParameter("amigo2", id0);
+       List<Amigos> listaAmigos =  (List) q.getResultList();
+       return listaAmigos.size()!=0;
     }
 }
