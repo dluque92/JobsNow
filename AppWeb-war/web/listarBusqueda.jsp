@@ -7,7 +7,11 @@
 <%@page import="appweb.entity.Datosusuario"%>
 <%@page import="java.util.List"%>
 <%
-    List<Datosusuario> listaUsuarios = (List<Datosusuario>) request.getAttribute("listaUsuarios");
+    List<Datosusuario> listaUsuarios = (List<Datosusuario>) request.getAttribute("listaUsuariosPorNombre");
+    List<Datosusuario> listaAficion = (List<Datosusuario>) request.getAttribute("listaUsuariosPorAficion");
+    List<Datosusuario> listaEstudios = (List<Datosusuario>) request.getAttribute("listaUsuariosPorEstudios");
+    List<Datosusuario> listaExperiencia = (List<Datosusuario>) request.getAttribute("listaUsuariosPorExperiencia");
+    String busqueda = (String) request.getAttribute("busqueda");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -49,19 +53,75 @@
         <div class="container">
             <div class="jumbotron vertical-center">
 
+                <%
+                   if (listaUsuarios != null && !listaUsuarios.isEmpty()) { 
+                %>
 
-                <h3>Usuarios</h3>
+                <h3>Usuarios cuyo nombre contiene: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                        if (listaUsuarios != null && !listaUsuarios.isEmpty()) {
                             for (Datosusuario usuario : listaUsuarios) {
                     %>
                     <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
                             }
-                        }
                     %>
                 </div>
+                <%
+                    }
+                %>
+                
+                
+                <%
+                   if (listaAficion != null && !listaAficion.isEmpty()) { 
+                %>
+                <h3>Usuarios que son aficionados a: <%=busqueda%></h3>
+                <div class="list-group">
+                    <%
+                            for (Datosusuario usuario : listaAficion) {
+                    %>
+                    <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
+                    <%
+                            }
+                    %>
+                </div>
+                <%
+                    }
+                %>
+                
+                <%
+                   if (listaExperiencia != null && !listaExperiencia.isEmpty()) {
+                %>
+                <h3>Usuarios trabajan o han trabajo en: <%=busqueda%></h3>
+                <div class="list-group">
+                    <%
+                            for (Datosusuario usuario : listaExperiencia) {
+                    %>
+                    <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
+                    <%
+                            }
+                    %>
+                </div>
+                <%
+                    }
+                %>
+                
+                <%
+                    if (listaEstudios != null && !listaEstudios.isEmpty()) {
+                %>
+                <h3>Usuarios que estudian o han estudiado en: <%=busqueda%></h3>
+                <div class="list-group">
+                    <%
+                            for (Datosusuario usuario : listaEstudios) {
+                    %>
+                    <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
+                    <%
+                            }
+                    %>
+                </div>
+                <%
+                    }
+                %>
             </div>
         </div>
     </body>

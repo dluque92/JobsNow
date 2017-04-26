@@ -61,11 +61,47 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
         Datosusuario u = new Datosusuario(num,email,password, nombre, apellidos);
         return u;
     }
+   
     
     public List<Datosusuario> findByName(String nombre, BigDecimal id) {
         Query q;
         q = this.em.createQuery("select d from Datosusuario d where UPPER(d.nombre) LIKE UPPER(:nombre) and d.id <> :id");
         q.setParameter("nombre", "%"+nombre+"%");
+        q.setParameter("id", id);
+        List <Datosusuario> lista = (List)q.getResultList();
+        return lista;
+    }
+
+    public List<Datosusuario> findByAficion(String nombreAficion, BigDecimal id) {
+        Query q;
+        
+        q = this.em.createQuery("select d from Datosusuario d join d.aficionCollection a "
+                //+ "where d.id = a.datosusuarioId ")
+                + "where UPPER(a.nombre) LIKE UPPER(:nombreAficion) and "
+                + "d.id <> :id");
+        q.setParameter("nombreAficion", "%"+nombreAficion+"%");
+        q.setParameter("id", id);
+        List <Datosusuario> lista = (List)q.getResultList();
+        return lista;
+    }
+
+    public List<Datosusuario> findByEstudios(String nombreUbicacion, BigDecimal id) {
+        Query q;
+        q = this.em.createQuery("select d from Datosusuario d join d.estudioCollection e "
+                + "where UPPER(e.ubicacion) LIKE UPPER(:nombreUbicacion) and "
+                + "d.id <> :id");
+        q.setParameter("nombreUbicacion", "%"+nombreUbicacion+"%");
+        q.setParameter("id", id);
+        List <Datosusuario> lista = (List)q.getResultList();
+        return lista;
+    }
+
+    public List<Datosusuario> findByExperiencia(String nombreEmpresa, BigDecimal id) {
+        Query q;
+        q = this.em.createQuery("select d from Datosusuario d join d.experienciaCollection e "
+                + "where UPPER(e.empresa) LIKE UPPER(:nombreEmpresa) and "
+                + "d.id <> :id");
+        q.setParameter("nombreEmpresa", "%"+nombreEmpresa+"%");
         q.setParameter("id", id);
         List <Datosusuario> lista = (List)q.getResultList();
         return lista;

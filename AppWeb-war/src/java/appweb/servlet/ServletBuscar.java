@@ -48,16 +48,23 @@ public class ServletBuscar extends HttpServlet {
         HttpSession session = request.getSession();
         Datosusuario usuarioEnSesion = (Datosusuario) session.getAttribute("usuario");
         
-        List<Datosusuario> listaUsuarios;
-        List<Aficion> listaAficion;
-        List<Estudio> listaEstudio;
-        List<Experiencia> listaExperiencia;
+        List<Datosusuario> listaUsuariosPorNombre;
+        List<Datosusuario> listaUsuariosPorAficion;
+        List<Datosusuario> listaUsuariosPorEstudios;
+        List<Datosusuario> listaUsuariosPorExperiencia;
         
         String busqueda = request.getParameter("busqueda");
         
-        listaUsuarios = this.datosusuarioFacade.findByName(busqueda, usuarioEnSesion.getId());
+        listaUsuariosPorNombre = this.datosusuarioFacade.findByName(busqueda, usuarioEnSesion.getId());
+        listaUsuariosPorAficion = this.datosusuarioFacade.findByAficion(busqueda, usuarioEnSesion.getId());
+        listaUsuariosPorEstudios = this.datosusuarioFacade.findByEstudios(busqueda, usuarioEnSesion.getId());
+        listaUsuariosPorExperiencia = this.datosusuarioFacade.findByExperiencia(busqueda, usuarioEnSesion.getId());
         
-        request.setAttribute("listaUsuarios", listaUsuarios);
+        request.setAttribute("listaUsuariosPorNombre", listaUsuariosPorNombre);
+        request.setAttribute("listaUsuariosPorAficion", listaUsuariosPorAficion);
+        request.setAttribute("listaUsuariosPorEstudios", listaUsuariosPorEstudios);
+        request.setAttribute("listaUsuariosPorExperiencia", listaUsuariosPorExperiencia);
+        request.setAttribute("busqueda", busqueda);
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/listarBusqueda.jsp");
         rd.forward(request, response);
