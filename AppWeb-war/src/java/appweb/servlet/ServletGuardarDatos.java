@@ -5,14 +5,23 @@
  */
 package appweb.servlet;
 
+import appweb.ejb.DatosusuarioFacade;
+import appweb.entity.Aficion;
+import appweb.entity.Datosusuario;
+import appweb.entity.Estudio;
+import appweb.entity.Experiencia;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -20,7 +29,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletGuardarDatos", urlPatterns = {"/ServletGuardarDatos"})
 public class ServletGuardarDatos extends HttpServlet {
-
+    @EJB
+    private DatosusuarioFacade datosusuariofacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,10 +42,72 @@ public class ServletGuardarDatos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding( "UTF-8" );//OJO!!
+        
+        Boolean badPassword = false;
+        //siempre que haya algun cambio, hay que actualizar la sesion tambien.
+        Datosusuario usuario;
+        
+        String  nombre = request.getParameter("nombre");
+        String  apellidos = request.getParameter("apellidos");
+        String  email = request.getParameter("email");
+        String  password = request.getParameter("password");
+        String  password2 = request.getParameter("password2");
+        String  password3 = request.getParameter("password3");
+        String  twitter = request.getParameter("twitter");
+        String  instagram = request.getParameter("instagram");
+        String  paginaweb = request.getParameter("paginaweb");
+        
+        
+       HttpSession session;
+       session = request.getSession();
+       Datosusuario usuarioSesion = (Datosusuario) session.getAttribute("usuario");
+       BigDecimal id = usuarioSesion.getId();
+       
+       usuario = this.datosusuariofacade.find(id);
+       
+       List<Aficion> aficiones = (List<Aficion>) usuario.getAficionCollection();
+       List<Experiencia> experiencias = (List<Experiencia>) usuario.getExperienciaCollection();
+       List<Estudio> estudios = (List<Estudio>) usuario.getEstudioCollection();
+       
+       usuario.setNombre(nombre);
+       usuario.setApellidos(apellidos);
+       usuario.setEmail(email);
+       
+       if(password2 != null && !password2.isEmpty() && password !=null && !password.isEmpty()){           
+           if(password2.equals(password3)&& password.equals(usuario.getPassword())){
+               usuario.setPassword(password2);
+           }else{
+               usuario.setPassword(usuario.getPassword());
+               badPassword = true;
+           }      
+       }else{
+           usuario.setPassword(usuario.getPassword());
+       }
+
+       usuario.setTwitter(twitter);
+       usuario.setInstagram(instagram);
+       usuario.setWeb(paginaweb);
+       
+       this.datosusuariofacade.edit(usuario);//actualiza el usuario
+        
+       session.setAttribute("usuario", usuario);//actualizamos la sesion
+       
         
         RequestDispatcher rd;
-        rd = this.getServletContext().getRequestDispatcher("/ServletListarDatos");
-        rd.forward(request,response);
+        
+        if(badPassword){
+            request.setAttribute("usuario",usuario);
+            request.setAttribute("aficiones", aficiones);
+            request.setAttribute("experiencias", experiencias);
+            request.setAttribute("estudios", estudios);
+  
+            rd = this.getServletContext().getRequestDispatcher("/editar.jsp");
+            rd.forward(request, response);
+        }else{
+            rd = this.getServletContext().getRequestDispatcher("/ServletListarDatos");        
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
