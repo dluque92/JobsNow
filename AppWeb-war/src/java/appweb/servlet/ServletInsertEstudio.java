@@ -6,10 +6,9 @@
 package appweb.servlet;
 
 import appweb.ejb.EstudioFacade;
-import appweb.entity.Datosusuario;
+import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +48,7 @@ public class ServletInsertEstudio extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         HttpSession session = request.getSession();
-        Datosusuario usuarioEnSession = (Datosusuario) session.getAttribute("usuario");
+        DatosUsuario usuarioEnSession = (DatosUsuario) session.getAttribute("usuario");
         //-------Obteniendo valores del request----------
         String stringFechaComienzo = request.getParameter("fechaComienzo");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -67,13 +65,12 @@ public class ServletInsertEstudio extends HttpServlet {
         String ubicacion = request.getParameter("ubicacion");
         //------Creacion del estudio-------
         Estudio estudio = new Estudio(new BigDecimal(5),fechaComienzo,descripcion);
-        estudio.setDatosusuarioId(usuarioEnSession);
-        
+        estudio.setDatosUsuarioIdUsuario(usuarioEnSession);
         if (ubicacion != null && !ubicacion.isEmpty()){
             estudio.setUbicacion(ubicacion);
         }
         if (fechaFin != null){
-            estudio.setFechoFinalizacion(fechaFin);
+            estudio.setFechaFinalizacion(fechaFin);
         }
         this.estudioFacade.create(estudio);
         //------Actualizacion usuario---------

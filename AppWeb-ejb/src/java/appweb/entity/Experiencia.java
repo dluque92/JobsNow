@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adrián
+ * @author adri_
  */
 @Entity
 @Table(name = "EXPERIENCIA")
@@ -57,18 +57,18 @@ public class Experiencia implements Serializable {
     private Date fechaFinalizacion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 60)
     @Column(name = "EMPRESA")
     private String empresa;
-    @Size(max = 80)
+    @Size(max = 120)
     @Column(name = "WEB_EMPRESA")
     private String webEmpresa;
     @Size(max = 80)
     @Column(name = "PUESTO")
     private String puesto;
-    @JoinColumn(name = "DATOSUSUARIO_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "DATOSUSUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
-    private Datosusuario datosusuarioId;
+    private DatosUsuario datosUsuarioIdUsuario;
 
     public Experiencia() {
     }
@@ -131,12 +131,12 @@ public class Experiencia implements Serializable {
         this.puesto = puesto;
     }
 
-    public Datosusuario getDatosusuarioId() {
-        return datosusuarioId;
+    public DatosUsuario getDatosUsuarioIdUsuario() {
+        return datosUsuarioIdUsuario;
     }
 
-    public void setDatosusuarioId(Datosusuario datosusuarioId) {
-        this.datosusuarioId = datosusuarioId;
+    public void setDatosUsuarioIdUsuario(DatosUsuario datosusuarioIdUsuario) {
+        this.datosUsuarioIdUsuario = datosusuarioIdUsuario;
     }
 
     @Override
@@ -161,7 +161,7 @@ public class Experiencia implements Serializable {
 
     @Override
     public String toString() {
-        return "appweb.entity.Experiencia[ idExperiencia=" + idExperiencia + " ]";
+        return "appweb.ejb.Experiencia[ idExperiencia=" + idExperiencia + " ]";
     }
     
 }

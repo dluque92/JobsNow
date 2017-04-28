@@ -4,13 +4,13 @@
     Author     : johncarlo
 --%>
 
-<%@page import="appweb.entity.Datosusuario"%>
+<%@page import="appweb.entity.DatosUsuario"%>
 <%@page import="java.util.List"%>
 <%
-    List<Datosusuario> listaUsuarios = (List<Datosusuario>) request.getAttribute("listaUsuariosPorNombre");
-    List<Datosusuario> listaAficion = (List<Datosusuario>) request.getAttribute("listaUsuariosPorAficion");
-    List<Datosusuario> listaEstudios = (List<Datosusuario>) request.getAttribute("listaUsuariosPorEstudios");
-    List<Datosusuario> listaExperiencia = (List<Datosusuario>) request.getAttribute("listaUsuariosPorExperiencia");
+    List<DatosUsuario> listaUsuarios = (List<DatosUsuario>) request.getAttribute("listaUsuariosPorNombre");
+    List<DatosUsuario> listaAficion = (List<DatosUsuario>) request.getAttribute("listaUsuariosPorAficion");
+    List<DatosUsuario> listaEstudios = (List<DatosUsuario>) request.getAttribute("listaUsuariosPorEstudios");
+    List<DatosUsuario> listaExperiencia = (List<DatosUsuario>) request.getAttribute("listaUsuariosPorExperiencia");
     String busqueda = (String) request.getAttribute("busqueda");
 %>
 
@@ -91,9 +91,9 @@
                 <h3>Usuarios cuyo nombre contiene: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                        for (Datosusuario usuario : listaUsuarios) {
+                        for (DatosUsuario usuario : listaUsuarios) {
                     %>
-                    <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
+                    <a href="ServletListarDatos?id=<%= usuario.getIdUsuario()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
                         }
                     %>
@@ -109,9 +109,9 @@
                 <h3>Usuarios que son aficionados a: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                        for (Datosusuario usuario : listaAficion) {
+                        for (DatosUsuario usuario : listaAficion) {
                     %>
-                    <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
+                    <a href="ServletListarDatos?id=<%= usuario.getIdUsuario()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
                         }
                     %>
@@ -126,9 +126,9 @@
                 <h3>Usuarios trabajan o han trabajo en: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                        for (Datosusuario usuario : listaExperiencia) {
+                        for (DatosUsuario usuario : listaExperiencia) {
                     %>
-                    <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
+                    <a href="ServletListarDatos?id=<%= usuario.getIdUsuario()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
                         }
                     %>
@@ -143,9 +143,9 @@
                 <h3>Usuarios que estudian o han estudiado en: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                        for (Datosusuario usuario : listaEstudios) {
+                        for (DatosUsuario usuario : listaEstudios) {
                     %>
-                    <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
+                    <a href="ServletListarDatos?id=<%= usuario.getIdUsuario()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
                         }
                     %>

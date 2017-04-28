@@ -4,12 +4,12 @@
     Author     : Adrián
 --%>
 
-<%@page import="appweb.entity.Datosusuario"%>
+<%@page import="appweb.entity.DatosUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
     Float accedido = (Float) request.getAttribute("accedido");
-    Datosusuario usuario = (Datosusuario) request.getAttribute("usuario");  
+    DatosUsuario usuario = (DatosUsuario) request.getAttribute("usuario");  
 %>
 <html>
     

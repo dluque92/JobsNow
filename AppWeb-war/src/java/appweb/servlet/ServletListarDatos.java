@@ -5,15 +5,10 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Aficion;
-import appweb.entity.Datosusuario;
-import appweb.entity.Estudio;
-import appweb.entity.Experiencia;
+import appweb.ejb.DatosUsuarioFacade;
+import appweb.entity.DatosUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,7 +26,7 @@ import javax.servlet.http.HttpSession;
 public class ServletListarDatos extends HttpServlet {
 
     @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+    private DatosUsuarioFacade datosUsuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,14 +47,14 @@ public class ServletListarDatos extends HttpServlet {
             session.removeAttribute("id");
         }
         
-        Datosusuario usuario = null;
+        DatosUsuario usuario = null;
         if(stringId == null || stringId.isEmpty()){
-            usuario = (Datosusuario) session.getAttribute("usuario");
+            usuario = (DatosUsuario) session.getAttribute("usuario");
         }else{
-            usuario = this.datosusuarioFacade.find(new BigDecimal(stringId));
-            Datosusuario miusuario = (Datosusuario)session.getAttribute("usuario");
-            request.setAttribute("sonAmigos", this.datosusuarioFacade.sonAmigos(usuario.getId(),miusuario.getId()));
-            request.setAttribute("peticionAmistad",miusuario.getDatosusuarioCollection().contains(usuario) );
+            usuario = this.datosUsuarioFacade.find(new BigDecimal(stringId));
+            DatosUsuario miusuario = (DatosUsuario)session.getAttribute("usuario");
+            request.setAttribute("sonAmigos", miusuario.getMisAmigos().contains(usuario));
+            request.setAttribute("peticionAmistad",miusuario.getPeticionesRecibidas().contains(usuario) );
         }
         
         request.setAttribute("usuario", usuario);

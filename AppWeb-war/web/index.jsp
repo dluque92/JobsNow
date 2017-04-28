@@ -9,10 +9,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="appweb.entity.Experiencia"%>
-<%@page import="appweb.entity.Datosusuario"%>
+<%@page import="appweb.entity.DatosUsuario"%>
 <%
-    Datosusuario usuario = (Datosusuario) request.getAttribute("usuario");
-    Datosusuario usuarioLogueado = (Datosusuario) session.getAttribute("usuario");
+    DatosUsuario usuario = (DatosUsuario) request.getAttribute("usuario");
+    DatosUsuario usuarioLogueado = (DatosUsuario) session.getAttribute("usuario");
     List<Experiencia> listaExperiencias = (List<Experiencia>) request.getAttribute("listaExperiencias");
     List<Aficion> listaAficiones = (List<Aficion>) request.getAttribute("listaAficiones");
     List<Estudio> listaEstudios = (List<Estudio>) request.getAttribute("listaEstudios");
@@ -169,17 +169,17 @@
             <br/>
 
             <%
-                if (usuarioLogueado.getId().equals(usuario.getId())) {
+                if (usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario())) {
             %>
             <a class="btn btn-success pull-right" href="ServletEditar"> Editar Perfil</a>
             <%
-            } else if (!usuarioLogueado.getId().equals(usuario.getId()) && sonAmigos) {
+            } else if (!usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario()) && sonAmigos) {
             %>
             <a class="btn btn-info pull-right" href="ServletEditar"> Enviar mensaje</a>
             <%
             } else if(!peticionAmistad){
             %>
-            <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getId() %>"> Añadir amigo</a>
+            <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getIdUsuario() %>"> Añadir amigo</a>
             <%
                 }
             %>
@@ -255,7 +255,7 @@
                     %>
                     <tr>
                         <td><%=estudio.getFechaComienzo()%></td>
-                        <td><%=estudio.getFechoFinalizacion()%></td>
+                        <td><%=estudio.getFechaFinalizacion()%></td>
                         <td><%=estudio.getDescripcion()%></td>
                         <td><%=estudio.getUbicacion()%></td>
                     </tr>

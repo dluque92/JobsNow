@@ -5,10 +5,10 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="appweb.entity.Datosusuario"%>
+<%@page import="appweb.entity.DatosUsuario"%>
 <%
-    Datosusuario du = (Datosusuario)session.getAttribute("usuario");
-    List<Datosusuario> listaPeticiones = (List)du.getDatosusuarioCollection1();
+    DatosUsuario du = (DatosUsuario)session.getAttribute("usuario");
+    List<DatosUsuario> listaPeticiones = (List)du.getPeticionesEnviadas();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -78,11 +78,11 @@
                 <div class="list-group">
                     <%
                         if (listaPeticiones != null) {
-                            for (Datosusuario usuario : listaPeticiones) {
+                            for (DatosUsuario usuario : listaPeticiones) {
                     %>
                     <div class="list-group-item">
                         <h4><%= usuario.getNombre()%>  <%= usuario.getApellidos()%>
-                            <a href="ServletAceptarAmigo?id=<%= usuario.getId()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-check"></span></button></a>
+                            <a href="ServletAceptarAmigo?id=<%= usuario.getIdUsuario()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-check"></span></button></a>
                         </h4>
                     </div>
                     <%

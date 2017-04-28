@@ -6,8 +6,8 @@ package appweb.servlet;
  * and open the template in the editor.
  */
 
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Datosusuario;
+import appweb.ejb.DatosUsuarioFacade;
+import appweb.entity.DatosUsuario;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 public class ServletLogin extends HttpServlet {
 
     @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+    private DatosUsuarioFacade datosUsuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +42,7 @@ public class ServletLogin extends HttpServlet {
         String email = (String) request.getParameter("email");
         String pass = (String) request.getParameter("password");
         
-        Datosusuario usuario = this.datosusuarioFacade.obtenerUsuario(email, pass);
+        DatosUsuario usuario = this.datosUsuarioFacade.obtenerUsuario(email, pass);
         HttpSession session = request.getSession();
         session.setAttribute("usuario", usuario);
         

@@ -5,8 +5,8 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Datosusuario;
+import appweb.ejb.DatosUsuarioFacade;
+import appweb.entity.DatosUsuario;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletRegistrar extends HttpServlet {
 
     @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+    private DatosUsuarioFacade datosusuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +37,7 @@ public class ServletRegistrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Datosusuario datosUsuario;
+        DatosUsuario datosUsuario;
 
         String nombre = request.getParameter("nombre");//obligatorio
         String apellidos = request.getParameter("apellidos");//obligatorio

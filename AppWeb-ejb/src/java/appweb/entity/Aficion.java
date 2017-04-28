@@ -22,14 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adrián
+ * @author adri_
  */
 @Entity
 @Table(name = "AFICION")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Aficion.findAll", query = "SELECT a FROM Aficion a")
-    , @NamedQuery(name = "Aficion.findByIdAficiones", query = "SELECT a FROM Aficion a WHERE a.idAficiones = :idAficiones")
+    , @NamedQuery(name = "Aficion.findByIdAficion", query = "SELECT a FROM Aficion a WHERE a.idAficion = :idAficion")
     , @NamedQuery(name = "Aficion.findByNombre", query = "SELECT a FROM Aficion a WHERE a.nombre = :nombre")})
 public class Aficion implements Serializable {
 
@@ -38,35 +38,35 @@ public class Aficion implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_AFICIONES")
-    private BigDecimal idAficiones;
+    @Column(name = "ID_AFICION")
+    private BigDecimal idAficion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
-    @JoinColumn(name = "DATOSUSUARIO_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "DATOSUSUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
-    private Datosusuario datosusuarioId;
+    private DatosUsuario datosUsuarioIdUsuario;
 
     public Aficion() {
     }
 
-    public Aficion(BigDecimal idAficiones) {
-        this.idAficiones = idAficiones;
+    public Aficion(BigDecimal idAficion) {
+        this.idAficion = idAficion;
     }
 
-    public Aficion(BigDecimal idAficiones, String nombre) {
-        this.idAficiones = idAficiones;
+    public Aficion(BigDecimal idAficion, String nombre) {
+        this.idAficion = idAficion;
         this.nombre = nombre;
     }
 
-    public BigDecimal getIdAficiones() {
-        return idAficiones;
+    public BigDecimal getIdAficion() {
+        return idAficion;
     }
 
-    public void setIdAficiones(BigDecimal idAficiones) {
-        this.idAficiones = idAficiones;
+    public void setIdAficion(BigDecimal idAficion) {
+        this.idAficion = idAficion;
     }
 
     public String getNombre() {
@@ -77,18 +77,18 @@ public class Aficion implements Serializable {
         this.nombre = nombre;
     }
 
-    public Datosusuario getDatosusuarioId() {
-        return datosusuarioId;
+    public DatosUsuario getDatosUsuarioIdUsuario() {
+        return datosUsuarioIdUsuario;
     }
 
-    public void setDatosusuarioId(Datosusuario datosusuarioId) {
-        this.datosusuarioId = datosusuarioId;
+    public void setDatosUsuarioIdUsuario(DatosUsuario datosusuarioIdUsuario) {
+        this.datosUsuarioIdUsuario = datosusuarioIdUsuario;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idAficiones != null ? idAficiones.hashCode() : 0);
+        hash += (idAficion != null ? idAficion.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +99,7 @@ public class Aficion implements Serializable {
             return false;
         }
         Aficion other = (Aficion) object;
-        if ((this.idAficiones == null && other.idAficiones != null) || (this.idAficiones != null && !this.idAficiones.equals(other.idAficiones))) {
+        if ((this.idAficion == null && other.idAficion != null) || (this.idAficion != null && !this.idAficion.equals(other.idAficion))) {
             return false;
         }
         return true;
@@ -107,7 +107,7 @@ public class Aficion implements Serializable {
 
     @Override
     public String toString() {
-        return "appweb.entity.Aficion[ idAficiones=" + idAficiones + " ]";
+        return "appweb.ejb.Aficion[ idAficion=" + idAficion + " ]";
     }
     
 }

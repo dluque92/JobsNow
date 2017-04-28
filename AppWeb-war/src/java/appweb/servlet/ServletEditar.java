@@ -6,11 +6,10 @@
 package appweb.servlet;
 
 import appweb.entity.Aficion;
-import appweb.entity.Datosusuario;
+import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
 import appweb.entity.Experiencia;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,8 +39,8 @@ public class ServletEditar extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-          HttpSession sesion = request.getSession();
-        Datosusuario usuario = (Datosusuario) sesion.getAttribute("usuario");
+        HttpSession sesion = request.getSession();
+        DatosUsuario usuario = (DatosUsuario) sesion.getAttribute("usuario");
         String idEstudio = (String) request.getParameter("id");
         
         List<Aficion> aficiones = (List<Aficion>) usuario.getAficionCollection();

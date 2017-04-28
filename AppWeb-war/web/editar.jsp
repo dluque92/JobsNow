@@ -9,11 +9,11 @@
 <%@page import="appweb.entity.Aficion"%>
 <%@page import="appweb.entity.Experiencia"%>
 <%@page import="appweb.entity.Estudio"%>
-<%@page import="appweb.entity.Datosusuario"%>
+<%@page import="appweb.entity.DatosUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    Datosusuario contacto = (Datosusuario) request.getAttribute("usuario");
+    DatosUsuario contacto = (DatosUsuario) request.getAttribute("usuario");
     List<Aficion> aficiones = (List<Aficion>) request.getAttribute("aficiones");
     List<Experiencia> experiencias = (List<Experiencia>) request.getAttribute("experiencias");
     List<Estudio> estudios = (List<Estudio>) request.getAttribute("estudios");
@@ -198,7 +198,7 @@
                                         }
                                     %>
                                     <br/>
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right" value="<%= contacto.getId()%>">Guardar cambios</button>
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right" value="<%= contacto.getIdUsuario()%>">Guardar cambios</button>
                                     <form action="ServletListarDatos" style="margin-bottom: 10px;">
                                         <button id="singlebutton" name="singlebutton" class="btn btn-default btn-sm pull-left">Cancelar</button>                      
                                     </form><br/>
@@ -222,7 +222,7 @@
                                     </thead>
                                     <%
                                         for (Estudio estudio : estudios) {
-                                            if (idEstudio != null && idEstudio.equals(estudio.getIdEstudios())) {
+                                            if (idEstudio != null && idEstudio.equals(estudio.getIdEstudio())) {
                                     %>
                                 <form action="ServletInsertEstudio" method="post">
                                     <tr>
@@ -230,8 +230,8 @@
                                         <td style="width:150px;"><input type="date" value="<%=estudio.getFechaFinString()%>" style="width:120px;"></td>
                                         <td style="width:150px;"><input type="text" value="<%=estudio.getDescripcion()%>" style="width:120px;"></td>
                                         <td style="width:150px;"><input type="text" value="<%=estudio.getUbicacion()%>" style="width:120px;"></td>  
-                                        <td ><a href="/editar.jsp?id=<%= estudio.getIdEstudios()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                        <td><a href="ServletBorrarEstudio?id=<%= estudio.getIdEstudios()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                        <td ><a href="/editar.jsp?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                        <td><a href="ServletBorrarEstudio?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                     </tr>
                                 </form>
                                 <%
@@ -239,11 +239,11 @@
                                 %>
                                 <tr>
                                     <td style="width:150px;"><%=estudio.getFechaComienzo()%></td>
-                                    <td style="width:150px;"><%=estudio.getFechoFinalizacion()%></td>
+                                    <td style="width:150px;"><%=estudio.getFechaFinalizacion()%></td>
                                     <td style="width:150px;"><%=estudio.getDescripcion()%></td>
                                     <td style="width:150px;"><%=estudio.getUbicacion()%></td>  
-                                    <td ><a href="ServletEditar?id=<%= estudio.getIdEstudios()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                    <td><a href="ServletBorrarEstudio?id=<%= estudio.getIdEstudios()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                    <td ><a href="ServletEditar?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                    <td><a href="ServletBorrarEstudio?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                 </tr>
                                 <%
                                             }

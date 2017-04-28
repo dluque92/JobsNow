@@ -5,9 +5,8 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.AmigosFacade;
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Datosusuario;
+import appweb.ejb.DatosUsuarioFacade;
+import appweb.entity.DatosUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -29,7 +28,7 @@ import javax.servlet.http.HttpSession;
 public class ServletEnviarPeticion extends HttpServlet {
 
     @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+    private DatosUsuarioFacade datosUsuarioFacade;
     
 
     /**
@@ -44,15 +43,15 @@ public class ServletEnviarPeticion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Datosusuario usuario = (Datosusuario) session.getAttribute("usuario");
+        DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
         String idSolicitud = request.getParameter("id");
-        Datosusuario solicitado = this.datosusuarioFacade.find(new BigDecimal(idSolicitud));
+        DatosUsuario solicitado = this.datosUsuarioFacade.find(new BigDecimal(idSolicitud));
         //Relaciones a ambos lados
-        usuario.getDatosusuarioCollection().add(solicitado);
-        solicitado.getDatosusuarioCollection1().add(usuario);
+        usuario.getPeticionesRecibidas().add(solicitado);
+        solicitado.getPeticionesEnviadas().add(usuario);
         //Editamos ambos usuarios
-        this.datosusuarioFacade.edit(usuario);
-        this.datosusuarioFacade.edit(solicitado);
+        this.datosUsuarioFacade.edit(usuario);
+        this.datosUsuarioFacade.edit(solicitado);
         //actualizamos session
         session.setAttribute("usuario", usuario);
         session.setAttribute("id", idSolicitud);

@@ -6,84 +6,75 @@
 package appweb.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adrián
+ * @author adri_
  */
 @Entity
 @Table(name = "MENSAJE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Mensaje.findAll", query = "SELECT m FROM Mensaje m")
+    , @NamedQuery(name = "Mensaje.findByIdMensaje", query = "SELECT m FROM Mensaje m WHERE m.idMensaje = :idMensaje")
     , @NamedQuery(name = "Mensaje.findByMensaje", query = "SELECT m FROM Mensaje m WHERE m.mensaje = :mensaje")
-    , @NamedQuery(name = "Mensaje.findByFecha", query = "SELECT m FROM Mensaje m WHERE m.fecha = :fecha")
     , @NamedQuery(name = "Mensaje.findByLeido", query = "SELECT m FROM Mensaje m WHERE m.leido = :leido")
-    , @NamedQuery(name = "Mensaje.findByAmigosDatosusuarioId", query = "SELECT m FROM Mensaje m WHERE m.mensajePK.amigosDatosusuarioId = :amigosDatosusuarioId")
-    , @NamedQuery(name = "Mensaje.findByAmigosDatosusuarioId1", query = "SELECT m FROM Mensaje m WHERE m.mensajePK.amigosDatosusuarioId1 = :amigosDatosusuarioId1")})
+    , @NamedQuery(name = "Mensaje.findByFecha", query = "SELECT m FROM Mensaje m WHERE m.fecha = :fecha")})
 public class Mensaje implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected MensajePK mensajePK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 300)
+    @Column(name = "ID_MENSAJE")
+    private BigDecimal idMensaje;
+    @Size(max = 300)
     @Column(name = "MENSAJE")
     private String mensaje;
-    @Basic(optional = false)
-    @NotNull
+    @Column(name = "LEIDO")
+    private Character leido;
     @Column(name = "FECHA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    @Column(name = "LEIDO")
-    private Character leido;
-    @JoinColumns({
-        @JoinColumn(name = "AMIGOS_DATOSUSUARIO_ID", referencedColumnName = "DATOSUSUARIO_ID", insertable = false, updatable = false)
-        , @JoinColumn(name = "AMIGOS_DATOSUSUARIO_ID1", referencedColumnName = "DATOSUSUARIO_ID2", insertable = false, updatable = false)})
-    @OneToOne(optional = false)
-    private Amigos amigos;
+    @JoinTable(name = "COMUNICACION", joinColumns = {
+        @JoinColumn(name = "MENSAJE_ID_MENSAJE", referencedColumnName = "ID_MENSAJE")}, inverseJoinColumns = {
+        @JoinColumn(name = "USUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")})
+    @ManyToMany
+    private Collection<DatosUsuario> datosUsuarioCollection;
 
     public Mensaje() {
     }
 
-    public Mensaje(MensajePK mensajePK) {
-        this.mensajePK = mensajePK;
+    public Mensaje(BigDecimal idMensaje) {
+        this.idMensaje = idMensaje;
     }
 
-    public Mensaje(MensajePK mensajePK, String mensaje, Date fecha) {
-        this.mensajePK = mensajePK;
-        this.mensaje = mensaje;
-        this.fecha = fecha;
+    public BigDecimal getIdMensaje() {
+        return idMensaje;
     }
 
-    public Mensaje(BigInteger amigosDatosusuarioId, BigInteger amigosDatosusuarioId1) {
-        this.mensajePK = new MensajePK(amigosDatosusuarioId, amigosDatosusuarioId1);
-    }
-
-    public MensajePK getMensajePK() {
-        return mensajePK;
-    }
-
-    public void setMensajePK(MensajePK mensajePK) {
-        this.mensajePK = mensajePK;
+    public void setIdMensaje(BigDecimal idMensaje) {
+        this.idMensaje = idMensaje;
     }
 
     public String getMensaje() {
@@ -94,14 +85,6 @@ public class Mensaje implements Serializable {
         this.mensaje = mensaje;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
     public Character getLeido() {
         return leido;
     }
@@ -110,18 +93,27 @@ public class Mensaje implements Serializable {
         this.leido = leido;
     }
 
-    public Amigos getAmigos() {
-        return amigos;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setAmigos(Amigos amigos) {
-        this.amigos = amigos;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    @XmlTransient
+    public Collection<DatosUsuario> getDatosUsuarioCollection() {
+        return datosUsuarioCollection;
+    }
+
+    public void setDatosUsuarioCollection(Collection<DatosUsuario> datosusuarioCollection) {
+        this.datosUsuarioCollection = datosusuarioCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (mensajePK != null ? mensajePK.hashCode() : 0);
+        hash += (idMensaje != null ? idMensaje.hashCode() : 0);
         return hash;
     }
 
@@ -132,7 +124,7 @@ public class Mensaje implements Serializable {
             return false;
         }
         Mensaje other = (Mensaje) object;
-        if ((this.mensajePK == null && other.mensajePK != null) || (this.mensajePK != null && !this.mensajePK.equals(other.mensajePK))) {
+        if ((this.idMensaje == null && other.idMensaje != null) || (this.idMensaje != null && !this.idMensaje.equals(other.idMensaje))) {
             return false;
         }
         return true;
@@ -140,7 +132,7 @@ public class Mensaje implements Serializable {
 
     @Override
     public String toString() {
-        return "appweb.entity.Mensaje[ mensajePK=" + mensajePK + " ]";
+        return "appweb.ejb.Mensaje[ idMensaje=" + idMensaje + " ]";
     }
     
 }

@@ -5,7 +5,6 @@
  */
 package appweb.entity;
 
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -28,18 +27,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adrián
+ * @author adri_
  */
 @Entity
 @Table(name = "ESTUDIO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estudio.findAll", query = "SELECT e FROM Estudio e")
-    , @NamedQuery(name = "Estudio.findByIdEstudios", query = "SELECT e FROM Estudio e WHERE e.idEstudios = :idEstudios")
+    , @NamedQuery(name = "Estudio.findByIdEstudio", query = "SELECT e FROM Estudio e WHERE e.idEstudio = :idEstudio")
     , @NamedQuery(name = "Estudio.findByFechaComienzo", query = "SELECT e FROM Estudio e WHERE e.fechaComienzo = :fechaComienzo")
-    , @NamedQuery(name = "Estudio.findByFechoFinalizacion", query = "SELECT e FROM Estudio e WHERE e.fechoFinalizacion = :fechoFinalizacion")
+    , @NamedQuery(name = "Estudio.findByFechaFinalizacion", query = "SELECT e FROM Estudio e WHERE e.fechaFinalizacion = :fechaFinalizacion")
     , @NamedQuery(name = "Estudio.findByDescripcion", query = "SELECT e FROM Estudio e WHERE e.descripcion = :descripcion")
-    , @NamedQuery(name = "Estudio.findByUbicacion", query = "SELECT e FROM Estudio e WHERE e.ubicacion = :ubicacion")})
+    , @NamedQuery(name = "Estudio.findByUbicacion", query = "SELECT e FROM Estudio e WHERE e.ubicacion = :ubicacion")
+    , @NamedQuery(name = "Estudio.findByNombre", query = "SELECT e FROM Estudio e WHERE e.nombre = :nombre")})
 public class Estudio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,78 +47,66 @@ public class Estudio implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_ESTUDIOS")
-    private BigDecimal idEstudios;
+    @Column(name = "ID_ESTUDIO")
+    private BigDecimal idEstudio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_COMIENZO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaComienzo;
-    @Column(name = "FECHO_FINALIZACION")
+    @Column(name = "FECHA_FINALIZACION")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechoFinalizacion;
+    private Date fechaFinalizacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Size(max = 60)
+    @Size(max = 80)
     @Column(name = "UBICACION")
     private String ubicacion;
-    @JoinColumn(name = "DATOSUSUARIO_ID", referencedColumnName = "ID")
+    @Size(max = 50)
+    @Column(name = "NOMBRE")
+    private String nombre;
+    @JoinColumn(name = "DATOSUSUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
-    private Datosusuario datosusuarioId;
+    private DatosUsuario datosUsuarioIdUsuario;
 
     public Estudio() {
     }
 
-    public Estudio(BigDecimal idEstudios) {
-        this.idEstudios = idEstudios;
+    public Estudio(BigDecimal idEstudio) {
+        this.idEstudio = idEstudio;
     }
 
-    public Estudio(BigDecimal idEstudios, Date fechaComienzo, String descripcion) {
-        this.idEstudios = idEstudios;
+    public Estudio(BigDecimal idEstudio, Date fechaComienzo, String descripcion) {
+        this.idEstudio = idEstudio;
         this.fechaComienzo = fechaComienzo;
         this.descripcion = descripcion;
     }
 
-    public BigDecimal getIdEstudios() {
-        return idEstudios;
+    public BigDecimal getIdEstudio() {
+        return idEstudio;
     }
 
-    public void setIdEstudios(BigDecimal idEstudios) {
-        this.idEstudios = idEstudios;
+    public void setIdEstudio(BigDecimal idEstudio) {
+        this.idEstudio = idEstudio;
     }
 
-    public String getFechaComienzoString() throws ParseException {
-        //String stringFechaComienzo = fechaComienzo.toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(fechaComienzo);
-        //return FechaComienzo.toString();
-    }
-    
-    
     public Date getFechaComienzo() {
         return fechaComienzo;
     }
-    
 
     public void setFechaComienzo(Date fechaComienzo) {
         this.fechaComienzo = fechaComienzo;
     }
 
-    public Date getFechoFinalizacion() {
-        return fechoFinalizacion;
-    }
-    public String getFechaFinString() throws ParseException {
-        //String stringFechaComienzo = fechaComienzo.toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(fechoFinalizacion);
-        //return FechaComienzo.toString();
+    public Date getFechaFinalizacion() {
+        return fechaFinalizacion;
     }
 
-    public void setFechoFinalizacion(Date fechoFinalizacion) {
-        this.fechoFinalizacion = fechoFinalizacion;
+    public void setFechaFinalizacion(Date fechaFinalizacion) {
+        this.fechaFinalizacion = fechaFinalizacion;
     }
 
     public String getDescripcion() {
@@ -137,18 +125,36 @@ public class Estudio implements Serializable {
         this.ubicacion = ubicacion;
     }
 
-    public Datosusuario getDatosusuarioId() {
-        return datosusuarioId;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setDatosusuarioId(Datosusuario datosusuarioId) {
-        this.datosusuarioId = datosusuarioId;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public DatosUsuario getDatosUsuarioIdUsuario() {
+        return datosUsuarioIdUsuario;
+    }
+
+    public void setDatosUsuarioIdUsuario(DatosUsuario datosusuarioIdUsuario) {
+        this.datosUsuarioIdUsuario = datosusuarioIdUsuario;
+    }
+    
+    public String getFechaComienzoString() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(fechaComienzo);
+    }
+    
+    public String getFechaFinString() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(fechaFinalizacion);
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idEstudios != null ? idEstudios.hashCode() : 0);
+        hash += (idEstudio != null ? idEstudio.hashCode() : 0);
         return hash;
     }
 
@@ -159,7 +165,7 @@ public class Estudio implements Serializable {
             return false;
         }
         Estudio other = (Estudio) object;
-        if ((this.idEstudios == null && other.idEstudios != null) || (this.idEstudios != null && !this.idEstudios.equals(other.idEstudios))) {
+        if ((this.idEstudio == null && other.idEstudio != null) || (this.idEstudio != null && !this.idEstudio.equals(other.idEstudio))) {
             return false;
         }
         return true;
@@ -167,7 +173,7 @@ public class Estudio implements Serializable {
 
     @Override
     public String toString() {
-        return "appweb.entity.Estudio[ idEstudios=" + idEstudios + " ]";
+        return "appweb.ejb.Estudio[ idEstudio=" + idEstudio + " ]";
     }
     
 }

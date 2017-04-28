@@ -5,16 +5,9 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.AmigosFacade;
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Amigos;
-import appweb.entity.Datosusuario;
+import appweb.entity.DatosUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,11 +35,11 @@ public class ServletListarPeticiones extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Datosusuario> listaPeticiones;
+        List<DatosUsuario> listaPeticiones;
         HttpSession session = request.getSession();
         
-        Datosusuario usuario = (Datosusuario)session.getAttribute("usuario");
-        listaPeticiones = (List)usuario.getDatosusuarioCollection1();
+        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
+        listaPeticiones = (List)usuario.getPeticionesEnviadas();
         
         request.setAttribute("listaPeticiones", listaPeticiones);
         RequestDispatcher rd;

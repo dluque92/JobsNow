@@ -5,13 +5,12 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.DatosusuarioFacade;
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.Aficion;
-import appweb.entity.Datosusuario;
+import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
 import appweb.entity.Experiencia;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -30,7 +29,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletGuardarDatos", urlPatterns = {"/ServletGuardarDatos"})
 public class ServletGuardarDatos extends HttpServlet {
     @EJB
-    private DatosusuarioFacade datosusuariofacade;
+    private DatosUsuarioFacade datosUsuariofacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +45,7 @@ public class ServletGuardarDatos extends HttpServlet {
         
         Boolean badPassword = false;
         //siempre que haya algun cambio, hay que actualizar la sesion tambien.
-        Datosusuario usuario;
+        DatosUsuario usuario;
         
         String  nombre = request.getParameter("nombre");
         String  apellidos = request.getParameter("apellidos");
@@ -61,10 +60,10 @@ public class ServletGuardarDatos extends HttpServlet {
         
        HttpSession session;
        session = request.getSession();
-       Datosusuario usuarioSesion = (Datosusuario) session.getAttribute("usuario");
-       BigDecimal id = usuarioSesion.getId();
+       DatosUsuario usuarioSesion = (DatosUsuario) session.getAttribute("usuario");
+       BigDecimal id = usuarioSesion.getIdUsuario();
        
-       usuario = this.datosusuariofacade.find(id);
+       usuario = this.datosUsuariofacade.find(id);
        
        List<Aficion> aficiones = (List<Aficion>) usuario.getAficionCollection();
        List<Experiencia> experiencias = (List<Experiencia>) usuario.getExperienciaCollection();
@@ -89,7 +88,7 @@ public class ServletGuardarDatos extends HttpServlet {
        usuario.setInstagram(instagram);
        usuario.setWeb(paginaweb);
        
-       this.datosusuariofacade.edit(usuario);//actualiza el usuario
+       this.datosUsuariofacade.edit(usuario);//actualiza el usuario
         
        session.setAttribute("usuario", usuario);//actualizamos la sesion
        

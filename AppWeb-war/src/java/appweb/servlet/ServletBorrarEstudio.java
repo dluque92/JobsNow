@@ -6,7 +6,7 @@
 package appweb.servlet;
 
 import appweb.ejb.EstudioFacade;
-import appweb.entity.Datosusuario;
+import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,7 +49,7 @@ public class ServletBorrarEstudio extends HttpServlet {
         estudio = this.estudioFacade.find(new BigDecimal(estudioID));
         
         HttpSession session = request.getSession();
-        Datosusuario usuario = (Datosusuario)session.getAttribute("usuario");
+        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
         Collection c = usuario.getEstudioCollection();
         c.remove(estudio);
         usuario.setEstudioCollection(c);

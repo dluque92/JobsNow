@@ -6,13 +6,9 @@ package appweb.servlet;
  * and open the template in the editor.
  */
 
-import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Aficion;
-import appweb.entity.Datosusuario;
-import appweb.entity.Estudio;
-import appweb.entity.Experiencia;
+import appweb.ejb.DatosUsuarioFacade;
+import appweb.entity.DatosUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -31,7 +27,7 @@ import javax.servlet.http.HttpSession;
 public class ServletBuscar extends HttpServlet {
 
     @EJB
-    private DatosusuarioFacade datosusuarioFacade;
+    private DatosUsuarioFacade datosUsuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,19 +42,19 @@ public class ServletBuscar extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        Datosusuario usuarioEnSesion = (Datosusuario) session.getAttribute("usuario");
+        DatosUsuario usuarioEnSesion = (DatosUsuario) session.getAttribute("usuario");
         
-        List<Datosusuario> listaUsuariosPorNombre;
-        List<Datosusuario> listaUsuariosPorAficion;
-        List<Datosusuario> listaUsuariosPorEstudios;
-        List<Datosusuario> listaUsuariosPorExperiencia;
+        List<DatosUsuario> listaUsuariosPorNombre;
+        List<DatosUsuario> listaUsuariosPorAficion;
+        List<DatosUsuario> listaUsuariosPorEstudios;
+        List<DatosUsuario> listaUsuariosPorExperiencia;
         
         String busqueda = request.getParameter("busqueda");
         
-        listaUsuariosPorNombre = this.datosusuarioFacade.findByName(busqueda, usuarioEnSesion.getId());
-        listaUsuariosPorAficion = this.datosusuarioFacade.findByAficion(busqueda, usuarioEnSesion.getId());
-        listaUsuariosPorEstudios = this.datosusuarioFacade.findByEstudios(busqueda, usuarioEnSesion.getId());
-        listaUsuariosPorExperiencia = this.datosusuarioFacade.findByExperiencia(busqueda, usuarioEnSesion.getId());
+        listaUsuariosPorNombre = this.datosUsuarioFacade.findByName(busqueda, usuarioEnSesion.getIdUsuario());
+        listaUsuariosPorAficion = this.datosUsuarioFacade.findByAficion(busqueda, usuarioEnSesion.getIdUsuario());
+        listaUsuariosPorEstudios = this.datosUsuarioFacade.findByEstudios(busqueda, usuarioEnSesion.getIdUsuario());
+        listaUsuariosPorExperiencia = this.datosUsuarioFacade.findByExperiencia(busqueda, usuarioEnSesion.getIdUsuario());
         
         request.setAttribute("listaUsuariosPorNombre", listaUsuariosPorNombre);
         request.setAttribute("listaUsuariosPorAficion", listaUsuariosPorAficion);
