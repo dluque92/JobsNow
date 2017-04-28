@@ -54,26 +54,27 @@
                                     <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control input-md" required="true">
                                     <div class="spacing"><small>Apellidos</small></div>
                                     <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos" class="form-control input-md" required="true">
-                                    <div class="spacing"><small>Email</small></div><%
+                                    <div class="spacing"><small>Email</small></div>
+                                    <input id="email" name="email" type="text" placeholder="Email" class="form-control input-md" required="true">
+                                     <%
                                         if(emailusado!=null && emailusado){
                                     %>   
-                                    <p style="color: red"><small>Email ya esta en uso</small></p>
+                                    <p class="pull-right" style="color: red; font-weight: 600"><small>Email ya esta en uso</small></p>
                                     <%
                                         }
                                     %>
-                                    
-                                    <input id="email" name="email" type="text" placeholder="Email" class="form-control input-md" required="true">
                                     <div class="spacing"><small>Contraseña</small></div>
-                                    <%
-                                        if(pass !=null && pass){
-                                    %>   
-                                    <p style="color: red"><small>Contraseña no coincide</small></p>
-                                    <%
-                                        }
-                                    %>
+                                    
                                     <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md" required="true">
                                     <div class="spacing"><small>Repetir Contraseña</small></div>
                                     <input id="password2" name="password2" type="password" placeholder="Password" class="form-control input-md" required="true">
+                                    <%
+                                        if(pass !=null && pass){
+                                    %>   
+                                    <p class="pull-right" style="color: red; font-weight: 600"><small>Contraseña no coincide</small></p>
+                                    <%
+                                        }
+                                    %>
                                     <div class="spacing"><small>Twitter</small></div>
                                     <input id="twitter" name="twitter" type="text" placeholder="@NombreUsuario" class="form-control input-md">
                                     <div class="spacing"><small>Instagram</small></div>

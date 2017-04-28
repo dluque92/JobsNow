@@ -5,8 +5,11 @@
  */
 package appweb.entity;
 
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -87,9 +90,18 @@ public class Estudio implements Serializable {
         this.idEstudios = idEstudios;
     }
 
+    public String getFechaComienzoString() throws ParseException {
+        //String stringFechaComienzo = fechaComienzo.toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(fechaComienzo);
+        //return FechaComienzo.toString();
+    }
+    
+    
     public Date getFechaComienzo() {
         return fechaComienzo;
     }
+    
 
     public void setFechaComienzo(Date fechaComienzo) {
         this.fechaComienzo = fechaComienzo;
@@ -97,6 +109,12 @@ public class Estudio implements Serializable {
 
     public Date getFechoFinalizacion() {
         return fechoFinalizacion;
+    }
+    public String getFechaFinString() throws ParseException {
+        //String stringFechaComienzo = fechaComienzo.toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(fechoFinalizacion);
+        //return FechaComienzo.toString();
     }
 
     public void setFechoFinalizacion(Date fechoFinalizacion) {

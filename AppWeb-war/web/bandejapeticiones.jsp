@@ -7,7 +7,8 @@
 <%@page import="java.util.List"%>
 <%@page import="appweb.entity.Datosusuario"%>
 <%
-    List<Datosusuario> listaPeticiones = (List<Datosusuario>) request.getAttribute("listaPeticiones");
+    Datosusuario du = (Datosusuario)session.getAttribute("usuario");
+    List<Datosusuario> listaPeticiones = (List)du.getDatosusuarioCollection1();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,7 +28,7 @@
 
         <!-- Icons -->
         <script src="https://use.fontawesome.com/0e798431ad.js"></script>
-        
+
         <style>
             body {
                 background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Chrome 10+, Saf5.1+ */
@@ -76,7 +77,8 @@
                 <h3>Usuarios</h3>
                 <div class="list-group">
                     <%
-                        for (Datosusuario usuario : listaPeticiones) {
+                        if (listaPeticiones != null) {
+                            for (Datosusuario usuario : listaPeticiones) {
                     %>
                     <div class="list-group-item">
                         <h4><%= usuario.getNombre()%>  <%= usuario.getApellidos()%>
@@ -84,6 +86,7 @@
                         </h4>
                     </div>
                     <%
+                            }
                         }
                     %>
                 </div>

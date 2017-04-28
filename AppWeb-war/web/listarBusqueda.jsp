@@ -39,6 +39,10 @@
                 background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
                 background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
                 padding-top: 60px; /* ESTO LO PIDE LA PAGINA WEB DE BOOTSTRAP */
+
+            }
+            .jumbotron{
+                margin: 1em;
             }
         </style>
         <script>
@@ -50,73 +54,100 @@
         </script>
     </head>
     <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top  navbar-static-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="ServletListarDatos">Brand</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left" action="ServletBuscar" method="POST">
+                        <div class="form-group">
+                            <input type="text" name="busqueda" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default fa fa-search"></button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color:green"></i></a></li>
+                        <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <div class="jumbotron vertical-center">
 
                 <%
-                   if (listaUsuarios != null && !listaUsuarios.isEmpty()) { 
+                    if (listaUsuarios != null && !listaUsuarios.isEmpty()) {
                 %>
 
                 <h3>Usuarios cuyo nombre contiene: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                            for (Datosusuario usuario : listaUsuarios) {
+                        for (Datosusuario usuario : listaUsuarios) {
                     %>
                     <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
-                            }
+                        }
                     %>
                 </div>
                 <%
                     }
                 %>
-                
-                
+
+
                 <%
-                   if (listaAficion != null && !listaAficion.isEmpty()) { 
+                    if (listaAficion != null && !listaAficion.isEmpty()) {
                 %>
                 <h3>Usuarios que son aficionados a: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                            for (Datosusuario usuario : listaAficion) {
+                        for (Datosusuario usuario : listaAficion) {
                     %>
                     <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
-                            }
+                        }
                     %>
                 </div>
                 <%
                     }
                 %>
-                
+
                 <%
-                   if (listaExperiencia != null && !listaExperiencia.isEmpty()) {
+                    if (listaExperiencia != null && !listaExperiencia.isEmpty()) {
                 %>
                 <h3>Usuarios trabajan o han trabajo en: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                            for (Datosusuario usuario : listaExperiencia) {
+                        for (Datosusuario usuario : listaExperiencia) {
                     %>
                     <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
-                            }
+                        }
                     %>
                 </div>
                 <%
                     }
                 %>
-                
+
                 <%
                     if (listaEstudios != null && !listaEstudios.isEmpty()) {
                 %>
                 <h3>Usuarios que estudian o han estudiado en: <%=busqueda%></h3>
                 <div class="list-group">
                     <%
-                            for (Datosusuario usuario : listaEstudios) {
+                        for (Datosusuario usuario : listaEstudios) {
                     %>
                     <a href="ServletListarDatos?id=<%= usuario.getId()%>" class="list-group-item"><%=usuario.getNombre()%> <%=usuario.getApellidos()%></a>
                     <%
-                            }
+                        }
                     %>
                 </div>
                 <%

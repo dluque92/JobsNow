@@ -17,6 +17,7 @@
     List<Aficion> listaAficiones = (List<Aficion>) request.getAttribute("listaAficiones");
     List<Estudio> listaEstudios = (List<Estudio>) request.getAttribute("listaEstudios");
     Boolean sonAmigos = (Boolean) request.getAttribute("sonAmigos");
+    Boolean peticionAmistad = (Boolean) request.getAttribute("peticionAmistad");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -123,148 +124,149 @@
                         <button type="submit" class="btn btn-default fa fa-search"></button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="bandejaentrada.jsp"><i class="fa fa-envelope"></i></a></li>
+                        <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
                         <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color:green"></i></a></li>
                         <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="container">
-            <div class="jumbotron vertical-center">
-                <%
-                    if (usuario.getNombre() != null || usuario.getApellidos() != null) {
-                %>
-                <h1><%= usuario.getNombre() + " " + usuario.getApellidos()%></h1>
-                <%
-                    }
-                %>
+    </nav>
+    <div class="container">
+        <div class="jumbotron vertical-center">
+            <%
+                if (usuario.getNombre() != null || usuario.getApellidos() != null) {
+            %>
+            <h1><%= usuario.getNombre() + " " + usuario.getApellidos()%></h1>
+            <%
+                }
+            %>
 
-                <div class="social-links">
+            <div class="social-links">
+                <%
+                    if (usuario.getTwitter() != null) {
+                %>
+                <a href="http://www.twitter.com/<%= usuario.getTwitter()%>" target="_blank"><i class="fa fa-twitter fa-lg"></i></a>
                     <%
-                        if (usuario.getTwitter() != null) {
+                        }
                     %>
-                    <a href="<%= usuario.getTwitter()%>"><i class="fa fa-twitter fa-lg"></i></a>
-                        <%
-                            }
-                        %>
 
-                    <%
-                        if (usuario.getInstagram() != null) {
-                    %>
-                    <a href="<%= usuario.getInstagram()%>"><i class="fa fa-instagram fa-lg"></i></a>
+                <%
+                    if (usuario.getInstagram() != null) {
+                %>
+                <a href="http://www.instagram.com/<%= usuario.getInstagram()%>" target="_blank"><i class="fa fa-instagram fa-lg"></i></a>
                     <%
                         }
                     %>
                     <%
                         if (usuario.getWeb() != null) {
                     %>
-                    <a href="<%= usuario.getWeb()%>"><i class="fa fa-link fa-lg"></i></a>
+                <a href="http://<%= usuario.getWeb()%>"target="_blank"><i class="fa fa-link fa-lg"></i></a>
                     <%
                         }
                     %>
-                </div>
-                <br/>
-                
-                <%
-                    if(usuarioLogueado.getId().equals(usuario.getId())){
-                %>
-                <a class="btn btn-success pull-right" href="ServletEditar"> Editar Perfil</a>
-                <%
-                    }else if(!usuarioLogueado.getId().equals(usuario.getId()) && sonAmigos){
-                %>
-                <a class="btn btn-info pull-right" href="ServletEditar"> Enviar mensaje</a>
-                <%
-                    }else{
-                %>
-                <a class="btn btn-primary pull-right " href="ServletEditar"> Añadir amigo</a>
-                <%
-                    }
-                %>
-                <h3>Experiencia</h3>
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Fecha Comienza</th>
-                            <th>Fecha Finalizaci&oacute;n</th>
-                            <th>Empresa</th>
-                            <th>Web Empresa</th>
-                            <th>Puesto</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            if (listaExperiencias != null && !listaExperiencias.isEmpty()) {
-                                for (Experiencia experiencia : listaExperiencias) {
-                        %>
-                        <tr>
-                            <td><%=experiencia.getFechaComienzo().toString()%></td>
-                            <td><%=experiencia.getFechaFinalizacion().toString()%></td>
-                            <td><%=experiencia.getEmpresa()%></td>
-                            <td><%=experiencia.getWebEmpresa()%></td>
-                            <td><%=experiencia.getPuesto()%></td>
-                        </tr>
-                        <%
-                                }
-                            }
-                        %>
-                    </tbody>
-                </table>
-
-
-
-
-                <h3>Aficiones</h3>
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            if (listaAficiones != null && !listaAficiones.isEmpty()) {
-                                for (Aficion aficion : listaAficiones) {
-                        %>
-                        <tr>
-                            <td><%=aficion.getNombre()%></td>
-                        </tr>
-                        <%
-                                }
-                            }
-                        %>
-                    </tbody>
-                </table>
-
-                <h3>Estudios</h3>
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Fecha Comienzo</th>
-                            <th>Fecha de Finalizaci&oacute;n</th>
-                            <th>Descripci&oacute;n</th>
-                            <th>Ubicaci&oacute;n</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            if (listaEstudios != null && !listaEstudios.isEmpty()) {
-                                for (Estudio estudio : listaEstudios) {
-                        %>
-                        <tr>
-                            <td><%=estudio.getFechaComienzo()%></td>
-                            <td><%=estudio.getFechoFinalizacion()%></td>
-                            <td><%=estudio.getDescripcion()%></td>
-                            <td><%=estudio.getUbicacion()%></td>
-                        </tr>
-                        <%
-                                }
-                            }
-                        %>
-                    </tbody>
-                </table>
-
             </div>
+            <br/>
+
+            <%
+                if (usuarioLogueado.getId().equals(usuario.getId())) {
+            %>
+            <a class="btn btn-success pull-right" href="ServletEditar"> Editar Perfil</a>
+            <%
+            } else if (!usuarioLogueado.getId().equals(usuario.getId()) && sonAmigos) {
+            %>
+            <a class="btn btn-info pull-right" href="ServletEditar"> Enviar mensaje</a>
+            <%
+            } else if(!peticionAmistad){
+            %>
+            <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getId() %>"> Añadir amigo</a>
+            <%
+                }
+            %>
+            <h3>Experiencia</h3>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Fecha Comienza</th>
+                        <th>Fecha Finalizaci&oacute;n</th>
+                        <th>Empresa</th>
+                        <th>Web Empresa</th>
+                        <th>Puesto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        if (listaExperiencias != null && !listaExperiencias.isEmpty()) {
+                            for (Experiencia experiencia : listaExperiencias) {
+                    %>
+                    <tr>
+                        <td><%=experiencia.getFechaComienzo().toString()%></td>
+                        <td><%=experiencia.getFechaFinalizacion().toString()%></td>
+                        <td><%=experiencia.getEmpresa()%></td>
+                        <td><%=experiencia.getWebEmpresa()%></td>
+                        <td><%=experiencia.getPuesto()%></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                    %>
+                </tbody>
+            </table>
+
+
+
+
+            <h3>Aficiones</h3>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        if (listaAficiones != null && !listaAficiones.isEmpty()) {
+                            for (Aficion aficion : listaAficiones) {
+                    %>
+                    <tr>
+                        <td><%=aficion.getNombre()%></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                    %>
+                </tbody>
+            </table>
+
+            <h3>Estudios</h3>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Fecha Comienzo</th>
+                        <th>Fecha de Finalizaci&oacute;n</th>
+                        <th>Descripci&oacute;n</th>
+                        <th>Ubicaci&oacute;n</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        if (listaEstudios != null && !listaEstudios.isEmpty()) {
+                            for (Estudio estudio : listaEstudios) {
+                    %>
+                    <tr>
+                        <td><%=estudio.getFechaComienzo()%></td>
+                        <td><%=estudio.getFechoFinalizacion()%></td>
+                        <td><%=estudio.getDescripcion()%></td>
+                        <td><%=estudio.getUbicacion()%></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                    %>
+                </tbody>
+            </table>
+
         </div>
-    </body>
+    </div>
+</body>
 </html>

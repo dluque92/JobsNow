@@ -45,22 +45,27 @@ public class ServletListarDatos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession();        
         String stringId = request.getParameter("id");
+        if(stringId==null || stringId.isEmpty()){
+            stringId = (String) session.getAttribute("id");
+            session.removeAttribute("id");
+        }
+        
         Datosusuario usuario = null;
-        HttpSession session = request.getSession();
         if(stringId == null || stringId.isEmpty()){
             usuario = (Datosusuario) session.getAttribute("usuario");
         }else{
             usuario = this.datosusuarioFacade.find(new BigDecimal(stringId));
             Datosusuario miusuario = (Datosusuario)session.getAttribute("usuario");
             request.setAttribute("sonAmigos", this.datosusuarioFacade.sonAmigos(usuario.getId(),miusuario.getId()));
+            request.setAttribute("peticionAmistad",miusuario.getDatosusuarioCollection().contains(usuario) );
         }
         
         request.setAttribute("usuario", usuario);
         request.setAttribute("listaExperiencias", usuario.getExperienciaCollection());
         request.setAttribute("listaAficiones", usuario.getAficionCollection());
         request.setAttribute("listaEstudios", usuario.getEstudioCollection());
-        
         
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/index.jsp");

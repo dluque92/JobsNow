@@ -75,19 +75,20 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
     public List<Datosusuario> findByAficion(String nombreAficion, BigDecimal id) {
         Query q;
         
-        q = this.em.createQuery("select d from Datosusuario d join d.aficionCollection a "
+        q = this.em.createQuery("select distinct d from Datosusuario d join fetch d.aficionCollection a "
                 //+ "where d.id = a.datosusuarioId ")
                 + "where UPPER(a.nombre) LIKE UPPER(:nombreAficion) and "
                 + "d.id <> :id");
         q.setParameter("nombreAficion", "%"+nombreAficion+"%");
         q.setParameter("id", id);
+        
         List <Datosusuario> lista = (List)q.getResultList();
         return lista;
     }
 
     public List<Datosusuario> findByEstudios(String nombreUbicacion, BigDecimal id) {
         Query q;
-        q = this.em.createQuery("select d from Datosusuario d join d.estudioCollection e "
+        q = this.em.createQuery("select distinct d from Datosusuario d join fetch d.estudioCollection e "
                 + "where UPPER(e.ubicacion) LIKE UPPER(:nombreUbicacion) and "
                 + "d.id <> :id");
         q.setParameter("nombreUbicacion", "%"+nombreUbicacion+"%");
@@ -98,7 +99,7 @@ public class DatosusuarioFacade extends AbstractFacade<Datosusuario> {
 
     public List<Datosusuario> findByExperiencia(String nombreEmpresa, BigDecimal id) {
         Query q;
-        q = this.em.createQuery("select d from Datosusuario d join d.experienciaCollection e "
+        q = this.em.createQuery("select distinct d from Datosusuario d join fetch d.experienciaCollection e "
                 + "where UPPER(e.empresa) LIKE UPPER(:nombreEmpresa) and "
                 + "d.id <> :id");
         q.setParameter("nombreEmpresa", "%"+nombreEmpresa+"%");

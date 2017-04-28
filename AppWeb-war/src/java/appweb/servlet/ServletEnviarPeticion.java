@@ -7,12 +7,11 @@ package appweb.servlet;
 
 import appweb.ejb.AmigosFacade;
 import appweb.ejb.DatosusuarioFacade;
-import appweb.entity.Amigos;
 import appweb.entity.Datosusuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,14 +25,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author adri_
  */
-@WebServlet(name = "ServletAceptarAmigo", urlPatterns = {"/ServletAceptarAmigo"})
-public class ServletAceptarAmigo extends HttpServlet {
+@WebServlet(name = "ServletEnviarPeticion", urlPatterns = {"/ServletEnviarPeticion"})
+public class ServletEnviarPeticion extends HttpServlet {
 
     @EJB
     private DatosusuarioFacade datosusuarioFacade;
-
-    @EJB
-    private AmigosFacade amigosFacade;
     
 
     /**
@@ -48,25 +44,20 @@ public class ServletAceptarAmigo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
-        String id = request.getParameter("id");
-        
-        Datosusuario usuario = (Datosusuario)session.getAttribute("usuario");
-        Datosusuario nuevoAmigo = this.datosusuarioFacade.find(new BigDecimal(id));
-                
-        this.amigosFacade.create(new Amigos(usuario.getId().toBigInteger(),nuevoAmigo.getId().toBigInteger()));
-        
-        usuario.getDatosusuarioCollection1().remove(nuevoAmigo);
-        nuevoAmigo.getDatosusuarioCollection().remove(usuario);
-        
-        
+        Datosusuario usuario = (Datosusuario) session.getAttribute("usuario");
+        String idSolicitud = request.getParameter("id");
+        Datosusuario solicitado = this.datosusuarioFacade.find(new BigDecimal(idSolicitud));
+        //Relaciones a ambos lados
+        usuario.getDatosusuarioCollection().add(solicitado);
+        solicitado.getDatosusuarioCollection1().add(usuario);
+        //Editamos ambos usuarios
         this.datosusuarioFacade.edit(usuario);
-        this.datosusuarioFacade.edit(nuevoAmigo);
-        
+        this.datosusuarioFacade.edit(solicitado);
+        //actualizamos session
         session.setAttribute("usuario", usuario);
-        RequestDispatcher rd;
-        rd = this.getServletContext().getRequestDispatcher("/ServletListarPeticiones");
-        rd.forward(request,response);
+        session.setAttribute("id", idSolicitud);
+        
+        response.sendRedirect("ServletListarDatos");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
