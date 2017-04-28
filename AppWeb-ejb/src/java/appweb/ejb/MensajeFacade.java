@@ -6,9 +6,12 @@
 package appweb.ejb;
 
 import appweb.entity.Mensaje;
+import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,20 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
 
     public MensajeFacade() {
         super(Mensaje.class);
+    }
+    
+    public List<Mensaje> getMensajesAmigos( BigDecimal id, BigDecimal id2) {
+        Query q;
+        q = this.em.createQuery("select m from Mensaje m"
+                + "where (:id = Mensaje.MensajePK.amigosDatousuarioId and  "
+                + ":id2 = Mensaje.MensajePK.amigosDatousuarioId1)" +
+                "or( :id = Mensaje.MensajePK.amigosDatousuarioId1 and"
+                + ":id2 = Mensaje.MensajePK.amigosDatousuarioId)");
+        
+        q.setParameter("id", id);
+        q.setParameter("id2", id2);
+        List <Mensaje> lista = (List)q.getResultList();
+        return lista;
     }
     
 }
