@@ -7,8 +7,10 @@ package appweb.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -79,8 +81,10 @@ public class Mensaje implements Serializable {
     public Mensaje(BigDecimal idMensaje,String texto, DatosUsuario usuario, DatosUsuario amigo){
         this.idMensaje = idMensaje;
         this.mensaje = texto;
-        this.datosUsuarioCollection.add(usuario);
-        this.datosUsuarioCollection.add(amigo);
+        List<DatosUsuario> datosUsuarioList = new ArrayList<>();
+        datosUsuarioList.add(usuario);
+        datosUsuarioList.add(amigo);
+        this.datosUsuarioCollection = datosUsuarioList;
     }
 
     public BigDecimal getIdMensaje() {
