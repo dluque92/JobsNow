@@ -5,6 +5,7 @@
  */
 package appweb.ejb;
 
+import appweb.entity.DatosUsuario;
 import appweb.entity.Mensaje;
 import java.math.BigDecimal;
 import java.util.List;
@@ -45,5 +46,14 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
         List <Mensaje> lista = (List)q.getResultList();
         return lista;
     }
+    
+    public Mensaje crearMensaje(String texto,DatosUsuario usuario,DatosUsuario amigo) {
+        Query q;
+        q = this.em.createNativeQuery("select SEQ_ID_MENSAJE.nextval from dual");
+        BigDecimal num = (BigDecimal) q.getResultList().get(0);
+        Mensaje mensaje = new Mensaje(num,texto,usuario,amigo);
+        return mensaje;
+    }
+    
     
 }

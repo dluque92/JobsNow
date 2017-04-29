@@ -75,6 +75,13 @@ public class Mensaje implements Serializable {
     public Mensaje(BigDecimal idMensaje) {
         this.idMensaje = idMensaje;
     }
+    
+    public Mensaje(BigDecimal idMensaje,String texto, DatosUsuario usuario, DatosUsuario amigo){
+        this.idMensaje = idMensaje;
+        this.mensaje = texto;
+        this.datosUsuarioCollection.add(usuario);
+        this.datosUsuarioCollection.add(amigo);
+    }
 
     public BigDecimal getIdMensaje() {
         return idMensaje;

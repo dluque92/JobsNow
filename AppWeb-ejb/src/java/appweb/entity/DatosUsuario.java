@@ -59,7 +59,7 @@ public class DatosUsuario implements Serializable {
     @Column(name = "ID_USUARIO")
     //--------Sentencias que habia que poner para hacer un atributo autoincrementable------
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "secuencia_id_usuario")
-    @SequenceGenerator(name="secuencia_id_usuario", sequenceName = "SEQ_ID_USUARIO", allocationSize=1)
+    @SequenceGenerator(name="secuencia_id_usuario", sequenceName = "SEQ_ID_DATOSUSUARIO", allocationSize=1)
     //--------------------------------------------------------------------------
     private BigDecimal idUsuario;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation

@@ -39,7 +39,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href='style.css' rel='stylesheet' type='text/css'>
-                <!-- Icons -->
+        <!-- Icons -->
         <script src="https://use.fontawesome.com/0e798431ad.js"></script>
         <title>Bandeja de Entrada</title>
         <style>
@@ -115,14 +115,23 @@
                             }
                         %>
                     </div>
-                    <div class="send-wrap ">
-                        <textarea class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
-                    </div>
-                    <div class="btn-panel">
-                        <button class="btn btn-success" role="button">
-                            <i class="fa fa-share"></i> Enviar mensaje
-                        </button>
-                    </div>
+                    <form method="post" action="ServletEnviarMensaje">
+                        <%
+                            if(amigo!=null){
+                        %>
+                        <input type="hidden" name="id" value="<%=amigo.getIdUsuario() %>" />
+                        <%
+                            }
+                        %>
+                        <div class="send-wrap ">
+                            <textarea class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
+                        </div>
+                        <div class="btn-panel">
+                            <button class="btn btn-success" role="button">
+                                <i class="fa fa-share"></i> Enviar mensaje
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
     </body>
