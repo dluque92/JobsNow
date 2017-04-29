@@ -45,7 +45,7 @@ public class ServletBorrarEstudio extends HttpServlet {
             throws ServletException, IOException {
         Estudio estudio;
         String estudioID;
-        estudioID = request.getParameter("id");
+        estudioID = request.getParameter("idEstudio");
         estudio = this.estudioFacade.find(new BigDecimal(estudioID));
         
         HttpSession session = request.getSession();

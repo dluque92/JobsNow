@@ -7,14 +7,18 @@ package appweb.servlet;
 
 import appweb.ejb.AficionFacade;
 import appweb.entity.Aficion;
+import appweb.entity.DatosUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,10 +44,15 @@ public class ServletBorrarAficion extends HttpServlet {
             throws ServletException, IOException {
         Aficion aficion;
         String aficionID;
-        aficionID = request.getParameter("id");
-        aficion = this.aficionFacade.find(new Integer(aficionID));
+        aficionID = request.getParameter("idAficion");
+        aficion = this.aficionFacade.find(new BigDecimal(aficionID));
+        HttpSession session = request.getSession();
+        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
+        Collection c = usuario.getAficionCollection();
+        c.remove(aficion);
+        usuario.setAficionCollection(c);
         this.aficionFacade.remove(aficion);
-        response.sendRedirect("ServletListarDatos");
+        response.sendRedirect("ServletEditar");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
