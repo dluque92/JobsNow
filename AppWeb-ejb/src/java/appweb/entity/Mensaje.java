@@ -85,6 +85,8 @@ public class Mensaje implements Serializable {
         datosUsuarioList.add(usuario);
         datosUsuarioList.add(amigo);
         this.datosUsuarioCollection = datosUsuarioList;
+        //OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO CON ESTO
+        //SI TENEMOS UNA COLECCIÓN TENEMOS QUE CREAR LA COLECCION, AÑADIR LOS ELEMENTOS Y ASIGNAR ESA COLECCION AL ATRIBUTO
     }
 
     public BigDecimal getIdMensaje() {
