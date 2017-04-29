@@ -124,7 +124,7 @@
                             }
                         %>
                         <div class="send-wrap ">
-                            <textarea class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
+                            <textarea name="mensaje" class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
                         </div>
                         <div class="btn-panel">
                             <button class="btn btn-success" role="button">
