@@ -5,10 +5,14 @@
  */
 package appweb.ejb;
 
+import appweb.entity.DatosUsuario;
 import appweb.entity.Experiencia;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,14 @@ public class ExperienciaFacade extends AbstractFacade<Experiencia> {
 
     public ExperienciaFacade() {
         super(Experiencia.class);
+    }
+
+    public Experiencia crearExperiencia(Date fechaComienzo, String empresa) {
+        Query q;
+        q = this.em.createNativeQuery("select SEQ_ID_EXPERIENCIA.nextval from dual");
+        BigDecimal num = (BigDecimal) q.getResultList().get(0);
+        Experiencia experiencia = new Experiencia(num,fechaComienzo, empresa);
+        return experiencia;
     }
     
 }

@@ -6,9 +6,11 @@
 package appweb.ejb;
 
 import appweb.entity.Aficion;
+import java.math.BigDecimal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,14 @@ public class AficionFacade extends AbstractFacade<Aficion> {
 
     public AficionFacade() {
         super(Aficion.class);
+    }
+
+    public Aficion crearAficion(String nombre) {
+        Query q;
+        q = this.em.createNativeQuery("select SEQ_ID_AFICION.nextval from dual");
+        BigDecimal num = (BigDecimal) q.getResultList().get(0);
+        Aficion aficion = new Aficion(num, nombre);
+        return aficion;
     }
     
 }

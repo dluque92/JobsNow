@@ -41,7 +41,9 @@ public class ServletEditar extends HttpServlet {
         
         HttpSession sesion = request.getSession();
         DatosUsuario usuario = (DatosUsuario) sesion.getAttribute("usuario");
-        String idEstudio = (String) request.getParameter("id");
+        String idEstudio = (String) request.getParameter("idEstudio");
+        String idExperiencia = (String) request.getParameter("idExperiencia");
+        String idAficion = (String) request.getParameter("idAficion");
         
         List<Aficion> aficiones = (List<Aficion>) usuario.getAficionCollection();
         List<Experiencia> experiencias = (List<Experiencia>) usuario.getExperienciaCollection();
@@ -51,7 +53,9 @@ public class ServletEditar extends HttpServlet {
         request.setAttribute("aficiones", aficiones);
         request.setAttribute("experiencias", experiencias);
         request.setAttribute("estudios", estudios);
-        request.setAttribute("id", idEstudio);
+        request.setAttribute("idEstudio", idEstudio);
+        request.setAttribute("idExperiencia", idExperiencia);
+        request.setAttribute("idAficion", idAficion);
         
         RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/editar.jsp");
         rd.forward(request, response);

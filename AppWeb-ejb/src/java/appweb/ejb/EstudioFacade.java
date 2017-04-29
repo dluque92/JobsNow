@@ -5,10 +5,14 @@
  */
 package appweb.ejb;
 
+import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,14 @@ public class EstudioFacade extends AbstractFacade<Estudio> {
 
     public EstudioFacade() {
         super(Estudio.class);
+    }
+
+    public Estudio crearEstudio(Date fechaComienzo, String descripcion) {
+        Query q;
+        q = this.em.createNativeQuery("select SEQ_ID_ESTUDIO.nextval from dual");
+        BigDecimal num = (BigDecimal) q.getResultList().get(0);
+        Estudio estudio = new Estudio(num,fechaComienzo,descripcion);
+        return estudio;
     }
     
 }

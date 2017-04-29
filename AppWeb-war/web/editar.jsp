@@ -17,10 +17,20 @@
     List<Aficion> aficiones = (List<Aficion>) request.getAttribute("aficiones");
     List<Experiencia> experiencias = (List<Experiencia>) request.getAttribute("experiencias");
     List<Estudio> estudios = (List<Estudio>) request.getAttribute("estudios");
-    String idEst = (String) request.getAttribute("id");
+    String idEst = (String) request.getAttribute("idEstudio");
+    String idExp = (String) request.getAttribute("idExperiencia");
+    String idAfi = (String) request.getAttribute("idAficion");
     BigDecimal idEstudio = null;
+    BigDecimal idExperiencia = null;
+    BigDecimal idAficion = null;
     if (idEst != null) {
         idEstudio = new BigDecimal(idEst);
+    }
+    if (idExp != null) {
+        idExperiencia = new BigDecimal(idExp);
+    }
+    if (idAfi != null) {
+        idAficion = new BigDecimal(idAfi);
     }
     Boolean badPassword = (Boolean) request.getAttribute("badPassword");
     Boolean badPassword2 = (Boolean) request.getAttribute("badPassword2");
@@ -128,25 +138,25 @@
                                     <%
                                         }
                                     %>
-                                    
+
                                     <%
-                                        if(badPassword!= null && badPassword){
+                                        if (badPassword != null && badPassword) {
                                     %>   
                                     <p class="pull-right" style="color: red"><small>Contraseña actual no coincide</small></p>
                                     <%
-                                       }
+                                        }
                                     %>
-                                    
+
                                     <div class="spacing"><small>Nueva Contraseña</small></div>
                                     <input id="password2" name="password2" type="password" placeholder="Nueva contraseña" class="form-control input-md">
                                     <br/>
                                     <input id="password3" name="password3" type="password" placeholder="Repetir contraseña" class="form-control input-md">
                                     <%
-                                        if(badPassword2!= null && badPassword2){
+                                        if (badPassword2 != null && badPassword2) {
                                     %>   
                                     <p class="pull-right" style="color: red"><small>Contraseña no coincide</small></p>
                                     <%
-                                       }
+                                        }
                                     %>
                                     <div class="spacing"><small>Twitter</small></div>
                                     <%
@@ -154,7 +164,7 @@
                                     %>
                                     <input id="twitter" name="twitter" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getTwitter()%>">
                                     <%
-                                        }else{
+                                    } else {
                                     %>
                                     <input id="twitter" name="twitter" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="">
                                     <%
@@ -166,7 +176,7 @@
                                     %>
                                     <input id="instagram" name="instagram" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="<%=contacto.getInstagram()%>">
                                     <%
-                                        }else{
+                                    } else {
                                     %>
                                     <input id="instagram" name="instagram" type="text" placeholder="@NombreUsuario" class="form-control input-md" value="">
                                     <%
@@ -178,7 +188,7 @@
                                     %>
                                     <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md" value="<%=contacto.getWeb()%>">
                                     <%
-                                        }else{
+                                    } else {
                                     %>
                                     <input id="paginaweb" name="paginaweb" type="text" placeholder="www.tuweb.com" class="form-control input-md" value="">
                                     <%
@@ -191,7 +201,7 @@
 
                                     <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="<%=contacto.getFoto()%>">
                                     <%
-                                        }else{
+                                    } else {
                                     %>
                                     <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="">
                                     <%
@@ -224,14 +234,14 @@
                                         for (Estudio estudio : estudios) {
                                             if (idEstudio != null && idEstudio.equals(estudio.getIdEstudio())) {
                                     %>
-                                <form action="ServletInsertEstudio" method="post">
+                                <form action="ServletCrearActualizarEstudio?idEstudio=<%= estudio.getIdEstudio()%>" method="post">
                                     <tr>
-                                        <td style="width:150px;"><input type="date" value="<%=estudio.getFechaComienzoString()%>" style="width:120px;"></td>
-                                        <td style="width:150px;"><input type="date" value="<%=estudio.getFechaFinString()%>" style="width:120px;"></td>
-                                        <td style="width:150px;"><input type="text" value="<%=estudio.getDescripcion()%>" style="width:120px;"></td>
-                                        <td style="width:150px;"><input type="text" value="<%=estudio.getUbicacion()%>" style="width:120px;"></td>  
-                                        <td ><a href="/editar.jsp?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                        <td><a href="ServletBorrarEstudio?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                        <td style="width:150px;"><input type="date" name="fechaComienzo" value="<%=estudio.getFechaComienzoString()%>" style="width:120px;"></td>
+                                        <td style="width:150px;"><input type="date" name="fechaFin" value="<%=estudio.getFechaFinString()%>" style="width:120px;"></td>
+                                        <td style="width:150px;"><input type="text" name="descripcion" value="<%=estudio.getDescripcion()%>" style="width:120px;"></td>
+                                        <td style="width:150px;"><input type="text" name="ubicacion" value="<%=estudio.getUbicacion()%>" style="width:120px;"></td>  
+                                        <td ><button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-ok"></span></button></td>
+                                        <td><a href="ServletBorrarEstudio?idEstudio=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                     </tr>
                                 </form>
                                 <%
@@ -242,26 +252,26 @@
                                     <td style="width:150px;"><%=estudio.getFechaFinalizacion()%></td>
                                     <td style="width:150px;"><%=estudio.getDescripcion()%></td>
                                     <td style="width:150px;"><%=estudio.getUbicacion()%></td>  
-                                    <td ><a href="ServletEditar?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                    <td><a href="ServletBorrarEstudio?id=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                    <td ><a href="ServletEditar?idEstudio=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td> 
+                                    <td><a href="ServletBorrarEstudio?idEstudio=<%= estudio.getIdEstudio()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                 </tr>
                                 <%
                                             }
                                         }
                                     }
                                 %>
-                                <form action="ServletInsertEstudio" method="post">
+                                <form action="ServletCrearActualizarEstudio" method="post">
                                     <tr>
-                                        <td style="width:150px;"><input type="date" name="fechaComienzo" style="width:120px;"></td>
-                                        <td style="width:150px;"><input type="date" name="fechaFin" style="width:120px;"></td>
-                                        <td style="width:150px;"><input type="text" name="descripcion" style="width:120px;"></td>
-                                        <td style="width:150px;"><input type="text" name="ubicacion" style="width:120px;"></td>
+                                        <td style="width:150px;"><input type="date" name="fechaComienzo" style="width:120px;" required="true"></td>
+                                        <td style="width:150px;"><input type="date" name="fechaFin" style="width:120px;" required="true"></td>
+                                        <td style="width:150px;"><input type="text" name="descripcion" style="width:120px;" required="true"></td>
+                                        <td style="width:150px;"><input type="text" name="ubicacion" style="width:120px;" required="true"></td>
                                         <td ><button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></td>
                                     </tr>
                                 </form>
                                 </tbody>
                             </table>
-                            <div class="spacing"><small>Experiencia</small></div>
+                            <div class="spacing" style="margin-top: 1em;">Experiencia</div>
                             <table class="table table-striped">
                                 <thead>
 
@@ -279,6 +289,21 @@
                                     </thead>
                                     <%
                                         for (Experiencia experiencia : experiencias) {
+                                            if (idExperiencia != null && idExperiencia.equals(experiencia.getIdExperiencia())) {
+                                    %>
+                                    <form action="ServletCrearActualizarExperiencia?idExperiencia=<%=experiencia.getIdExperiencia()%>" method="post">
+                                    <tr>
+                                        <td style="width:100px;"><input type="date" name="fechaComienzo" value="<%=experiencia.getFechaComienzoString()%>" style="width:100px;"></td>
+                                        <td style="width:100px;"><input type="date" name="fechaFin" value="<%=experiencia.getFechaFinalizacionString()%>" style="width:100px;"></td>
+                                        <td style="width:100px;"><input type="text" name="empresa" value="<%=experiencia.getEmpresa()%>" style="width:100px;"></td>
+                                        <td style="width:100px;"><input type="text" name="webEmpresa" value="<%=experiencia.getWebEmpresa()%>" style="width:100px;"></td>
+                                        <td style="width:100px;"><input type="text" name="puesto" value="<%=experiencia.getPuesto()%>" style="width:100px;"></td>
+                                        <td ><button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-ok"></span></button></td>
+                                        <td><a href="ServletBorrarExperiencia?idExperiencia=<%= experiencia.getIdExperiencia()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                    </tr>
+                                    </form>
+                                    <%
+                                    } else {
                                     %>
                                     <tr>
                                         <td style="width:100px;"><%=experiencia.getFechaComienzo()%></td>
@@ -286,21 +311,24 @@
                                         <td style="width:100px;"><%=experiencia.getEmpresa()%></td>
                                         <td style="width:100px;"><%=experiencia.getWebEmpresa()%></td>
                                         <td style="width:100px;"><%=experiencia.getPuesto()%></td>
-                                        <td><a href="ServletEditarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                        <td><a href="ServletBorrarExperiencia?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
+                                        <td><a href="ServletEditar?idExperiencia=<%= experiencia.getIdExperiencia()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                        <td><a href="ServletBorrarExperiencia?idExperiencia=<%= experiencia.getIdExperiencia()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td> 
                                     </tr>
                                     <%
+                                                }
                                             }
                                         }
                                     %>
+                                <form action="ServletCrearActualizarExperiencia" method="post">
                                     <tr>
-                                        <td style="width:100px;"><input type="date" style="width:100px;"></td>
-                                        <td style="width:100px;"><input type="date" style="width:100px;"></td>
-                                        <td style="width:100px;"><input type="text" style="width:100px;"></td>
-                                        <td style="width:100px;"><input type="text" style="width:100px;"></td>
-                                        <td style="width:100px;"><input type="text" style="width:100px;"></td>
-                                        <td ><a href=""><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></a></td>
+                                        <td style="width:100px;"><input type="date" name="fechaComienzo" style="width:100px;" required="true"></td>
+                                        <td style="width:100px;"><input type="date" name="fechaFin" style="width:100px;" required="true"></td>
+                                        <td style="width:100px;"><input type="text" name="empresa" style="width:100px;" required="true"></td>
+                                        <td style="width:100px;"><input type="text" name="webEmpresa" style="width:100px;" required="true"></td>
+                                        <td style="width:100px;"><input type="text" name="puesto" style="width:100px;" required="true"></td>
+                                        <td ><button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></td>
                                     </tr>
+                                </form>
                                 </tbody>
                             </table>
 
@@ -317,39 +345,51 @@
                                         <th style="width:150px;"> </th>
 
                                     </tr>
+                                    </form>
                                 </thead>
                                 <%
-                                    for (Aficion aficion
-                                            : aficiones) {
+                                    for (Aficion aficion : aficiones) {
+                                        if (idAficion != null && idAficion.equals(aficion.getIdAficion())) {
                                 %>
-
-
                                 <tbody >
+                                    <form action="ServletCrearActualizarAficion?idAficion=<%=aficion.getIdAficion()%>" method="post">
+                                    <tr >
+                                        <td style="width:150px;"><input type="text" name="nombreAficion" value="<%=aficion.getNombre()%>" style="width:120px;"></td>
+                                        <td style="width:150px;"></td>
+                                        <td style="width:150px;"></td>
+                                        <td style="width:150px;"></td>
+                                        <td ><button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-ok"></span></button></td>
+                                        <td><a href="ServletBorrarAficion?idAficion=<%= aficion.getIdAficion()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td>
+                                    </tr>
+                                    </form>
+                                    <%
+                                    } else {
+                                    %>
                                     <tr >
                                         <td style="width:150px;"><%= aficion.getNombre()%></td>
                                         <td style="width:150px;"></td>
                                         <td style="width:150px;"></td>
                                         <td style="width:150px;"></td>
-                                        <td><a href="ServletEditarAficion?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                        <td><a href="ServletBorrarAficion?id="><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td>
+                                        <td><a href="ServletEditar?idAficion=<%= aficion.getIdAficion()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                        <td><a href="ServletBorrarAficion?idAficion=<%= aficion.getIdAficion()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button></a></td>
                                     </tr>
                                     <%
+                                                }
                                             }
                                         }
                                     %>
+                                <form action="ServletCrearActualizarAficion" method="post">
                                     <tr>
-                                        <td style="width:150px;"><input type="text" style="width:100px;"></td>
+                                        <td style="width:150px;"><input type="text" name="nombreAficion" style="width:100px;" required="true"></td>
                                         <td style="width:150px;"></td>
                                         <td style="width:150px;"></td>
                                         <td style="width:150px;"></td>
-                                        <td ><a href=""><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></a></td>
+                                        <td ><button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button></td>
                                     </tr>
+                                </form>
                                 </tbody>
                             </table>
-
                             <div class="spacing"></div>
-
-
                         </div>
                     </div>
                 </div>

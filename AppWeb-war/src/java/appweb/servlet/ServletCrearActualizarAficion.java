@@ -5,13 +5,12 @@
  */
 package appweb.servlet;
 
-import appweb.ejb.ExperienciaFacade;
+import appweb.ejb.AficionFacade;
+import appweb.entity.Aficion;
 import appweb.entity.DatosUsuario;
-import appweb.entity.Experiencia;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,14 +21,14 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Daniel
+ * @author Adrián
  */
-@WebServlet(name = "ServletBorrarExperiencia", urlPatterns = {"/ServletBorrarExperiencia"})
-public class ServletBorrarExperiencia extends HttpServlet {
+@WebServlet(name = "ServletCrearActualizarAficion", urlPatterns = {"/ServletCrearActualizarAficion"})
+public class ServletCrearActualizarAficion extends HttpServlet {
 
     @EJB
-    private ExperienciaFacade experienciaFacade;
-    
+    private AficionFacade aficionFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,17 +40,48 @@ public class ServletBorrarExperiencia extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Experiencia experiencia;
-        String experienciaID;
-        experienciaID = request.getParameter("idExperiencia");
-        experiencia = this.experienciaFacade.find(new BigDecimal(experienciaID));
+        response.setContentType("text/html;charset=UTF-8");
+        
         HttpSession session = request.getSession();
-        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
-        Collection c = usuario.getExperienciaCollection();
-        c.remove(experiencia);
-        usuario.setExperienciaCollection(c);
-        this.experienciaFacade.remove(experiencia);
+        DatosUsuario usuarioEnSession = (DatosUsuario) session.getAttribute("usuario");
+        //-------Obteniendo valores del request---------------------------------
+        String idAficion = (String) request.getParameter("idAficion");
+        String nombreAficion = request.getParameter("nombreAficion");
+        
+        Aficion aficion;
+        if (idAficion != null) { //Actualizar datos
+            aficion = this.aficionFacade.find(new BigDecimal(idAficion));
+            List<Aficion> listaAficion = (List<Aficion>) usuarioEnSession.getAficionCollection();
+            int i = listaAficion.indexOf(aficion);
+            aficion.setNombre(nombreAficion);
+            
+            listaAficion.set(i, aficion);
+            
+            usuarioEnSession.setAficionCollection(listaAficion);
+            session.setAttribute("usuario", usuarioEnSession);
+            this.aficionFacade.edit(aficion);
+        } else {
+            //------Creacion del aficion-------
+            aficion = this.aficionFacade.crearAficion(nombreAficion);
+            aficion.setDatosUsuarioIdUsuario(usuarioEnSession);
+            
+            //--------------------------------------------
+            this.aficionFacade.create(aficion);
+            //------Actualizacion usuario-------------------------------------------
+            List<Aficion> listaDeAficion = (List<Aficion>) usuarioEnSession.getAficionCollection();
+            listaDeAficion.add(aficion);
+            usuarioEnSession.setAficionCollection(listaDeAficion);
+            session.setAttribute("usuario", usuarioEnSession);
+        }
+
+        //------Finalizamos el servlet------------------------------------------
+        /*
+        RequestDispatcher rd;
+        rd = this.getServletContext().getRequestDispatcher("/editar.jsp");
+        rd.forward(request, response);
+         */
         response.sendRedirect("ServletEditar");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
