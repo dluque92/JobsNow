@@ -7,15 +7,19 @@ package appweb.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +50,8 @@ public class Experiencia implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_EXPERIENCIA")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "secuencia_id_experiencia")
+    @SequenceGenerator(name = "secuencia_id_experiencia", sequenceName = "SEQ_ID_EXPERIENCIA", allocationSize = 1)
     private BigDecimal idExperiencia;
     @Basic(optional = false)
     @NotNull
@@ -95,12 +101,22 @@ public class Experiencia implements Serializable {
         return fechaComienzo;
     }
 
+    public String getFechaComienzoString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(fechaComienzo);
+    }
+
     public void setFechaComienzo(Date fechaComienzo) {
         this.fechaComienzo = fechaComienzo;
     }
 
     public Date getFechaFinalizacion() {
         return fechaFinalizacion;
+    }
+
+    public String getFechaFinalizacionString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(fechaFinalizacion);
     }
 
     public void setFechaFinalizacion(Date fechaFinalizacion) {
@@ -163,5 +179,5 @@ public class Experiencia implements Serializable {
     public String toString() {
         return "appweb.ejb.Experiencia[ idExperiencia=" + idExperiencia + " ]";
     }
-    
+
 }
