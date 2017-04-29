@@ -8,11 +8,8 @@ package appweb.servlet;
 import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.DatosUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,8 +44,8 @@ public class ServletEnviarPeticion extends HttpServlet {
         String idSolicitud = request.getParameter("id");
         DatosUsuario solicitado = this.datosUsuarioFacade.find(new BigDecimal(idSolicitud));
         //Relaciones a ambos lados
-        usuario.getPeticionesRecibidas().add(solicitado);
-        solicitado.getPeticionesEnviadas().add(usuario);
+        usuario.getPeticionesEnviadas().add(solicitado);
+        solicitado.getPeticionesRecibidas().add(usuario);
         //Editamos ambos usuarios
         this.datosUsuarioFacade.edit(usuario);
         this.datosUsuarioFacade.edit(solicitado);

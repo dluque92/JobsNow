@@ -177,10 +177,16 @@
             %>
             <a class="btn btn-info pull-right" href="ServletEditar"> Enviar mensaje</a>
             <%
-            } else if(!peticionAmistad){
+            } else if (!peticionAmistad) {
             %>
-            <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getIdUsuario() %>"> Añadir amigo</a>
+            <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getIdUsuario()%>"> Añadir amigo</a>
             <%
+            } else if(peticionAmistad){
+                int rechazar = 1;
+            %>
+            <a class="btn btn-primary pull-right " href="ServletRechazarAmigo?id=<%= usuario.getIdUsuario()%>&rechazar=<%= rechazar%>"> Cancelar solicitud de amistad</a>
+            <%
+
                 }
             %>
             <h3>Experiencia</h3>

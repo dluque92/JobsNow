@@ -7,8 +7,8 @@
 <%@page import="java.util.List"%>
 <%@page import="appweb.entity.DatosUsuario"%>
 <%
-    DatosUsuario du = (DatosUsuario)session.getAttribute("usuario");
-    List<DatosUsuario> listaPeticiones = (List)du.getPeticionesEnviadas();
+    DatosUsuario du = (DatosUsuario) session.getAttribute("usuario");
+    List<DatosUsuario> listaPeticiones = (List)request.getAttribute("listaPeticiones");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -82,13 +82,20 @@
                     %>
                     <div class="list-group-item">
                         <h4><%= usuario.getNombre()%>  <%= usuario.getApellidos()%>
-                            <a href="ServletAceptarAmigo?id=<%= usuario.getIdUsuario()%>"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-check"></span></button></a>
+                            <a href="ServletAceptarAmigo?id=<%= usuario.getIdUsuario()%>"><i class="glyphicon glyphicon-ok-circle" style="font-size: 25px; padding-left: 10px"></i></a>  
+                            <a href="ServletRechazarAmigo?id=<%= usuario.getIdUsuario()%>"><i class="glyphicon glyphicon-remove-circle" style="font-size: 25px; padding-left: 10px"></i></a>
                         </h4>
                     </div>
+                    <%
+                        }
+                        if (listaPeticiones.size() == 0) {
+                    %>
+                    <h4> No hay peticiones de amistad disponibles</h4>
                     <%
                             }
                         }
                     %>
+
                 </div>
             </div>
         </div>

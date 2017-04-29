@@ -1,13 +1,16 @@
+package appweb.servlet;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appweb.servlet;
 
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.DatosUsuario;
 import java.io.IOException;
-import java.util.List;
+import java.math.BigDecimal;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,9 +23,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author adri_
  */
-@WebServlet(name = "ServletListarPeticiones", urlPatterns = {"/ServletListarPeticiones"})
-public class ServletListarPeticiones extends HttpServlet {
+@WebServlet(urlPatterns = {"/ServletRechazarAmigo"})
+public class ServletRechazarAmigo extends HttpServlet {
 
+    @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +40,34 @@ public class ServletListarPeticiones extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<DatosUsuario> listaPeticiones;
         HttpSession session = request.getSession();
         
-        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
-        listaPeticiones = (List)usuario.getPeticionesRecibidas();
+        String id = request.getParameter("id");
+        String rechazar = request.getParameter("rechazar");
         
-        request.setAttribute("listaPeticiones", listaPeticiones);
+        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
+        DatosUsuario nuevoAmigo = this.datosUsuarioFacade.find(new BigDecimal(id));
+        if(rechazar!=null&&Integer.parseInt(rechazar)==1){
+            usuario.getPeticionesEnviadas().remove(nuevoAmigo);
+            nuevoAmigo.getPeticionesRecibidas().remove(usuario);
+        }else{
+            usuario.getPeticionesRecibidas().remove(nuevoAmigo);
+            nuevoAmigo.getPeticionesEnviadas().remove(usuario);
+        }
+        this.datosUsuarioFacade.edit(usuario);
+        this.datosUsuarioFacade.edit(nuevoAmigo);
+        
+        session.setAttribute("usuario", usuario);
         RequestDispatcher rd;
-        rd = this.getServletContext().getRequestDispatcher("/bandejapeticiones.jsp");
+        if(rechazar!=null&&Integer.parseInt(rechazar)==1){
+            session.setAttribute("id", id);
+            rd = this.getServletContext().getRequestDispatcher("/ServletListarDatos");
+        }else{
+            rd = this.getServletContext().getRequestDispatcher("/ServletListarPeticiones");
+        }
         rd.forward(request,response);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

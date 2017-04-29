@@ -38,7 +38,8 @@ public class ServletRegistrar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DatosUsuario datosUsuario;
-
+        response.setContentType("text/html;charset=UTF-8");
+        
         String nombre = request.getParameter("nombre");//obligatorio
         String apellidos = request.getParameter("apellidos");//obligatorio
         String email = request.getParameter("email");//obligatorio

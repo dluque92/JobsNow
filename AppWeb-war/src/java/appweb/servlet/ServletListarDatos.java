@@ -54,7 +54,7 @@ public class ServletListarDatos extends HttpServlet {
             usuario = this.datosUsuarioFacade.find(new BigDecimal(stringId));
             DatosUsuario miusuario = (DatosUsuario)session.getAttribute("usuario");
             request.setAttribute("sonAmigos", miusuario.getMisAmigos().contains(usuario));
-            request.setAttribute("peticionAmistad",miusuario.getPeticionesRecibidas().contains(usuario) );
+            request.setAttribute("peticionAmistad",miusuario.getPeticionesEnviadas().contains(usuario) );
         }
         
         request.setAttribute("usuario", usuario);
