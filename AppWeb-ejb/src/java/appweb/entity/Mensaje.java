@@ -12,12 +12,15 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -47,6 +50,10 @@ public class Mensaje implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_MENSAJE")
+    //--------Sentencias que habia que poner para hacer un atributo autoincrementable------
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "secuencia_id_mensaje")
+    @SequenceGenerator(name="secuencia_id_mensaje", sequenceName = "SEQ_ID_MENSAJE", allocationSize=1)
+    //--------------------------------------------------------------------------
     private BigDecimal idMensaje;
     @Size(max = 300)
     @Column(name = "MENSAJE")

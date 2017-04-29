@@ -52,8 +52,8 @@ public class Estudio implements Serializable {
     @NotNull
     @Column(name = "ID_ESTUDIO")
     //--------Sentencias que habia que poner para hacer un atributo autoincrementable------
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "secuencia_post")
-    @SequenceGenerator(name="secuencia_post", sequenceName = "SEQ_ID_ESTUDIO", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "secuencia_id_estudio")
+    @SequenceGenerator(name="secuencia_id_estudio", sequenceName = "SEQ_ID_ESTUDIO", allocationSize=1)
     //--------------------------------------------------------------------------
     private BigDecimal idEstudio;
     @Basic(optional = false)
