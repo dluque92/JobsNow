@@ -4,18 +4,22 @@
     Author     : david
 --%>
 
+<%@page import="appweb.entity.DatosUsuario"%>
 <%@page import="java.util.List"%>
 <%@page import="appweb.entity.Mensaje"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    List<List<Mensaje>> listaMensajesAmigos = (List<List<Mensaje>>) request.getAttribute("listaMensajesAmigos");
-    listaMensajesAmigos.get(0);
+    List<Mensaje> listaMensajesAmigo = (List<Mensaje>) request.getAttribute("listaMensajesAmigo");
+    DatosUsuario amigo = (DatosUsuario) request.getAttribute("amigo");
+    DatosUsuario usuario = (DatosUsuario) request.getAttribute("usuario");
+    List<DatosUsuario> listaAmigos = (List<DatosUsuario>) request.getAttribute("listaAmigos");
 %>
 <html>
     <head>
+        <!--
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <!-- Latest compiled and minified JavaScript -->
+        Latest compiled and minified JavaScript
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/40f6f1cf0c.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -24,8 +28,31 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href='style.css' rel='stylesheet' type='text/css'>
+                <!-- Icons -->
+        <script src="https://use.fontawesome.com/0e798431ad.js"></script>
         <title>Bandeja de Entrada</title>
+        <style>
+            body { padding-top: 70px; }
+            .message-panel{
+                background-color: #EEEEEE;
+                width: 100%;
+                padding: 2em;
+            }
+            .container{
+                margin: 2em;
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top  navbar-static-top">
@@ -55,58 +82,48 @@
                 </div>
             </div>
         </nav>
-        <div class="container bootstrap snippet middlePage" style="margin-top: 5%; width: 80%; height: auto;">
-            <div class="row" >
-                <%
-                    //for (Datosusuario usuario : listaCorreos) {
-                %>
-                <div class="conversation-wrap col-md-3" style=" background-color: whitesmoke;">
-                    <div class="media conversation">
-                        <a class="pull-left" href="#">
-                            <img class="media-object img-circle"  style="width: 50px; height: 50px;" src="http://bootdey.com/img/Content/user_2.jpg">
-                        </a>
-                        <div class="media-body">
-                            <h5 class="media-heading"></h5>
-                            <small class="text-muted">Lorem ipsum dolor...</small>
-                        </div>
-                    </div>
+
+        <div class="container">
+            <div class="col-sm-4">
+                <div class="list-group">
+                    <%
+                        if (listaAmigos != null) {
+                            for (DatosUsuario amigos : listaAmigos) {
+                    %>
+                    <a href="ServletListarCorreos?amigo=<%= amigos.getIdUsuario()%>" class="list-group-item"><%=amigos.getNombre() + " " + amigos.getApellidos()%></a>
+                    <%
+                            }
+                        }
+                    %>
                 </div>
-                <div class="message-wrap col-md-8" style=" background-color: whitesmoke;">
-                    <div class="msg-wrap">
-                        
-                        <% //for( Mensaje mensaje: usuario.getMensaje){
-                            //
-                        %>
-                        <div class="media msg ">
-                            <a class="pull-left" href="#">
-                                <img class="media-object    img-circle" style="width: 32px; height: 32px;" src="http://bootdey.com/img/Content/user_2.jpg">
-                            </a>
-                            <div class="media-body">
-                                <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
-                                <h5 class="media-heading">Pauline mothg</h5>
-                                <small class="col-md-10 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam convallis, augue sed euismod varius, nisl metus vestibulum neque, nec dictum est dui et tellus</small>
-                            </div>
-                        </div>
-                        <!-- <div class="alert alert-info msg-date">
-                             <strong>Today</strong>
-                         </div> -->
+            </div>
+            <div class="col-sm-8">
+                <div class="message-panel">
+                    <div class="jumbotron" style="background-color: #FFFFFF; border: 1px solid black; border-radius: 0px;">
                         <%
-                        //}
+                            if (listaMensajesAmigo != null) {
+                                for (Mensaje mensaje : listaMensajesAmigo) {
                         %>
-                        
-                        <div class="send-wrap ">
-                            <textarea class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
+                        <div>
+                            <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
+                            <h5 class="media-heading"><%=amigo.getNombre() + " " + amigo.getApellidos()%></h5>
+                            <small class="col-md-10 text-muted"><%=mensaje.getMensaje()%> </small>
+                            <br/>
                         </div>
-                        <div class="btn-panel">
-                            <button class="btn btn-success" role="button">
-                                <i class="fa fa-share"></i> Enviar mensaje
-                            </button>
-                        </div>
+                        <%
+                                }
+                            }
+                        %>
+                    </div>
+                    <div class="send-wrap ">
+                        <textarea class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
+                    </div>
+                    <div class="btn-panel">
+                        <button class="btn btn-success" role="button">
+                            <i class="fa fa-share"></i> Enviar mensaje
+                        </button>
                     </div>
                 </div>
-                <%
-                  //  }
-                %>
-            </div>                
+            </div>
     </body>
 </html>

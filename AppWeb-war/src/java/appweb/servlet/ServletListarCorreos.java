@@ -11,8 +11,11 @@ import appweb.ejb.MensajeFacade;
 import appweb.entity.DatosUsuario;
 
 import appweb.entity.Mensaje;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -49,17 +52,28 @@ public class ServletListarCorreos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Mensaje> listaCorreos = new ArrayList<>();
+ 
         HttpSession session = request.getSession();
         
         DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
-        List<DatosUsuario> listaAmigos = (List) usuario.getMisAmigos();
-        List<List<Mensaje>> listaMensajesAmigos = new ArrayList<>();
-        for(DatosUsuario amigo: listaAmigos){
-            listaMensajesAmigos.add(this.mensajeFacade.getMensajesAmigos(usuario.getIdUsuario(),amigo.getIdUsuario()));
-        }
-        
-        request.setAttribute("listaMensajesAmigos", listaMensajesAmigos);
+        String idAmigo = (String) request.getParameter("amigo");
+        request.setAttribute("listaAmigos", usuario.getMisAmigos());
+        if(idAmigo != null){
+             DatosUsuario amigo = this.datosusuarioFacade.find(new BigDecimal (idAmigo));
+             List<Mensaje> listaMensajesAmigo = new ArrayList<>();
+          
+          for(Mensaje mensaje: usuario.getMensajeCollection()){ 
+              Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
+              if(coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)){                
+                  listaMensajesAmigo.add(mensaje);
+                  
+              }
+          }
+          
+        request.setAttribute("listaMensajesAmigo",listaMensajesAmigo);
+        request.setAttribute("amigo",amigo);
+        }            
+          
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/bandejaentrada.jsp");
         rd.forward(request,response);
