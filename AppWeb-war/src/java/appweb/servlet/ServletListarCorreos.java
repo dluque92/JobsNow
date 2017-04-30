@@ -10,7 +10,6 @@ import appweb.ejb.MensajeFacade;
 import appweb.entity.DatosUsuario;
 
 import appweb.entity.Mensaje;
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -34,9 +33,6 @@ import javax.servlet.http.HttpSession;
 public class ServletListarCorreos extends HttpServlet {
 
     @EJB
-    private MensajeFacade mensajeFacade;
-
-    @EJB
     private DatosUsuarioFacade datosUsuarioFacade;
 
     /**
@@ -57,7 +53,15 @@ public class ServletListarCorreos extends HttpServlet {
         usuario = this.datosUsuarioFacade.find(usuario.getIdUsuario());
         String idAmigo = (String) request.getParameter("amigo");
         request.setAttribute("listaAmigos", usuario.getMisAmigos());
-        
+        List<Mensaje> lista = new ArrayList<>();
+        lista = (List<Mensaje>) usuario.getMensajeCollection();
+        if (idAmigo == null && lista != null && !lista.isEmpty() && usuario.getMisAmigos()!=null) {
+            Collections.sort(lista);
+            lista.get(lista.size()-1).getDatosUsuarioCollection().remove(usuario);
+            List<DatosUsuario> amigos = (List<DatosUsuario>) lista.get(lista.size()-1).getDatosUsuarioCollection();
+            DatosUsuario amigo = amigos.get(0);
+            idAmigo=amigo.getIdUsuario().toString();
+        }
         if (idAmigo != null) {
             DatosUsuario amigo = this.datosUsuarioFacade.find(new BigDecimal(idAmigo));
             List<Mensaje> listaMensajesAmigo = new ArrayList<>();
@@ -69,7 +73,7 @@ public class ServletListarCorreos extends HttpServlet {
 
                 }
             }
-            
+
             for (Mensaje mensaje : amigo.getMensajeCollection()) {
                 Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
                 if (coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)) {
