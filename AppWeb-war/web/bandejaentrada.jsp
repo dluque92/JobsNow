@@ -54,20 +54,22 @@
             }
             .msg{
                 margin: 1em;
+                font-weight: 500;
+            }
+            .msg-box{
+                border-style: solid;
+                border-width: 0.01px;
+                margin: 1em;
+                padding: 5em;
             }
             #friend{
-                background-color: #34AADC;
-                color: #111111;
+                background-color: #FFFFFF;
             }
             #user{
-                background-color: #151515;
-                color: #FFFFFF;
+                background-color: #DCF8C6;
             }
-            .text-friend{
-                color: #111111;
-            }
-            .text-user{
-                color: #FFFFFF;
+            .msg-text{
+                color:#111111;
             }
         </style>
     </head>
@@ -115,55 +117,51 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                <div class="message-panel">
-                    <div class="jumbotron" style="background-color: #FFFFFF; border: 1px solid black; border-radius: 0px;">
-                        <%
-                            if (listaMensajesAmigo != null) {
-                                for (Mensaje mensaje : listaMensajesAmigo) {
-                                    if (amigo.getEmail().equals(mensaje.getMensaje().substring(0, amigo.getEmail().length()))) {
-                        %>
-                        <div id="friend">
-                            <div class="msg">
-                            <small class="text-friend pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
+                <div class="jumbotron" style="border-radius: 0px;">
+                    <%
+                        if (listaMensajesAmigo != null) {
+                            for (Mensaje mensaje : listaMensajesAmigo) {
+                                if (amigo.getEmail().equals(mensaje.getMensaje().substring(0, amigo.getEmail().length()))) {
+                    %>
+                    <div id="friend" class="msg-box">
+                        <div class="msg">
+                            <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
                             <h4 class="media-heading"><%=amigo.getNombre() + " " + amigo.getApellidos()%></h4>
-                            <small class="text-friend col-md-10 text-muted"><%=mensaje.getMensaje().substring(amigo.getEmail().length())%> </small>
-                            </div>
-                            <br/>
+                            <small class="msg-text col-md-10 text-muted"><%=mensaje.getMensaje().substring(amigo.getEmail().length())%> </small>
                         </div>
-                        <%
-                                    } else {
-                        %>
-                        <div id="user">
-                            <div class="msg">
-                            <small class="text-user pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
+                    </div>
+                    <%
+                    } else {
+                    %>
+                    <div id="user" class="msg-box">
+                        <div class="msg">
+                            <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
                             <h4 class="media-heading"><%=usuario.getNombre() + " " + usuario.getApellidos()%></h4>
-                            <small class="text-user col-md-10 text-muted"><%=mensaje.getMensaje().substring(usuario.getEmail().length())%> </small>
-                            </div>
-                            <br/>
+                            <small class="msg-text col-md-10 text-muted"><%=mensaje.getMensaje().substring(usuario.getEmail().length())%> </small>
                         </div>
-                        <%
-                                    }
+                    </div>
+                    <%
                                 }
                             }
-                        %>
+                        }
+                    %>
+                <form method="post" action="ServletEnviarMensaje">
+                    <%
+                        if (amigo != null) {
+                    %>
+                    <input type="hidden" name="id" value="<%=amigo.getIdUsuario()%>" />
+                    <%
+                        }
+                    %>
+                    <div class="send-wrap ">
+                        <textarea name="mensaje" class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
                     </div>
-                    <form method="post" action="ServletEnviarMensaje">
-                        <%
-                            if (amigo != null) {
-                        %>
-                        <input type="hidden" name="id" value="<%=amigo.getIdUsuario()%>" />
-                        <%
-                            }
-                        %>
-                        <div class="send-wrap ">
-                            <textarea name="mensaje" class="form-control send-message" rows="3" placeholder="Escribe un mensaje..."></textarea>
-                        </div>
-                        <div class="btn-panel">
-                            <button class="btn btn-success" role="button">
-                                <i class="fa fa-share"></i> Enviar mensaje
-                            </button>
-                        </div>
-                    </form>
+                    <div class="btn-panel">
+                        <button class="btn btn-success" role="button">
+                            <i class="fa fa-share"></i> Enviar mensaje
+                        </button>
+                    </div>
+                </form>
                 </div>
             </div>
     </body>
