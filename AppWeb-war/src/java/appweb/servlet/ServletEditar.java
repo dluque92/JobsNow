@@ -5,12 +5,14 @@
  */
 package appweb.servlet;
 
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.Aficion;
 import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
 import appweb.entity.Experiencia;
 import java.io.IOException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +28,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletEditar", urlPatterns = {"/ServletEditar"})
 public class ServletEditar extends HttpServlet {
 
+    @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,8 +44,11 @@ public class ServletEditar extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession sesion = request.getSession();
-        DatosUsuario usuario = (DatosUsuario) sesion.getAttribute("usuario");
+        HttpSession session = request.getSession();
+
+        DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
+        usuario = this.datosUsuarioFacade.find(usuario.getIdUsuario());
+        session.setAttribute("usuario", usuario);
         String idEstudio = (String) request.getParameter("idEstudio");
         String idExperiencia = (String) request.getParameter("idExperiencia");
         String idAficion = (String) request.getParameter("idAficion");

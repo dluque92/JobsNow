@@ -42,7 +42,10 @@ public class ServletBuscar extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        DatosUsuario usuarioEnSesion = (DatosUsuario) session.getAttribute("usuario");
+
+        DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
+        usuario = this.datosUsuarioFacade.find(usuario.getIdUsuario());
+        session.setAttribute("usuario", usuario);
         
         List<DatosUsuario> listaUsuariosPorNombre;
         List<DatosUsuario> listaUsuariosPorAficion;
@@ -51,10 +54,10 @@ public class ServletBuscar extends HttpServlet {
         
         String busqueda = request.getParameter("busqueda");
         
-        listaUsuariosPorNombre = this.datosUsuarioFacade.findByName(busqueda, usuarioEnSesion.getIdUsuario());
-        listaUsuariosPorAficion = this.datosUsuarioFacade.findByAficion(busqueda, usuarioEnSesion.getIdUsuario());
-        listaUsuariosPorEstudios = this.datosUsuarioFacade.findByEstudios(busqueda, usuarioEnSesion.getIdUsuario());
-        listaUsuariosPorExperiencia = this.datosUsuarioFacade.findByExperiencia(busqueda, usuarioEnSesion.getIdUsuario());
+        listaUsuariosPorNombre = this.datosUsuarioFacade.findByName(busqueda, usuario.getIdUsuario());
+        listaUsuariosPorAficion = this.datosUsuarioFacade.findByAficion(busqueda, usuario.getIdUsuario());
+        listaUsuariosPorEstudios = this.datosUsuarioFacade.findByEstudios(busqueda, usuario.getIdUsuario());
+        listaUsuariosPorExperiencia = this.datosUsuarioFacade.findByExperiencia(busqueda, usuario.getIdUsuario());
         
         request.setAttribute("listaUsuariosPorNombre", listaUsuariosPorNombre);
         request.setAttribute("listaUsuariosPorAficion", listaUsuariosPorAficion);

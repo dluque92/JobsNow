@@ -41,13 +41,17 @@ public class ServletListarDatos extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+
         String stringId = request.getParameter("id");
         if (stringId == null || stringId.isEmpty()) {
             stringId = (String) session.getAttribute("id");
             session.removeAttribute("id");
         }
         DatosUsuario miusuario = (DatosUsuario) session.getAttribute("usuario");
+        miusuario = this.datosUsuarioFacade.find(miusuario.getIdUsuario());
+        session.setAttribute("usuario", miusuario);
         DatosUsuario usuario = null;
+        
         if (stringId == null || stringId.isEmpty()) {
             usuario = (DatosUsuario) session.getAttribute("usuario");
         } else {
@@ -56,7 +60,6 @@ public class ServletListarDatos extends HttpServlet {
             request.setAttribute("peticionAmistad", miusuario.getPeticionesEnviadas().contains(usuario));
         }
         request.setAttribute("peticiones", miusuario.getPeticionesRecibidas().size());
-        
         request.setAttribute("usuario", usuario);
         request.setAttribute("listaExperiencias", usuario.getExperienciaCollection());
         request.setAttribute("listaAficiones", usuario.getAficionCollection());

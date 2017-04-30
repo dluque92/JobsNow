@@ -5,9 +5,11 @@
  */
 package appweb.servlet;
 
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.DatosUsuario;
 import java.io.IOException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletListarPeticiones", urlPatterns = {"/ServletListarPeticiones"})
 public class ServletListarPeticiones extends HttpServlet {
 
+    @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,8 +42,10 @@ public class ServletListarPeticiones extends HttpServlet {
             throws ServletException, IOException {
         List<DatosUsuario> listaPeticiones;
         HttpSession session = request.getSession();
-        
-        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
+
+        DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
+        usuario = this.datosUsuarioFacade.find(usuario.getIdUsuario());
+        session.setAttribute("usuario", usuario);
         listaPeticiones = (List)usuario.getPeticionesRecibidas();
         
         request.setAttribute("listaPeticiones", listaPeticiones);
