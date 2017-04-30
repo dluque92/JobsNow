@@ -9,10 +9,10 @@
 <!DOCTYPE html>
 <%
     Boolean accedido = (Boolean) request.getAttribute("accedido");
-    DatosUsuario usuario = (DatosUsuario) request.getAttribute("usuario");  
+    DatosUsuario usuario = (DatosUsuario) request.getAttribute("usuario");
 %>
 <html>
-    
+
     <link href='style.css' rel='stylesheet' type='text/css'>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,11 +26,13 @@
     </head>
     <body>
         <%
-        if (usuario == null && accedido!=null && accedido){
+            if (usuario == null && accedido != null && accedido) {
         %>
-        <script>
-            alert("Usuario o contraseña incorrecto");
-        </script>
+        <div class="middlePage" style="margin-top: 25px">
+            <div class="alert alert-warning">
+                <strong>Error:</strong> Usuario o contraseña incorrecto
+            </div>
+        </div>
         <%
             }
         %>
@@ -64,7 +66,7 @@
                                     <div class="spacing"><a href="#"><small> Forgot Password?</small></a><br/></div>
                                     <input type="submit" id="singlebutton" name="singlebutton" value="Sign In" class="btn btn-info btn-sm pull-right">
                                     <a href="registrar.jsp" target="_self"> <input type="button" name="boton" value="Register" class="btn btn-default btn-sm pull-left"/> </a>
-                                    </fieldset>
+                                </fieldset>
                             </form>
                         </div>
 
