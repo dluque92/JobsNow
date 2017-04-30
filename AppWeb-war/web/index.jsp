@@ -18,6 +18,7 @@
     List<Estudio> listaEstudios = (List<Estudio>) request.getAttribute("listaEstudios");
     Boolean sonAmigos = (Boolean) request.getAttribute("sonAmigos");
     Boolean peticionAmistad = (Boolean) request.getAttribute("peticionAmistad");
+    Integer peticiones = (Integer) request.getAttribute("peticiones");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -125,7 +126,16 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
-                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color:green"></i></a></li>
+                                <%
+                                    if (peticiones != null && peticiones!=0) {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: #33ffff"></i></a></li>
+                                <%} else {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users"></i></a></li>
+                                <%
+                                    }
+                                %>
                         <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
                     </ul>
                 </div>
@@ -134,8 +144,7 @@
     </nav>
     <div class="container">
         <div class="jumbotron vertical-center">
-            <%
-                if (usuario.getNombre() != null || usuario.getApellidos() != null) {
+            <%                if (usuario.getNombre() != null || usuario.getApellidos() != null) {
             %>
             <h1><%= usuario.getNombre() + " " + usuario.getApellidos()%></h1>
             <%
@@ -181,7 +190,7 @@
             %>
             <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getIdUsuario()%>"> Añadir amigo</a>
             <%
-            } else if(peticionAmistad){
+            } else if (peticionAmistad) {
                 int rechazar = 1;
             %>
             <a class="btn btn-primary pull-right " href="ServletRechazarAmigo?id=<%= usuario.getIdUsuario()%>&rechazar=<%= rechazar%>"> Cancelar solicitud de amistad</a>
