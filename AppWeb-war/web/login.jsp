@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    Float accedido = (Float) request.getAttribute("accedido");
+    Boolean accedido = (Boolean) request.getAttribute("accedido");
     DatosUsuario usuario = (DatosUsuario) request.getAttribute("usuario");  
 %>
 <html>
@@ -26,7 +26,7 @@
     </head>
     <body>
         <%
-        if (usuario == null &&accedido!=null&& accedido==1){
+        if (usuario == null && accedido!=null && accedido){
         %>
         <script>
             alert("Usuario o contraseña incorrecto");

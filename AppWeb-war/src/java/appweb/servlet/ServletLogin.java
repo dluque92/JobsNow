@@ -46,12 +46,12 @@ public class ServletLogin extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("usuario", usuario);
         
-        request.setAttribute("accedido",(float) 1.0);
         RequestDispatcher rd;
         if (usuario != null){
             //rd = this.getServletContext().getRequestDispatcher("/index.jsp");
             rd = this.getServletContext().getRequestDispatcher("/ServletListarDatos");
         } else {
+            request.setAttribute("accedido", true);
             rd = this.getServletContext().getRequestDispatcher("/login.jsp");
         }
         rd.forward(request,response);
