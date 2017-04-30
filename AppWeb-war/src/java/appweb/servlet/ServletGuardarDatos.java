@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletGuardarDatos", urlPatterns = {"/ServletGuardarDatos"})
 public class ServletGuardarDatos extends HttpServlet {
     @EJB
-    private DatosUsuarioFacade datosUsuariofacade;
+    private DatosUsuarioFacade datosusuariofacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,6 +44,7 @@ public class ServletGuardarDatos extends HttpServlet {
         request.setCharacterEncoding( "UTF-8" );//OJO!!
         
         Boolean badPassword = false;
+        Boolean badPassword2 = false;
         //siempre que haya algun cambio, hay que actualizar la sesion tambien.
         DatosUsuario usuario;
         
@@ -63,7 +64,7 @@ public class ServletGuardarDatos extends HttpServlet {
        DatosUsuario usuarioSesion = (DatosUsuario) session.getAttribute("usuario");
        BigDecimal id = usuarioSesion.getIdUsuario();
        
-       usuario = this.datosUsuariofacade.find(id);
+       usuario = this.datosusuariofacade.find(id);
        
        List<Aficion> aficiones = (List<Aficion>) usuario.getAficionCollection();
        List<Experiencia> experiencias = (List<Experiencia>) usuario.getExperienciaCollection();
@@ -73,9 +74,14 @@ public class ServletGuardarDatos extends HttpServlet {
        usuario.setApellidos(apellidos);
        usuario.setEmail(email);
        
-       if(password2 != null && !password2.isEmpty() && password !=null && !password.isEmpty()){           
-           if(password2.equals(password3)&& password.equals(usuario.getPassword())){
-               usuario.setPassword(password2);
+       if(password2 != null && !password2.isEmpty() && password !=null && !password.isEmpty()){ 
+           if(password.equals(usuario.getPassword())){
+                if(password2.equals(password3)){
+                     usuario.setPassword(password2);
+                }else{
+                    badPassword2 = true;
+                }
+              
            }else{
                usuario.setPassword(usuario.getPassword());
                badPassword = true;
@@ -88,18 +94,20 @@ public class ServletGuardarDatos extends HttpServlet {
        usuario.setInstagram(instagram);
        usuario.setWeb(paginaweb);
        
-       this.datosUsuariofacade.edit(usuario);//actualiza el usuario
+       this.datosusuariofacade.edit(usuario);//actualiza el usuario
         
        session.setAttribute("usuario", usuario);//actualizamos la sesion
        
         
         RequestDispatcher rd;
         
-        if(badPassword){
+        if(badPassword || badPassword2){
             request.setAttribute("usuario",usuario);
             request.setAttribute("aficiones", aficiones);
             request.setAttribute("experiencias", experiencias);
             request.setAttribute("estudios", estudios);
+            request.setAttribute("badPassword",badPassword);
+            request.setAttribute("badPassword2", badPassword2);
   
             rd = this.getServletContext().getRequestDispatcher("/editar.jsp");
             rd.forward(request, response);
