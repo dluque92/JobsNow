@@ -184,7 +184,7 @@
             <%
             } else if (!usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario()) && sonAmigos) {
             %>
-            <a class="btn btn-info pull-right" href="ServletEditar"> Enviar mensaje</a>
+            <a class="btn btn-info pull-right" href="ServletListarCorreos?amigo=<%= usuario.getIdUsuario() %>"> Enviar mensaje</a>
             <%
             } else if (!peticionAmistad) {
             %>
