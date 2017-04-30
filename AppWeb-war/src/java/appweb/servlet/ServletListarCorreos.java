@@ -5,7 +5,6 @@
  */
 package appweb.servlet;
 
-
 import appweb.ejb.DatosUsuarioFacade;
 import appweb.ejb.MensajeFacade;
 import appweb.entity.DatosUsuario;
@@ -39,8 +38,6 @@ public class ServletListarCorreos extends HttpServlet {
     @EJB
     private DatosUsuarioFacade datosusuarioFacade;
 
-
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,31 +49,41 @@ public class ServletListarCorreos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
+
         HttpSession session = request.getSession();
-        
-        DatosUsuario usuario = (DatosUsuario)session.getAttribute("usuario");
+
+        DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
         String idAmigo = (String) request.getParameter("amigo");
         request.setAttribute("listaAmigos", usuario.getMisAmigos());
-        if(idAmigo != null){
-             DatosUsuario amigo = this.datosusuarioFacade.find(new BigDecimal (idAmigo));
-             List<Mensaje> listaMensajesAmigo = new ArrayList<>();
-          
-          for(Mensaje mensaje: usuario.getMensajeCollection()){ 
-              Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
-              if(coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)){                
-                  listaMensajesAmigo.add(mensaje);
-                  
-              }
-          }
-          
-        request.setAttribute("listaMensajesAmigo",listaMensajesAmigo);
-        request.setAttribute("amigo",amigo);
-        }            
-          
+        
+        if (idAmigo != null) {
+            DatosUsuario amigo = this.datosusuarioFacade.find(new BigDecimal(idAmigo));
+            List<Mensaje> listaMensajesAmigo = new ArrayList<>();
+
+            for (Mensaje mensaje : usuario.getMensajeCollection()) {
+                Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
+                if (coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)) {
+                    listaMensajesAmigo.add(mensaje);
+
+                }
+            }
+            
+            for (Mensaje mensaje : amigo.getMensajeCollection()) {
+                Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
+                if (coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)) {
+                    if (!listaMensajesAmigo.contains(mensaje)) {
+                        listaMensajesAmigo.add(mensaje);
+                    }
+                }
+            }
+
+            request.setAttribute("listaMensajesAmigo", listaMensajesAmigo);
+            request.setAttribute("amigo", amigo);
+        }
+
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/bandejaentrada.jsp");
-        rd.forward(request,response);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

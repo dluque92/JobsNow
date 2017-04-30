@@ -12,7 +12,7 @@
 <%
     List<Mensaje> listaMensajesAmigo = (List<Mensaje>) request.getAttribute("listaMensajesAmigo");
     DatosUsuario amigo = (DatosUsuario) request.getAttribute("amigo");
-    DatosUsuario usuario = (DatosUsuario) request.getAttribute("usuario");
+    DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
     List<DatosUsuario> listaAmigos = (List<DatosUsuario>) request.getAttribute("listaAmigos");
 %>
 <html>
@@ -103,23 +103,38 @@
                         <%
                             if (listaMensajesAmigo != null) {
                                 for (Mensaje mensaje : listaMensajesAmigo) {
+                                    if (amigo.getEmail().equals(mensaje.getMensaje().substring(0, amigo.getEmail().length()))) {
                         %>
                         <div>
+                            <div class="pull-left">
                             <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
                             <h5 class="media-heading"><%=amigo.getNombre() + " " + amigo.getApellidos()%></h5>
-                            <small class="col-md-10 text-muted"><%=mensaje.getMensaje()%> </small>
+                            <small class="col-md-10 text-muted"><%=mensaje.getMensaje().substring(amigo.getEmail().length())%> </small>
+                            </div>
                             <br/>
                         </div>
                         <%
+                                    } else {
+                        %>
+                        <div>
+                            <div style="background-color: whitesmoke;" class="pull-right">
+                            <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
+                            <h5 class="media-heading"><%=usuario.getNombre() + " " + usuario.getApellidos()%></h5>
+                            <small class="col-md-10 text-muted"><%=mensaje.getMensaje().substring(usuario.getEmail().length())%> </small>
+                            </div>
+                            <br/>
+                        </div>
+                        <%
+                                    }
                                 }
                             }
                         %>
                     </div>
                     <form method="post" action="ServletEnviarMensaje">
                         <%
-                            if(amigo!=null){
+                            if (amigo != null) {
                         %>
-                        <input type="hidden" name="id" value="<%=amigo.getIdUsuario() %>" />
+                        <input type="hidden" name="id" value="<%=amigo.getIdUsuario()%>" />
                         <%
                             }
                         %>

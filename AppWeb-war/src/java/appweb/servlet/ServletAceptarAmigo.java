@@ -48,6 +48,8 @@ public class ServletAceptarAmigo extends HttpServlet {
                 
         usuario.getMisAmigos().add(nuevoAmigo);
         nuevoAmigo.getSoyAmigoDe().add(usuario);
+        usuario.getSoyAmigoDe().add(nuevoAmigo);
+        nuevoAmigo.getMisAmigos().add(usuario);
         
         usuario.getPeticionesRecibidas().remove(nuevoAmigo);
         nuevoAmigo.getPeticionesEnviadas().remove(usuario);

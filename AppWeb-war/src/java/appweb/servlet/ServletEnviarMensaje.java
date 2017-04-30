@@ -57,10 +57,15 @@ public class ServletEnviarMensaje extends HttpServlet {
         }
 
         if (amigo != null && texto != null && !texto.equals("") && usuario != null) {
-            Mensaje mensajeAEnviar = this.mensajeFacade.crearMensaje(usuario.getNombre()+" "+usuario.getApellidos()+": "+texto, usuario, amigo);
+            Mensaje mensajeAEnviar = this.mensajeFacade.crearMensaje(usuario.getEmail()+texto, usuario, amigo);
             this.mensajeFacade.create(mensajeAEnviar);
+            usuario.getMensajeCollection().add(mensajeAEnviar);
+            amigo.getMensajeCollection().add(mensajeAEnviar);
+            this.datosUsuarioFacade.edit(usuario);
+            this.datosUsuarioFacade.edit(amigo);
         }
-
+        
+        
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/ServletListarCorreos");
         rd.forward(request, response);

@@ -84,6 +84,8 @@ public class Mensaje implements Serializable {
         List<DatosUsuario> datosUsuarioList = new ArrayList<>();
         datosUsuarioList.add(usuario);
         datosUsuarioList.add(amigo);
+        Date f = new Date();
+        this.fecha=f;
         this.datosUsuarioCollection = datosUsuarioList;
         //OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO CON ESTO
         //SI TENEMOS UNA COLECCIÓN TENEMOS QUE CREAR LA COLECCION, AÑADIR LOS ELEMENTOS Y ASIGNAR ESA COLECCION AL ATRIBUTO
