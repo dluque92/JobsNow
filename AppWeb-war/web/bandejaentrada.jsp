@@ -60,7 +60,7 @@
                 border-style: solid;
                 border-width: 0.01px;
                 margin: 1em;
-                padding: 5em;
+                padding: 1.5em;
             }
             #friend{
                 background-color: #FFFFFF;
