@@ -52,6 +52,23 @@
             .container{
                 margin: 2em;
             }
+            .msg{
+                margin: 1em;
+            }
+            #friend{
+                background-color: #34AADC;
+                color: #111111;
+            }
+            #user{
+                background-color: #151515;
+                color: #FFFFFF;
+            }
+            .text-friend{
+                color: #111111;
+            }
+            .text-user{
+                color: #FFFFFF;
+            }
         </style>
     </head>
     <body>
@@ -105,22 +122,22 @@
                                 for (Mensaje mensaje : listaMensajesAmigo) {
                                     if (amigo.getEmail().equals(mensaje.getMensaje().substring(0, amigo.getEmail().length()))) {
                         %>
-                        <div>
-                            <div class="pull-left">
-                            <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
-                            <h5 class="media-heading"><%=amigo.getNombre() + " " + amigo.getApellidos()%></h5>
-                            <small class="col-md-10 text-muted"><%=mensaje.getMensaje().substring(amigo.getEmail().length())%> </small>
+                        <div id="friend">
+                            <div class="msg">
+                            <small class="text-friend pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
+                            <h4 class="media-heading"><%=amigo.getNombre() + " " + amigo.getApellidos()%></h4>
+                            <small class="text-friend col-md-10 text-muted"><%=mensaje.getMensaje().substring(amigo.getEmail().length())%> </small>
                             </div>
                             <br/>
                         </div>
                         <%
                                     } else {
                         %>
-                        <div>
-                            <div style="background-color: whitesmoke;" class="pull-right">
-                            <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
-                            <h5 class="media-heading"><%=usuario.getNombre() + " " + usuario.getApellidos()%></h5>
-                            <small class="col-md-10 text-muted"><%=mensaje.getMensaje().substring(usuario.getEmail().length())%> </small>
+                        <div id="user">
+                            <div class="msg">
+                            <small class="text-user pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
+                            <h4 class="media-heading"><%=usuario.getNombre() + " " + usuario.getApellidos()%></h4>
+                            <small class="text-user col-md-10 text-muted"><%=mensaje.getMensaje().substring(usuario.getEmail().length())%> </small>
                             </div>
                             <br/>
                         </div>
