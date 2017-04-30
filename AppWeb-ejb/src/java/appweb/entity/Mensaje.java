@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Mensaje.findByMensaje", query = "SELECT m FROM Mensaje m WHERE m.mensaje = :mensaje")
     , @NamedQuery(name = "Mensaje.findByLeido", query = "SELECT m FROM Mensaje m WHERE m.leido = :leido")
     , @NamedQuery(name = "Mensaje.findByFecha", query = "SELECT m FROM Mensaje m WHERE m.fecha = :fecha")})
-public class Mensaje implements Serializable {
+public class Mensaje implements Serializable, Comparable<Mensaje> {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -53,8 +53,8 @@ public class Mensaje implements Serializable {
     @NotNull
     @Column(name = "ID_MENSAJE")
     //--------Sentencias que habia que poner para hacer un atributo autoincrementable------
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "secuencia_id_mensaje")
-    @SequenceGenerator(name="secuencia_id_mensaje", sequenceName = "SEQ_ID_MENSAJE", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "secuencia_id_mensaje")
+    @SequenceGenerator(name = "secuencia_id_mensaje", sequenceName = "SEQ_ID_MENSAJE", allocationSize = 1)
     //--------------------------------------------------------------------------
     private BigDecimal idMensaje;
     @Size(max = 300)
@@ -77,15 +77,15 @@ public class Mensaje implements Serializable {
     public Mensaje(BigDecimal idMensaje) {
         this.idMensaje = idMensaje;
     }
-    
-    public Mensaje(BigDecimal idMensaje,String texto, DatosUsuario usuario, DatosUsuario amigo){
+
+    public Mensaje(BigDecimal idMensaje, String texto, DatosUsuario usuario, DatosUsuario amigo) {
         this.idMensaje = idMensaje;
         this.mensaje = texto;
         List<DatosUsuario> datosUsuarioList = new ArrayList<>();
         datosUsuarioList.add(usuario);
         datosUsuarioList.add(amigo);
         Date f = new Date();
-        this.fecha=f;
+        this.fecha = f;
         this.datosUsuarioCollection = datosUsuarioList;
         //OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO CON ESTO
         //SI TENEMOS UNA COLECCIÓN TENEMOS QUE CREAR LA COLECCION, AÑADIR LOS ELEMENTOS Y ASIGNAR ESA COLECCION AL ATRIBUTO
@@ -156,5 +156,10 @@ public class Mensaje implements Serializable {
     public String toString() {
         return "appweb.ejb.Mensaje[ idMensaje=" + idMensaje + " ]";
     }
-    
+
+    @Override
+    public int compareTo(Mensaje m) {
+        return fecha.compareTo(m.fecha);
+    }
+
 }

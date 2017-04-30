@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -78,6 +79,7 @@ public class ServletListarCorreos extends HttpServlet {
                 }
             }
 
+            Collections.sort(listaMensajesAmigo);
             request.setAttribute("listaMensajesAmigo", listaMensajesAmigo);
             request.setAttribute("amigo", amigo);
         }
