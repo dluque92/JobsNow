@@ -8,12 +8,15 @@ package dropbox;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
+import com.dropbox.core.v2.files.WriteMode;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -61,5 +64,13 @@ public class DropboxController {
             System.err.println(ex.toString());
         }
         return url;
+    }
+    
+    public static void overwriteFile(String fileName, InputStream fileContent){
+        try {
+            client.files().uploadBuilder("/" + fileName).withMode(WriteMode.OVERWRITE).uploadAndFinish(fileContent);
+        } catch (DbxException | IOException ex) {
+            Logger.getLogger(DropboxController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -123,7 +123,7 @@
 
                     <div class="row">
                         <div class="col-md-7" style="border-left:1px solid #ccc;height:auto; width: 680px">
-                            <form class="form-horizontal" action="ServletGuardarDatos" method="post">
+                            <form class="form-horizontal" action="ServletGuardarDatos" method="post" enctype="multipart/form-data">
                                 <fieldset>
                                     <div class="spacing"><small>Nombre</small></div>
                                     <%
@@ -220,11 +220,11 @@
                                         if (contacto.getFoto() != null) {
                                     %>
 
-                                    <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="<%=contacto.getFoto()%>">
+                                    <input id="foto" name="foto" type="file" placeholder="Foto" class="form-control input-md" value="">
                                     <%
                                     } else {
                                     %>
-                                    <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md" value="">
+                                    <input id="foto" name="foto" type="file" placeholder="Foto" class="form-control input-md" value="">
                                     <%
                                         }
                                     %>
