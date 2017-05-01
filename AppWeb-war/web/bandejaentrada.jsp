@@ -114,7 +114,7 @@
                 </div>
             </div>
         </nav>
-                        
+
         <div class="container">
             <div class="col-sm-4">
                 <div class="list-group">
@@ -130,7 +130,8 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                <div class="jumbotron" style="border-radius: 0px;">
+                <div class="jumbotron" style="border-radius: 0px; border-style: solid; border-width: 0.01px; width: 1000px; padding: 0px !important;">
+                <div class="jumbotron" style="border-radius: 0px; overflow-y: auto; height:350px;">
                     <%
                         if (listaMensajesAmigo != null) {
                             for (Mensaje mensaje : listaMensajesAmigo) {
@@ -158,7 +159,8 @@
                             }
                         }
                     %>
-                <form method="post" action="ServletEnviarMensaje">
+                </div>
+                <form method="post" action="ServletEnviarMensaje" style="margin: 1em;">
                     <%
                         if (amigo != null) {
                     %>
