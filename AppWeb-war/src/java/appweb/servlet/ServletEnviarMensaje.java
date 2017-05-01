@@ -58,6 +58,7 @@ public class ServletEnviarMensaje extends HttpServlet {
 
         if (amigo != null && texto != null && !texto.equals("") && usuario != null) {
             Mensaje mensajeAEnviar = this.mensajeFacade.crearMensaje(usuario.getEmail()+texto, usuario, amigo);
+            mensajeAEnviar.setLeido('0');
             this.mensajeFacade.create(mensajeAEnviar);
             usuario.getMensajeCollection().add(mensajeAEnviar);
             amigo.getMensajeCollection().add(mensajeAEnviar);

@@ -31,14 +31,13 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ServletListarCorreos", urlPatterns = {"/ServletListarCorreos"})
 public class ServletListarCorreos extends HttpServlet {
-
+    
+    @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
+    
     @EJB
     private MensajeFacade mensajeFacade;
 
-    @EJB
-    private DatosUsuarioFacade datosUsuarioFacade;
-
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,49 +49,39 @@ public class ServletListarCorreos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         HttpSession session = request.getSession();
-
+        
         DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
         usuario = this.datosUsuarioFacade.find(usuario.getIdUsuario());
         String idAmigo = (String) request.getParameter("amigo");
         request.setAttribute("listaAmigos", usuario.getMisAmigos());
-        List<Mensaje> lista = new ArrayList<>();
+        List<Mensaje> lista;
         lista = (List<Mensaje>) usuario.getMensajeCollection();
-        if (idAmigo == null && lista != null && !lista.isEmpty() && usuario.getMisAmigos()!=null) {
+        if (idAmigo == null && lista != null && !lista.isEmpty() && usuario.getMisAmigos() != null) {
             Collections.sort(lista);
-            lista.get(lista.size()-1).getDatosUsuarioCollection().remove(usuario);
-            List<DatosUsuario> amigos = (List<DatosUsuario>) lista.get(lista.size()-1).getDatosUsuarioCollection();
-            DatosUsuario amigo = amigos.get(0);
-            idAmigo=amigo.getIdUsuario().toString();
+            for (DatosUsuario u : lista.get(lista.size() - 1).getDatosUsuarioCollection()) {
+                if (!u.equals(usuario)) {
+                    idAmigo = u.getIdUsuario().toString();
+                }
+            }
         }
         if (idAmigo != null) {
             DatosUsuario amigo = this.datosUsuarioFacade.find(new BigDecimal(idAmigo));
             List<Mensaje> listaMensajesAmigo = new ArrayList<>();
-
+            
             for (Mensaje mensaje : usuario.getMensajeCollection()) {
                 Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
                 if (coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)) {
                     listaMensajesAmigo.add(mensaje);
-
                 }
-            }
-
-            for (Mensaje mensaje : amigo.getMensajeCollection()) {
-                Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
-                if (coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)) {
-                    if (!listaMensajesAmigo.contains(mensaje)) {
-                        listaMensajesAmigo.add(mensaje);
-                    }
+                if (!mensaje.getMensaje().startsWith(usuario.getEmail())) {
+                    mensaje.setLeido('1');   
+                    this.mensajeFacade.edit(mensaje);
                 }
-            }
-
-            Collections.sort(listaMensajesAmigo);
-            for(Mensaje mensaje: listaMensajesAmigo){
-                mensaje.setLeido('1');
-                this.mensajeFacade.edit(mensaje);
             }
             
+            Collections.sort(listaMensajesAmigo);
             request.setAttribute("listaMensajesAmigo", listaMensajesAmigo);
             request.setAttribute("amigo", amigo);
         }
