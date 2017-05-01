@@ -57,11 +57,10 @@
             }
             h1 { 
                 color: #16222A;
-                font-size: 4em; 
+                font-size: 2em; 
                 font-weight: 800; 
                 line-height: 72px; 
-                margin: 0 0 24px; 
-                text-align: center; 
+                margin: 0 0 24px;
                 text-transform: uppercase; 
             }
             h3 { 
@@ -102,6 +101,13 @@
             }
             .social-links a:hover i{
                 color:#fff;
+            }
+            .bgimg {
+                padding: 2em;
+                width: 100%;
+                background-image: url('http://medioambiente.blogs.upv.es/files/2013/10/cabecera1.jpg');
+                background-size: cover;
+                margin: 0.1em;
             }
         </style>
     </head>
@@ -154,60 +160,77 @@
         </nav>
         <div class="container">
             <div class="jumbotron vertical-center">
-                <%                if (usuario.getNombre() != null || usuario.getApellidos() != null) {
-                %>
-                <h1><%= usuario.getNombre() + " " + usuario.getApellidos()%></h1>
-                <%
-                    }
-                %>
-
-                <div class="social-links">
-                    <%
-                        if (usuario.getTwitter() != null) {
-                    %>
-                    <a href="http://www.twitter.com/<%= usuario.getTwitter()%>" target="_blank"><i class="fa fa-twitter fa-lg"></i></a>
+                <div class="row  bgimg">
+                    <div class="col-sm-3 col-md-3">  
+                        <img src="default_avatar.jpg" class="img-circle" alt="Cinque Terre" width="150" height="150">
+                    </div>
+                    <div class="col-sm-9 col-md-9">
+                        <%                if (usuario.getNombre() != null || usuario.getApellidos() != null) {
+                        %>
+                        <h3><%= usuario.getNombre() + " " + usuario.getApellidos()%></h3>
                         <%
                             }
                         %>
-
-                    <%
-                        if (usuario.getInstagram() != null) {
-                    %>
-                    <a href="http://www.instagram.com/<%= usuario.getInstagram()%>" target="_blank"><i class="fa fa-instagram fa-lg"></i></a>
-                        <%
-                            }
-                        %>
-                        <%
-                            if (usuario.getWeb() != null) {
-                        %>
-                    <a href="http://<%= usuario.getWeb()%>"target="_blank"><i class="fa fa-link fa-lg"></i></a>
-                        <%
-                            }
-                        %>
+                    </div>
                 </div>
                 <br/>
 
-                <%
-                    if (usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario())) {
-                %>
-                <a class="btn btn-success pull-right" href="ServletEditar"> Editar Perfil</a>
-                <%
-                } else if (!usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario()) && sonAmigos) {
-                %>
-                <a class="btn btn-info pull-right" href="ServletListarCorreos?amigo=<%= usuario.getIdUsuario()%>"> Enviar mensaje</a>
-                <%
-                } else if (!peticionAmistad) {
-                %>
-                <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getIdUsuario()%>"> Añadir amigo</a>
-                <%
-                } else if (peticionAmistad) {
-                    int rechazar = 1;
-                %>
-                <a class="btn btn-primary pull-right " href="ServletRechazarAmigo?id=<%= usuario.getIdUsuario()%>&rechazar=<%= rechazar%>"> Cancelar solicitud de amistad</a>
-                <%
+                <div class="row">
+                    <div class="col-sm-3 col-md-3">
+                        <div class="social-links">
+                            <%
+                                if (usuario.getTwitter() != null) {
+                            %>
+                            <a href="http://www.twitter.com/<%= usuario.getTwitter()%>" target="_blank"><i class="fa fa-twitter fa-lg"></i></a>
+                                <%
+                                    }
+                                %>
 
-                    }
-                %>
+                            <%
+                                if (usuario.getInstagram() != null) {
+                            %>
+                            <a href="http://www.instagram.com/<%= usuario.getInstagram()%>" target="_blank"><i class="fa fa-instagram fa-lg"></i></a>
+                                <%
+                                    }
+                                %>
+                                <%
+                                    if (usuario.getWeb() != null) {
+                                %>
+                            <a href="http://<%= usuario.getWeb()%>"target="_blank"><i class="fa fa-link fa-lg"></i></a>
+                                <%
+                                    }
+                                %>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                    </div>
+
+                    <div class="co-sm-3 col-md-3">
+                        <%
+                            if (usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario())) {
+                        %>
+                        <a class="btn btn-success pull-right" href="ServletEditar"> Editar Perfil</a>
+                        <%
+                        } else if (!usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario()) && sonAmigos) {
+                        %>
+                        <a class="btn btn-info pull-right" href="ServletListarCorreos?amigo=<%= usuario.getIdUsuario()%>"> Enviar mensaje</a>
+                        <%
+                        } else if (!peticionAmistad) {
+                        %>
+                        <a class="btn btn-primary pull-right " href="ServletEnviarPeticion?id=<%= usuario.getIdUsuario()%>"> Añadir amigo</a>
+                        <%
+                        } else if (peticionAmistad) {
+                            int rechazar = 1;
+                        %>
+                        <a class="btn btn-primary pull-right " href="ServletRechazarAmigo?id=<%= usuario.getIdUsuario()%>&rechazar=<%= rechazar%>"> Cancelar solicitud de amistad</a>
+                        <%
+
+                            }
+                        %>
+                    </div>
+                </div>
+
                 <h3>Experiencia</h3>
                 <table class="table table-responsive">
                     <thead>
