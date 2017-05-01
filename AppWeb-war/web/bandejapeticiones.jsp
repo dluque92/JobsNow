@@ -10,6 +10,7 @@
     DatosUsuario du = (DatosUsuario) session.getAttribute("usuario");
     List<DatosUsuario> listaPeticiones = (List)request.getAttribute("listaPeticiones");
     Boolean mensajeDisponible = (Boolean) request.getAttribute("mensajeDisponible");
+    Integer peticiones = (Integer) request.getAttribute("peticiones");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -65,7 +66,7 @@
                         </div>
                         <button type="submit" class="btn btn-default fa fa-search"></button>
                     </form>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" style="margin-right: 1em;">
                         <%
                             if (mensajeDisponible != null && mensajeDisponible == true) {
                         %>
@@ -75,9 +76,19 @@
                                 %>
                         <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
                                 <%
-                                }
+                                    }
                                 %>
-                        <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
+                                <%
+                                    if (peticiones != null && peticiones != 0) {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: orangered"></i></a></li>
+                                <%} else {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users"></i></a></li>
+                                <%
+                                    }
+                                %>
+                        <li><a href="ServletCerrarSesion"><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
             </div>

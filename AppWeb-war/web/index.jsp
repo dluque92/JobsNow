@@ -125,7 +125,7 @@
                         </div>
                         <button type="submit" class="btn btn-default fa fa-search"></button>
                     </form>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" style="margin-right: 1em;">
                         <%
                             if (mensajeDisponible != null && mensajeDisponible == true) {
                         %>
@@ -135,10 +135,10 @@
                                 %>
                         <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
                                 <%
-                                }
+                                    }
                                 %>
                                 <%
-                                    if (peticiones != null && peticiones!=0) {
+                                    if (peticiones != null && peticiones != 0) {
                                 %>
                         <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: orangered"></i></a></li>
                                 <%} else {
@@ -147,7 +147,7 @@
                                 <%
                                     }
                                 %>
-                        <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
+                        <li><a href="ServletCerrarSesion"><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -194,7 +194,7 @@
                 <%
                 } else if (!usuarioLogueado.getIdUsuario().equals(usuario.getIdUsuario()) && sonAmigos) {
                 %>
-                <a class="btn btn-info pull-right" href="ServletListarCorreos?amigo=<%= usuario.getIdUsuario() %>"> Enviar mensaje</a>
+                <a class="btn btn-info pull-right" href="ServletListarCorreos?amigo=<%= usuario.getIdUsuario()%>"> Enviar mensaje</a>
                 <%
                 } else if (!peticionAmistad) {
                 %>

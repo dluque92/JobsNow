@@ -75,7 +75,7 @@
                         </div>
                         <button type="submit" class="btn btn-default fa fa-search"></button>
                     </form>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" style="margin-right: 1em;">
                         <%
                             if (mensajeDisponible != null && mensajeDisponible == true) {
                         %>
@@ -97,7 +97,7 @@
                                 <%
                                     }
                                 %>
-                        <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
+                        <li><a href="ServletCerrarSesion"><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
             </div>
