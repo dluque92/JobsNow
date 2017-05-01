@@ -129,7 +129,7 @@
                                 <%
                                     if (peticiones != null && peticiones!=0) {
                                 %>
-                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: #33ffff"></i></a></li>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: orangered"></i></a></li>
                                 <%} else {
                                 %>
                         <li><a href="ServletListarPeticiones"><i class="fa fa-users"></i></a></li>
@@ -141,7 +141,6 @@
                 </div>
             </div>
         </nav>
-    </nav>
     <div class="container">
         <div class="jumbotron vertical-center">
             <%                if (usuario.getNombre() != null || usuario.getApellidos() != null) {

@@ -14,6 +14,7 @@
     DatosUsuario amigo = (DatosUsuario) request.getAttribute("amigo");
     DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
     List<DatosUsuario> listaAmigos = (List<DatosUsuario>) request.getAttribute("listaAmigos");
+    Integer peticiones = (Integer) request.getAttribute("peticiones");
 %>
 <html>
     <head>
@@ -98,13 +99,22 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
-                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color:green"></i></a></li>
+                                <%
+                                    if (peticiones != null && peticiones!=0) {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: orangered"></i></a></li>
+                                <%} else {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users"></i></a></li>
+                                <%
+                                    }
+                                %>
                         <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-
+                        
         <div class="container">
             <div class="col-sm-4">
                 <div class="list-group">

@@ -64,7 +64,7 @@ public class ServletEditar extends HttpServlet {
         request.setAttribute("idEstudio", idEstudio);
         request.setAttribute("idExperiencia", idExperiencia);
         request.setAttribute("idAficion", idAficion);
-        
+        request.setAttribute("peticiones", usuario.getPeticionesRecibidas().size());
         RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/editar.jsp");
         rd.forward(request, response);
     }

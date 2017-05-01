@@ -34,6 +34,7 @@
     }
     Boolean badPassword = (Boolean) request.getAttribute("badPassword");
     Boolean badPassword2 = (Boolean) request.getAttribute("badPassword2");
+    Integer peticiones = (Integer) request.getAttribute("peticiones");
 %>
 <html>
     <link href='style.css' rel='stylesheet' type='text/css'>
@@ -80,9 +81,17 @@
                         <button type="submit" class="btn btn-default fa fa-search"></button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="bandejaentrada.jsp"><i class="fa fa-envelope"></i></a></li>
-                        <!-- HAY QUE HACER UN IF EN EL COLOR PARA QUE SE PONGA DE COLOR CUANDO HAYA PETICIONES -->
-                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color:green"></i></a></li>
+                        <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
+                                <%
+                                    if (peticiones != null && peticiones!=0) {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: orangered"></i></a></li>
+                                <%} else {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users"></i></a></li>
+                                <%
+                                    }
+                                %>
                         <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
                     </ul>
                 </div>

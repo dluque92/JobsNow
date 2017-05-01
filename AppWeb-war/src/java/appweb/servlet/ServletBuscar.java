@@ -59,6 +59,8 @@ public class ServletBuscar extends HttpServlet {
         listaUsuariosPorEstudios = this.datosUsuarioFacade.findByEstudios(busqueda, usuario.getIdUsuario());
         listaUsuariosPorExperiencia = this.datosUsuarioFacade.findByExperiencia(busqueda, usuario.getIdUsuario());
         
+        
+        request.setAttribute("peticiones", usuario.getPeticionesRecibidas().size());
         request.setAttribute("listaUsuariosPorNombre", listaUsuariosPorNombre);
         request.setAttribute("listaUsuariosPorAficion", listaUsuariosPorAficion);
         request.setAttribute("listaUsuariosPorEstudios", listaUsuariosPorEstudios);

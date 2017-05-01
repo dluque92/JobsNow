@@ -12,6 +12,7 @@
     List<DatosUsuario> listaEstudios = (List<DatosUsuario>) request.getAttribute("listaUsuariosPorEstudios");
     List<DatosUsuario> listaExperiencia = (List<DatosUsuario>) request.getAttribute("listaUsuariosPorExperiencia");
     String busqueda = (String) request.getAttribute("busqueda");
+    Integer peticiones = (Integer) request.getAttribute("peticiones");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -75,7 +76,16 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
-                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color:green"></i></a></li>
+                                <%
+                                    if (peticiones != null && peticiones!=0) {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users" style="color: orangered"></i></a></li>
+                                <%} else {
+                                %>
+                        <li><a href="ServletListarPeticiones"><i class="fa fa-users"></i></a></li>
+                                <%
+                                    }
+                                %>
                         <li><a href="ServletCerrarSesion">Cerrar Sesión</a></li>
                     </ul>
                 </div>

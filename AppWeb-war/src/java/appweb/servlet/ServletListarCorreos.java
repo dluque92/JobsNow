@@ -85,6 +85,7 @@ public class ServletListarCorreos extends HttpServlet {
             request.setAttribute("listaMensajesAmigo", listaMensajesAmigo);
             request.setAttribute("amigo", amigo);
         }
+        request.setAttribute("peticiones", usuario.getPeticionesRecibidas().size());
         session.setAttribute("usuario", usuario);
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/bandejaentrada.jsp");
