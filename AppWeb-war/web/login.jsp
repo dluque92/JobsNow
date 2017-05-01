@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <p><a href="https://www.davidluque.xyz">Sobre</a> eCorp</p>
+            <p>Sobre <a href="https://www.davidluque.xyz">eCorp</a></p>
 
         </div>
     </body>
