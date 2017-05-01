@@ -5,6 +5,7 @@
  */
 package appweb.servlet;
 
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.ejb.EstudioFacade;
 import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
@@ -31,6 +32,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ServletCrearActualizarEstudio", urlPatterns = {"/ServletCrearActualizarEstudio"})
 public class ServletCrearActualizarEstudio extends HttpServlet {
+
+    @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
 
     @EJB
     private EstudioFacade estudioFacade;
@@ -95,6 +99,7 @@ public class ServletCrearActualizarEstudio extends HttpServlet {
             listaDeEstudios.add(estudio);
             usuarioEnSession.setEstudioCollection(listaDeEstudios);
             session.setAttribute("usuario", usuarioEnSession);
+            this.datosUsuarioFacade.edit(usuarioEnSession);
         }
 
         //------Finalizamos el servlet------------------------------------------

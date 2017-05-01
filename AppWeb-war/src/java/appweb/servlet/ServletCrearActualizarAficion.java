@@ -6,6 +6,7 @@
 package appweb.servlet;
 
 import appweb.ejb.AficionFacade;
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.Aficion;
 import appweb.entity.DatosUsuario;
 import java.io.IOException;
@@ -27,8 +28,12 @@ import javax.servlet.http.HttpSession;
 public class ServletCrearActualizarAficion extends HttpServlet {
 
     @EJB
-    private AficionFacade aficionFacade;
+    private DatosUsuarioFacade datosUsuarioFacade;
 
+    @EJB
+    private AficionFacade aficionFacade;
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -73,7 +78,9 @@ public class ServletCrearActualizarAficion extends HttpServlet {
             listaDeAficion.add(aficion);
             usuarioEnSession.setAficionCollection(listaDeAficion);
             session.setAttribute("usuario", usuarioEnSession);
+            this.datosUsuarioFacade.edit(usuarioEnSession);
         }
+        
 
         //------Finalizamos el servlet------------------------------------------
         /*

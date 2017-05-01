@@ -5,6 +5,7 @@
  */
 package appweb.servlet;
 
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.ejb.ExperienciaFacade;
 import appweb.entity.DatosUsuario;
 import appweb.entity.Experiencia;
@@ -28,7 +29,11 @@ import javax.servlet.http.HttpSession;
 public class ServletBorrarExperiencia extends HttpServlet {
 
     @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
+
+    @EJB
     private ExperienciaFacade experienciaFacade;
+    
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,6 +56,7 @@ public class ServletBorrarExperiencia extends HttpServlet {
         c.remove(experiencia);
         usuario.setExperienciaCollection(c);
         this.experienciaFacade.remove(experiencia);
+        this.datosUsuarioFacade.edit(usuario);
         response.sendRedirect("ServletEditar");
     }
 

@@ -5,6 +5,7 @@
  */
 package appweb.servlet;
 
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.ejb.EstudioFacade;
 import appweb.entity.DatosUsuario;
 import appweb.entity.Estudio;
@@ -26,6 +27,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ServletBorrarEstudio", urlPatterns = {"/ServletBorrarEstudio"})
 public class ServletBorrarEstudio extends HttpServlet {
+
+    @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
 
     @EJB
     private EstudioFacade estudioFacade;
@@ -55,7 +59,7 @@ public class ServletBorrarEstudio extends HttpServlet {
         usuario.setEstudioCollection(c);
         
         this.estudioFacade.remove(estudio);
-        
+        this.datosUsuarioFacade.edit(usuario);
         response.sendRedirect("ServletEditar");
     }
 

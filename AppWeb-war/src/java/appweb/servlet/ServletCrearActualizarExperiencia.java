@@ -5,6 +5,7 @@
  */
 package appweb.servlet;
 
+import appweb.ejb.DatosUsuarioFacade;
 import appweb.ejb.ExperienciaFacade;
 import appweb.entity.DatosUsuario;
 import appweb.entity.Experiencia;
@@ -32,7 +33,11 @@ import javax.servlet.http.HttpSession;
 public class ServletCrearActualizarExperiencia extends HttpServlet {
 
     @EJB
+    private DatosUsuarioFacade datosUsuarioFacade;
+
+    @EJB
     private ExperienciaFacade experienciaFacade;
+    
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -100,6 +105,7 @@ public class ServletCrearActualizarExperiencia extends HttpServlet {
             listaExperiencia.add(experiencia);
             usuarioEnSession.setExperienciaCollection(listaExperiencia);
             session.setAttribute("usuario", usuarioEnSession);
+            this.datosUsuarioFacade.edit(usuarioEnSession);
         }
 
         //------Finalizamos el servlet------------------------------------------
