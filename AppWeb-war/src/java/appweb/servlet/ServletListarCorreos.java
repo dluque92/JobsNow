@@ -31,10 +31,10 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ServletListarCorreos", urlPatterns = {"/ServletListarCorreos"})
 public class ServletListarCorreos extends HttpServlet {
-    
+
     @EJB
     private DatosUsuarioFacade datosUsuarioFacade;
-    
+
     @EJB
     private MensajeFacade mensajeFacade;
 
@@ -49,9 +49,9 @@ public class ServletListarCorreos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
-        
+
         DatosUsuario usuario = (DatosUsuario) session.getAttribute("usuario");
         usuario = this.datosUsuarioFacade.find(usuario.getIdUsuario());
         String idAmigo = (String) request.getParameter("amigo");
@@ -66,32 +66,34 @@ public class ServletListarCorreos extends HttpServlet {
                 }
             }
         }
+        
         if (idAmigo != null) {
             DatosUsuario amigo = this.datosUsuarioFacade.find(new BigDecimal(idAmigo));
             List<Mensaje> listaMensajesAmigo = new ArrayList<>();
-            
+
             for (Mensaje mensaje : usuario.getMensajeCollection()) {
                 Collection<DatosUsuario> coleccionParticipantes = mensaje.getDatosUsuarioCollection();
                 if (coleccionParticipantes.contains(usuario) && coleccionParticipantes.contains(amigo)) {
                     listaMensajesAmigo.add(mensaje);
                 }
-                if (!mensaje.getMensaje().startsWith(usuario.getEmail())) {
-                    mensaje.setLeido('1');   
+                if (!mensaje.getMensaje().startsWith(usuario.getEmail())
+                        && amigo!=null && mensaje.getMensaje().startsWith(amigo.getEmail())) {
+                    mensaje.setLeido('1');
                     this.mensajeFacade.edit(mensaje);
                 }
             }
-            
+
             Collections.sort(listaMensajesAmigo);
             request.setAttribute("listaMensajesAmigo", listaMensajesAmigo);
             request.setAttribute("amigo", amigo);
         }
-        
-        for(Mensaje mensaje : usuario.getMensajeCollection()){
-            if (!mensaje.getMensaje().startsWith(usuario.getEmail()) && mensaje.getLeido()=='0') {
-                    request.setAttribute("mensajeDisponible", true);
-                }
+
+        for (Mensaje mensaje : usuario.getMensajeCollection()) {
+            if (!mensaje.getMensaje().startsWith(usuario.getEmail()) && mensaje.getLeido() == '0') {
+                request.setAttribute("mensajeDisponible", true);
+            }
         }
-        
+
         request.setAttribute("peticiones", usuario.getPeticionesRecibidas().size());
         session.setAttribute("usuario", usuario);
         RequestDispatcher rd;

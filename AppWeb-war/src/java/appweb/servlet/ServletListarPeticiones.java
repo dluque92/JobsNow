@@ -55,6 +55,7 @@ public class ServletListarPeticiones extends HttpServlet {
             }
         }
         
+        request.setAttribute("peticiones", usuario.getPeticionesRecibidas().size());
         request.setAttribute("listaPeticiones", listaPeticiones);
         RequestDispatcher rd;
         rd = this.getServletContext().getRequestDispatcher("/bandejapeticiones.jsp");
