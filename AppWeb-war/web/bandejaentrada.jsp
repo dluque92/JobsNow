@@ -48,19 +48,20 @@
             .message-panel{
                 background-color: #EEEEEE;
                 width: 100%;
-                padding: 2em;
+                padding: 1em;
             }
             .container{
-                margin: 2em;
+                margin: 1em;
             }
             .msg{
-                margin: 1em;
-                font-weight: 500;
+                margin: 0.2em;
+                font-weight: 600;
             }
             .msg-box{
+                border-radius: 8px;
                 border-style: solid;
                 border-width: 0.01px;
-                margin: 1em;
+                margin: 0.5em;
                 padding: 1.5em;
             }
             #friend{
@@ -136,8 +137,8 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                <div class="jumbotron" style="border-radius: 0px; border-style: solid; border-width: 0.01px; width: 1000px; padding: 0px !important;">
-                <div id="msg-end-scroll" class="jumbotron" style="border-radius: 0px; overflow-y: auto; height:350px;">
+                <div class="jumbotron" style="border-radius: 8px; border-style: solid; border-width: 0.01px; width: 1000px; padding: 0px !important;">
+                <div id="msg-end-scroll" class="jumbotron" style="margin-top: 0.5em; border-radius: 0px; overflow-y: auto; height:350px;">
                     <%
                         if (listaMensajesAmigo != null) {
                             for (Mensaje mensaje : listaMensajesAmigo) {
