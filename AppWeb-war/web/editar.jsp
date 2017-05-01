@@ -35,6 +35,7 @@
     Boolean badPassword = (Boolean) request.getAttribute("badPassword");
     Boolean badPassword2 = (Boolean) request.getAttribute("badPassword2");
     Integer peticiones = (Integer) request.getAttribute("peticiones");
+    Boolean mensajeDisponible = (Boolean) request.getAttribute("mensajeDisponible");
 %>
 <html>
     <link href='style.css' rel='stylesheet' type='text/css'>
@@ -70,7 +71,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="ServletListarDatos"><img src="https://img.clipartfest.com/6ce9d186fb2c7050f360764b2a087dda_big-image-png-job-clipart-png_2230-1803.png" style="height: 2em"></a>
+                    <a class="navbar-brand" href="ServletListarDatos" style="margin-left:2em"><img src="https://img.clipartfest.com/6ce9d186fb2c7050f360764b2a087dda_big-image-png-job-clipart-png_2230-1803.png" style="height: 2em"></a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -81,7 +82,17 @@
                         <button type="submit" class="btn btn-default fa fa-search"></button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
+                        <%
+                            if (mensajeDisponible != null && mensajeDisponible == true) {
+                        %>
+                        <li><a href="ServletListarCorreos"><i class="fa fa-envelope" style="color: orangered"></i></a></li>
+                                <%
+                                } else {
+                                %>
                         <li><a href="ServletListarCorreos"><i class="fa fa-envelope"></i></a></li>
+                                <%
+                                }
+                                %>
                                 <%
                                     if (peticiones != null && peticiones!=0) {
                                 %>
@@ -97,6 +108,7 @@
                 </div>
             </div>
         </nav>
+                        
         <div class="middlePage" style="margin-top:  3em; width: 700px">
             <div class="page-header">
                 <h1 class="logo">JobsNow <small>Welcome to our place!</small></h1>

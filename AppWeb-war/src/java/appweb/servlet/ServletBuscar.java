@@ -8,6 +8,7 @@ package appweb.servlet;
 
 import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.DatosUsuario;
+import appweb.entity.Mensaje;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -59,6 +60,11 @@ public class ServletBuscar extends HttpServlet {
         listaUsuariosPorEstudios = this.datosUsuarioFacade.findByEstudios(busqueda, usuario.getIdUsuario());
         listaUsuariosPorExperiencia = this.datosUsuarioFacade.findByExperiencia(busqueda, usuario.getIdUsuario());
         
+        for(Mensaje mensaje : usuario.getMensajeCollection()){
+            if (!mensaje.getMensaje().startsWith(usuario.getEmail()) && mensaje.getLeido()=='0') {
+                    request.setAttribute("mensajeDisponible", true);
+                }
+        }
         
         request.setAttribute("peticiones", usuario.getPeticionesRecibidas().size());
         request.setAttribute("listaUsuariosPorNombre", listaUsuariosPorNombre);

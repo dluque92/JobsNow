@@ -7,6 +7,7 @@ package appweb.servlet;
 
 import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.DatosUsuario;
+import appweb.entity.Mensaje;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -47,6 +48,12 @@ public class ServletListarPeticiones extends HttpServlet {
         usuario = this.datosUsuarioFacade.find(usuario.getIdUsuario());
         session.setAttribute("usuario", usuario);
         listaPeticiones = (List)usuario.getPeticionesRecibidas();
+        
+        for(Mensaje mensaje : usuario.getMensajeCollection()){
+            if (!mensaje.getMensaje().startsWith(usuario.getEmail()) && mensaje.getLeido()=='0') {
+                    request.setAttribute("mensajeDisponible", true);
+            }
+        }
         
         request.setAttribute("listaPeticiones", listaPeticiones);
         RequestDispatcher rd;

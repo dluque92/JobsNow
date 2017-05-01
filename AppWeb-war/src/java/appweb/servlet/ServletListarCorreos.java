@@ -85,6 +85,13 @@ public class ServletListarCorreos extends HttpServlet {
             request.setAttribute("listaMensajesAmigo", listaMensajesAmigo);
             request.setAttribute("amigo", amigo);
         }
+        
+        for(Mensaje mensaje : usuario.getMensajeCollection()){
+            if (!mensaje.getMensaje().startsWith(usuario.getEmail()) && mensaje.getLeido()=='0') {
+                    request.setAttribute("mensajeDisponible", true);
+                }
+        }
+        
         request.setAttribute("peticiones", usuario.getPeticionesRecibidas().size());
         session.setAttribute("usuario", usuario);
         RequestDispatcher rd;
