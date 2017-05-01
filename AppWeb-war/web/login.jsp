@@ -38,7 +38,7 @@
         %>
         <div class="middlePage">
             <div class="page-header">
-                <h1 class="logo">JobsNow <small>Welcome to our place!</small></h1>
+                <h1 class="logo">JobsNow <small>Encuentra trabajo ya!</small></h1>
 
             </div>
 
@@ -52,20 +52,20 @@
 
 
                         <div class="col-md-5" >
-                            <a class="btn btn-block btn-social btn-lg btn-twitter"><i class="fa fa-twitter"></i> Sign in with Twitter</a><br/>
-                            <a class="btn btn-block btn-social btn-lg btn-github"><i class="fa fa-github"></i> Sign in with GitHub</a><br/>
-                            <a class="btn btn-block btn-social btn-lg btn-facebook"><i class="fa fa-facebook"></i> Sign in with Facebook</a><br/>
+                            <a class="btn btn-block btn-social btn-lg btn-twitter"><i class="fa fa-twitter"></i> Logueate con Twitter</a><br/>
+                            <a class="btn btn-block btn-social btn-lg btn-github"><i class="fa fa-github"></i> Logueate con GitHub</a><br/>
+                            <a class="btn btn-block btn-social btn-lg btn-facebook"><i class="fa fa-facebook"></i> Logueate con Facebook</a><br/>
                         </div>
 
                         <div class="col-md-7" style="border-left:1px solid #ccc;height:160px">
                             <form class="form-horizontal" action="ServletLogin" method="post">
                                 <fieldset>
                                     <input id="email" name="email" type="text" placeholder="Enter User Name" class="form-control input-md">
-                                    <div class="spacing"><input type="checkbox" name="checkboxes" id="checkboxes-0" value="1"><small> Remember me</small></div>
+                                    <div class="spacing"><input type="checkbox" name="checkboxes" id="checkboxes-0" value="1"><small> Recuerdame</small></div>
                                     <input id="password" name="password" type="password" placeholder="Enter Password" class="form-control input-md">
-                                    <div class="spacing"><a href="#"><small> Forgot Password?</small></a><br/></div>
+                                    <div class="spacing"><a href="#"><small>¿Has olvidado tu contraseña?</small></a><br/></div>
                                     <input type="submit" id="singlebutton" name="singlebutton" value="Sign In" class="btn btn-info btn-sm pull-right">
-                                    <a href="registrar.jsp" target="_self"> <input type="button" name="boton" value="Register" class="btn btn-default btn-sm pull-left"/> </a>
+                                    <a href="registrar.jsp" target="_self"> <input type="button" name="boton" value="Registrar" class="btn btn-default btn-sm pull-left"/> </a>
                                 </fieldset>
                             </form>
                         </div>
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <p><a href="https://www.davidluque.xyz">About</a> Deivi</p>
+            <p><a href="https://www.davidluque.xyz">Sobre</a> eCorp</p>
 
         </div>
     </body>
