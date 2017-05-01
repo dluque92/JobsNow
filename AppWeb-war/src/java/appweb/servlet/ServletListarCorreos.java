@@ -33,8 +33,12 @@ import javax.servlet.http.HttpSession;
 public class ServletListarCorreos extends HttpServlet {
 
     @EJB
+    private MensajeFacade mensajeFacade;
+
+    @EJB
     private DatosUsuarioFacade datosUsuarioFacade;
 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -84,6 +88,11 @@ public class ServletListarCorreos extends HttpServlet {
             }
 
             Collections.sort(listaMensajesAmigo);
+            for(Mensaje mensaje: listaMensajesAmigo){
+                mensaje.setLeido('1');
+                this.mensajeFacade.edit(mensaje);
+            }
+            
             request.setAttribute("listaMensajesAmigo", listaMensajesAmigo);
             request.setAttribute("amigo", amigo);
         }
