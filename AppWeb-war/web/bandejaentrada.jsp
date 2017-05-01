@@ -66,10 +66,13 @@
                 background-color: #FFFFFF;
             }
             #user{
-                background-color: #DCF8C6;
+                background-color: #D9F4FF;
             }
-            .msg-text{
+            .msg-friend{
                 color:#111111;
+            }
+            .msg-user{
+                color: #111111;
             }
         </style>
     </head>
@@ -127,7 +130,7 @@
                         <div class="msg">
                             <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
                             <h4 class="media-heading"><%=amigo.getNombre() + " " + amigo.getApellidos()%></h4>
-                            <small class="msg-text col-md-10 text-muted"><%=mensaje.getMensaje().substring(amigo.getEmail().length())%> </small>
+                            <small class="msg-friend col-md-10 text-muted"><%=mensaje.getMensaje().substring(amigo.getEmail().length())%> </small>
                         </div>
                     </div>
                     <%
@@ -137,7 +140,7 @@
                         <div class="msg">
                             <small class="pull-right time"><i class="fa fa-clock-o"></i><%=mensaje.getFecha()%></small>
                             <h4 class="media-heading"><%=usuario.getNombre() + " " + usuario.getApellidos()%></h4>
-                            <small class="msg-text col-md-10 text-muted"><%=mensaje.getMensaje().substring(usuario.getEmail().length())%> </small>
+                            <small class="msg-user col-md-10 text-muted"><%=mensaje.getMensaje().substring(usuario.getEmail().length())%> </small>
                         </div>
                     </div>
                     <%
