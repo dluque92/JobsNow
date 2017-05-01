@@ -6,7 +6,9 @@
 package appweb.servlet;
 
 import appweb.ejb.DatosUsuarioFacade;
+import appweb.ejb.MensajeFacade;
 import appweb.entity.DatosUsuario;
+import appweb.entity.Mensaje;
 import java.io.IOException;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
@@ -27,6 +29,9 @@ public class ServletListarDatos extends HttpServlet {
 
     @EJB
     private DatosUsuarioFacade datosUsuarioFacade;
+    
+    @EJB
+    private MensajeFacade mensajeFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,6 +56,12 @@ public class ServletListarDatos extends HttpServlet {
         miusuario = this.datosUsuarioFacade.find(miusuario.getIdUsuario());
         session.setAttribute("usuario", miusuario);
         DatosUsuario usuario = null;
+        
+        for(Mensaje mensaje : miusuario.getMensajeCollection()){
+            if (!mensaje.getMensaje().startsWith(miusuario.getEmail()) && mensaje.getLeido()=='0') {
+                    request.setAttribute("mensajeDisponible", true);
+                }
+        }
         
         if (stringId == null || stringId.isEmpty()) {
             usuario = (DatosUsuario) session.getAttribute("usuario");
