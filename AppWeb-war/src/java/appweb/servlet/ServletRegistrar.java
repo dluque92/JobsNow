@@ -7,20 +7,29 @@ package appweb.servlet;
 
 import appweb.ejb.DatosUsuarioFacade;
 import appweb.entity.DatosUsuario;
+import dropbox.DropboxController;
+import dropbox.DropboxControllerException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Daniel
  */
 @WebServlet(name = "ServletRegistrar", urlPatterns = {"/ServletRegistrar"})
+@MultipartConfig
 public class ServletRegistrar extends HttpServlet {
 
     @EJB
@@ -38,9 +47,7 @@ public class ServletRegistrar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DatosUsuario datosUsuario;
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
+
         String nombre = request.getParameter("nombre");//obligatorio
         String apellidos = request.getParameter("apellidos");//obligatorio
         String email = request.getParameter("email");//obligatorio
@@ -50,6 +57,10 @@ public class ServletRegistrar extends HttpServlet {
         String instagram = request.getParameter("instagram");
         String web = request.getParameter("web");
         String foto = request.getParameter("foto");//serializable??
+
+        //----------Codigo para obtención de la foto---------------------------- 
+        Part filePart = request.getPart("foto"); // Retrieves <input type="file" name="file">
+        //----------------------------------------------------------------------
 
         if (this.datosusuarioFacade.emailUsado(email)) {
             Boolean emailusado = true;
@@ -75,15 +86,29 @@ public class ServletRegistrar extends HttpServlet {
             if (web != null) {
                 datosUsuario.setWeb(web);
             }
-            if (foto != null) {
-                datosUsuario.setFoto(foto);
+            String nombreFoto = "";
+            if (foto == null) {
+                nombreFoto = email + ".jpg";
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                InputStream fileContent = filePart.getInputStream();
+                try {
+                    DropboxController.uploadFile(nombreFoto, fileContent);
+                } catch (DropboxControllerException ex) {
+                    Logger.getLogger(ServletRegistrar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else {
+                nombreFoto = "default.jpg";
             }
+            datosUsuario.setFoto(nombreFoto);
+            
 
             this.datosusuarioFacade.create(datosUsuario);
 
-            RequestDispatcher rd;
-            rd = this.getServletContext().getRequestDispatcher("/login.jsp");
-            rd.forward(request, response);
+            // RequestDispatcher rd;
+            // rd = this.getServletContext().getRequestDispatcher("/login.jsp");
+            // rd.forward(request, response);
+            response.sendRedirect("login.jsp");
         }
     }
 

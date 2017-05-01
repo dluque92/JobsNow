@@ -48,7 +48,7 @@
                                     <% 
                                     }
                                 %>
-                            <form class="form-horizontal" action="ServletRegistrar" method="post">
+                            <form class="form-horizontal" action="ServletRegistrar" method="post" enctype="multipart/form-data">
                                 <fieldset>
                                     <div class="spacing"><small>Nombre</small></div>
                                     <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control input-md" required="true">
@@ -82,7 +82,7 @@
                                     <div class="spacing"><small>Página Web</small></div>
                                     <input id="web" name="web" type="text" placeholder="www.tuweb.com" class="form-control input-md">
                                     <div class="spacing"><small>Foto</small></div>
-                                    <input id="imagen" name="nombre" type="file" placeholder="Foto" class="form-control input-md">
+                                    <input id="foto" name="foto" type="file" placeholder="Foto" class="form-control input-md">
                                     <div class="spacing"></div>
                                     <button id="singlebutton" name="singlebutton" class="btn btn-info btn-sm pull-right">Registrarse</button>
                                 </fieldset>
