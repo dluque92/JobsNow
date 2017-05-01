@@ -76,6 +76,12 @@
                 color: #111111;
             }
         </style>
+        <script>
+            window.onload = function () {
+                var objDiv = document.getElementById("msg-end-scroll");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            };
+        </script>
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top  navbar-static-top">
@@ -131,7 +137,7 @@
             </div>
             <div class="col-sm-8">
                 <div class="jumbotron" style="border-radius: 0px; border-style: solid; border-width: 0.01px; width: 1000px; padding: 0px !important;">
-                <div class="jumbotron" style="border-radius: 0px; overflow-y: auto; height:350px;">
+                <div id="msg-end-scroll" class="jumbotron" style="border-radius: 0px; overflow-y: auto; height:350px;">
                     <%
                         if (listaMensajesAmigo != null) {
                             for (Mensaje mensaje : listaMensajesAmigo) {
