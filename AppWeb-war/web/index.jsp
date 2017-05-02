@@ -183,7 +183,7 @@
                     <div class="col-sm-3 col-md-3">
                         <div class="social-links">
                             <%
-                                if (usuario.getTwitter() != null) {
+                                if (usuario.getTwitter() != null && !usuario.getTwitter().equals("")) {
                             %>
                             <a href="http://www.twitter.com/<%= usuario.getTwitter()%>" target="_blank"><i class="fa fa-twitter fa-lg"></i></a>
                                 <%
@@ -191,14 +191,14 @@
                                 %>
 
                             <%
-                                if (usuario.getInstagram() != null) {
+                                if (usuario.getInstagram() != null && !usuario.getInstagram().equals("")) {
                             %>
                             <a href="http://www.instagram.com/<%= usuario.getInstagram()%>" target="_blank"><i class="fa fa-instagram fa-lg"></i></a>
                                 <%
                                     }
                                 %>
                                 <%
-                                    if (usuario.getWeb() != null) {
+                                    if (usuario.getWeb() != null && usuario.getWeb().equals("")) {
                                 %>
                             <a href="http://<%= usuario.getWeb()%>"target="_blank"><i class="fa fa-link fa-lg"></i></a>
                                 <%
